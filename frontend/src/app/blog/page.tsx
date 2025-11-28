@@ -40,10 +40,10 @@ export default function BlogPage() {
         <Breadcrumb items={[{ label: "Blog" }]} />
 
         <h1 className="text-5xl text-black font-bold text-center mb-4">
-          Know Your Spice
+          Know Your Masala
         </h1>
         <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
-          Learn about the health benefits, uses, and history of different spices
+          Learn about the health benefits, uses, and history of different masalas
         </p>
 
         {/* Skeleton Loader */}

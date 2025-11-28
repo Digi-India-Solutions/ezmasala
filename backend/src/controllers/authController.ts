@@ -54,11 +54,11 @@ export const adminLogin = async (req: Request, res: Response) => {
       { expiresIn: '7d' }
     );
 
-    // Set cookie
+    // Set cookie for cross-domain
     res.cookie('adminToken', token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
+      secure: true,
+      sameSite: 'none',
       path: '/',
       maxAge: 60 * 60 * 24 * 7 * 1000 // 7 days in ms
     });
@@ -103,11 +103,11 @@ export const userSignup = async (req: Request, res: Response) => {
       { expiresIn: '7d' }
     );
 
-    // Set cookie
+    // Set cookie for cross-domain
     res.cookie('token', token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
+      secure: true,
+      sameSite: 'none',
       path: '/',
       maxAge: 60 * 60 * 24 * 7 * 1000 // 7 days in ms
     });
@@ -147,11 +147,11 @@ export const userLogin = async (req: Request, res: Response) => {
       { expiresIn: '7d' }
     );
 
-    // Set cookie
+    // Set cookie for cross-domain
     res.cookie('token', token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
+      secure: true,
+      sameSite: 'none',
       path: '/',
       maxAge: 60 * 60 * 24 * 7 * 1000 // 7 days in ms
     });

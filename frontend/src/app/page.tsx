@@ -75,20 +75,20 @@ export default function Home() {
             {/* RIGHT TEXT SIDE */}
             <div>
               <div className="inline-block mb-3">
-                <span className="text-sm font-montserrat font-bold tracking-widest text-gray-500 bg-gray-100 px-4 py-2 rounded-full">OUR STORY</span>
+                <span className="text-sm font-dm-sans font-bold tracking-widest text-gray-500 bg-gray-100 px-4 py-2 rounded-full">OUR STORY</span>
               </div>
-              <h2 className="text-5xl font-fraunces font-black mb-6 text-gray-900 leading-tight tracking-tight">Pure. Authentic. Fresh.</h2>
-              <div className="space-y-4 text-base text-gray-700 leading-relaxed font-raleway">
+              <h2 className="text-5xl font-dm-sans font-black mb-6 text-gray-900 leading-tight tracking-tight">Pure. Authentic. Fresh.</h2>
+              <div className="space-y-4 text-base text-gray-700 leading-relaxed font-dm-sans">
                 <p className="border-l-4 border-black pl-4">
-                  At EZ Masala 🌿, we believe that great cooking starts with great ingredients. Our spices are carefully selected,
-                  sourced from the finest farms 🏞️, and processed using traditional methods to preserve their natural aroma and flavor.
+                  At EZ Masala, we believe that great cooking starts with great ingredients. Our spices are carefully selected,
+                  sourced from the finest farms, and processed using traditional methods to preserve their natural aroma and flavor.
                 </p>
                 <p>
-                  Every package is sealed with freshness ✨, ensuring that you get the same authentic taste that has been cherished
+                  Every package is sealed with freshness, ensuring that you get the same authentic taste that has been cherished
                   in Indian households for generations.
                 </p>
                 <div className="bg-gray-50 p-4 rounded-xl border-l-4 border-gray-900">
-                  <p className="font-semibold text-gray-900 font-poppins">
+                  <p className="font-semibold text-gray-900 font-dm-sans">
                     From our kitchen to yours, we promise quality, purity, and authenticity in every pinch.
                   </p>
                 </div>
@@ -115,8 +115,8 @@ export default function Home() {
                   <circle cx="32" cy="14" r="5" fill="currentColor" opacity="0.7"/>
                 </svg>
               </div>
-              <h3 className="text-lg font-fraunces font-bold text-gray-900 mb-2">Easy for New & Experienced Cooks</h3>
-              <p className="text-sm text-gray-600 font-raleway">Designed for first-time cooks as well as trained chefs.</p>
+              <h3 className="text-lg font-dm-sans font-bold text-gray-900 mb-2">Easy for New & Experienced Cooks</h3>
+              <p className="text-sm text-gray-600 font-dm-sans">Designed for first-time cooks as well as trained chefs.</p>
             </div>
 
             {/* USP 2 - Spice Mortar & Pestle Icon */}
@@ -132,8 +132,8 @@ export default function Home() {
                   <ellipse cx="30" cy="42" rx="2.5" ry="1.5" fill="currentColor" opacity="0.4"/>
                 </svg>
               </div>
-              <h3 className="text-lg font-fraunces font-bold text-gray-900 mb-2">Consistent Taste, Every Time</h3>
-              <p className="text-sm text-gray-600 font-raleway">Fixed flavour support – less guesswork, more reliability.</p>
+              <h3 className="text-lg font-dm-sans font-bold text-gray-900 mb-2">Consistent Taste, Every Time</h3>
+              <p className="text-sm text-gray-600 font-dm-sans">Fixed flavour support – less guesswork, more reliability.</p>
             </div>
 
             {/* USP 3 - Cooking Pot with Steam Icon */}
@@ -149,8 +149,8 @@ export default function Home() {
                   <path d="M40 20c0-4 2-8 2-8s2 4 2 8" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" opacity="0.7"/>
                 </svg>
               </div>
-              <h3 className="text-lg font-fraunces font-bold text-gray-900 mb-2">One Base, Many Dishes</h3>
-              <p className="text-sm text-gray-600 font-raleway">Use the same pack to cook different gravies, dals and curries.</p>
+              <h3 className="text-lg font-dm-sans font-bold text-gray-900 mb-2">One Base, Many Dishes</h3>
+              <p className="text-sm text-gray-600 font-dm-sans">Use the same pack to cook different gravies, dals and curries.</p>
             </div>
 
             {/* USP 4 - Recipe Card with Spices Icon */}
@@ -168,8 +168,8 @@ export default function Home() {
                   <circle cx="30" cy="42" r="3" fill="currentColor" opacity="0.5"/>
                 </svg>
               </div>
-              <h3 className="text-lg font-fraunces font-bold text-gray-900 mb-2">Clear Instructions on Every Box</h3>
-              <p className="text-sm text-gray-600 font-raleway">All sides of the box guide you step by step.</p>
+              <h3 className="text-lg font-dm-sans font-bold text-gray-900 mb-2">Clear Instructions on Every Box</h3>
+              <p className="text-sm text-gray-600 font-dm-sans">All sides of the box guide you step by step.</p>
             </div>
 
           </div>
@@ -180,10 +180,10 @@ export default function Home() {
         <div className="container mx-auto px-6">
 
           <div className="mb-8">
-            <h2 className="text-4xl md:text-5xl font-fraunces font-black text-gray-900 mb-3 tracking-tight">
+            <h2 className="text-4xl md:text-5xl font-dm-sans font-black text-gray-900 mb-3 tracking-tight">
               Cook with True Flavours of India
             </h2>
-            <p className="text-gray-600 text-lg font-raleway">
+            <p className="text-gray-600 text-lg font-dm-sans">
               Discover our most loved spices, handpicked for quality and taste
             </p>
           </div>
@@ -352,11 +352,11 @@ export default function Home() {
       <section className="py-16 bg-[#F4EDE1] text-black relative overflow-hidden">
         <div className="container mx-auto px-6 relative z-10">
           <div className="text-center mb-8">
-            <span className="inline-block bg-red-600 text-white px-4 py-2 rounded-full text-sm font-montserrat font-bold mb-3 animate-pulse">
+            <span className="inline-block bg-red-600 text-white px-4 py-2 rounded-full text-sm font-dm-sans font-bold mb-3 animate-pulse">
               LIMITED TIME OFFER
             </span>
-            <h2 className="text-4xl md:text-5xl font-fraunces font-black mb-3 text-black tracking-tight">Hot Deals</h2>
-            <p className="text-gray-700 text-lg font-raleway">
+            <h2 className="text-4xl md:text-5xl font-dm-sans font-black mb-3 text-black tracking-tight">Hot Deals</h2>
+            <p className="text-gray-700 text-lg font-dm-sans">
               Save up to 20% on our premium spice selection
             </p>
           </div>
@@ -371,13 +371,13 @@ export default function Home() {
       <section className="py-16 bg-white text-black">
         <div className="container mx-auto px-6">
           <div className="text-center">
-            <span className="text-sm font-montserrat font-bold tracking-widest text-gray-500 bg-gray-100 px-4 py-2 rounded-full mb-4 inline-block">RECIPE INSPIRATION</span>
-            <h2 className="text-4xl md:text-5xl font-fraunces font-black mb-4 text-gray-900 tracking-tight">Cook With EZ Masala</h2>
-            <p className="text-gray-600 text-base font-raleway max-w-2xl mx-auto leading-relaxed mb-8">
+            <span className="text-sm font-dm-sans font-bold tracking-widest text-gray-500 bg-gray-100 px-4 py-2 rounded-full mb-4 inline-block">RECIPE INSPIRATION</span>
+            <h2 className="text-4xl md:text-5xl font-dm-sans font-black mb-4 text-gray-900 tracking-tight">Cook With EZ Masala</h2>
+            <p className="text-gray-600 text-base font-dm-sans max-w-2xl mx-auto leading-relaxed mb-8">
               Discover delicious recipes and cooking tips to make the most of your spices
             </p>
             <Link href="/cook">
-              <button className="bg-white text-black border-2 border-black px-8 py-4 rounded-2xl font-montserrat font-bold hover:bg-black hover:text-white transition-all duration-200 shadow-xl hover:shadow-2xl transform hover:-translate-y-1 inline-flex items-center gap-3 group">
+              <button className="bg-white text-black border-2 border-black px-8 py-4 rounded-2xl font-dm-sans font-bold hover:bg-black hover:text-white transition-all duration-200 shadow-xl hover:shadow-2xl transform hover:-translate-y-1 inline-flex items-center gap-3 group">
                 Explore Recipes
                 <svg className="w-6 h-6 group-hover:translate-x-1 transition-transform duration-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M5 12h14"/>
@@ -393,8 +393,8 @@ export default function Home() {
       <section className="py-16 bg-gradient-to-br from-gray-50 to-white">
         <div className="container mx-auto px-6">
           <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-fraunces font-black mb-4 text-gray-900 tracking-tight">Who is EZ Masala For?</h2>
-            <p className="text-lg text-gray-700 max-w-3xl mx-auto leading-relaxed font-raleway">
+            <h2 className="text-4xl md:text-5xl font-dm-sans font-black mb-4 text-gray-900 tracking-tight">Who is EZ Masala For?</h2>
+            <p className="text-lg text-gray-700 max-w-3xl mx-auto leading-relaxed font-dm-sans">
               We designed EZ Masala for real kitchens and real people – not only for expert chefs.
             </p>
           </div>
@@ -413,8 +413,8 @@ export default function Home() {
                   </svg>
                 </div>
                 <div>
-                  <h3 className="text-xl font-fraunces font-bold text-gray-900 mb-3">Home Makers & Working Couples</h3>
-                  <p className="text-gray-600 leading-relaxed font-raleway">
+                  <h3 className="text-xl font-dm-sans font-bold text-gray-900 mb-3">Home Makers & Working Couples</h3>
+                  <p className="text-gray-600 leading-relaxed font-dm-sans">
                     Save time on daily cooking while keeping familiar home-style taste.
                   </p>
                 </div>
@@ -434,8 +434,8 @@ export default function Home() {
                   </svg>
                 </div>
                 <div>
-                  <h3 className="text-xl font-fraunces font-bold text-gray-900 mb-3">Students & New Cooks</h3>
-                  <p className="text-gray-600 leading-relaxed font-raleway">
+                  <h3 className="text-xl font-dm-sans font-bold text-gray-900 mb-3">Students & New Cooks</h3>
+                  <p className="text-gray-600 leading-relaxed font-dm-sans">
                     Even if you don't know complex recipes, you can still cook dependable meals.
                   </p>
                 </div>
@@ -455,8 +455,8 @@ export default function Home() {
                   </svg>
                 </div>
                 <div>
-                  <h3 className="text-xl font-fraunces font-bold text-gray-900 mb-3">Home Chefs & Tiffin Services</h3>
-                  <p className="text-gray-600 leading-relaxed font-raleway">
+                  <h3 className="text-xl font-dm-sans font-bold text-gray-900 mb-3">Home Chefs & Tiffin Services</h3>
+                  <p className="text-gray-600 leading-relaxed font-dm-sans">
                     Maintain consistent taste for your customers, even when helpers are cooking.
                   </p>
                 </div>
@@ -479,8 +479,8 @@ export default function Home() {
                   </svg>
                 </div>
                 <div>
-                  <h3 className="text-xl font-fraunces font-bold text-gray-900 mb-3">Small Restaurants, Canteens & Cloud Kitchens</h3>
-                  <p className="text-gray-600 leading-relaxed font-raleway">
+                  <h3 className="text-xl font-dm-sans font-bold text-gray-900 mb-3">Small Restaurants, Canteens & Cloud Kitchens</h3>
+                  <p className="text-gray-600 leading-relaxed font-dm-sans">
                     Use EZ Masala as your standard base and make training new staff easier.
                   </p>
                 </div>
@@ -512,8 +512,8 @@ export default function Home() {
                   </svg>
                 </div>
               </div>
-              <p className="text-lg md:text-xl text-gray-700 leading-relaxed font-raleway">
-                EZ Masala is developed and marketed by <span className="font-bold text-gray-900 font-fraunces">Shine Exports (India)</span> – combining years of experience in food, printing and packaging to bring clarity and support to your kitchen.
+              <p className="text-lg md:text-xl text-gray-700 leading-relaxed font-dm-sans">
+                EZ Masala is developed and marketed by <span className="font-bold text-gray-900">Shine Exports (India)</span> – combining years of experience in food, printing and packaging to bring clarity and support to your kitchen.
               </p>
             </div>
           </div>
