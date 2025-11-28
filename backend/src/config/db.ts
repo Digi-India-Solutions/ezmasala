@@ -4,7 +4,6 @@ let isConnected = false;
 
 export async function connectDb(): Promise<typeof mongoose> {
   if (isConnected) {
-    console.log('Using existing database connection');
     return mongoose;
   }
 
@@ -23,7 +22,6 @@ export async function connectDb(): Promise<typeof mongoose> {
     });
 
     isConnected = true;
-    console.log(`MongoDB connected: ${conn.connection.host}`);
     return conn;
   } catch (error) {
     console.error('MongoDB connection error:', error);

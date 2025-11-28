@@ -34,6 +34,6 @@ export const uploadMultipart = async (req: Request, res: Response) => {
 
     res.json({ url: imageUrl });
   } catch (error: any) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: error.message || 'Upload failed' });
   }
 };

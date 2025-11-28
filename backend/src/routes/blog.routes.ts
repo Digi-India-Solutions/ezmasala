@@ -7,6 +7,7 @@ const router = Router();
 // Public routes
 router.get('/', blogController.getAll);
 router.get('/slug/:slug', blogController.getBySlug);
+router.get('/:id', blogController.getById);
 
 // Protected routes (Admin only)
 router.post('/', authenticate, requireAdmin, blogController.create);

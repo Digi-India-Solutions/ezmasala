@@ -53,7 +53,7 @@ export default function AdminVideos() {
       formData.append("file", videoFile);
       formData.append("folder", "spice-videos");
 
-      const { url } = await api.upload("/upload", formData);
+      const { url } = await api.upload("/upload/file", formData);
 
       await api.post("/videos", {
         spiceId: selectedSpice,
@@ -92,7 +92,7 @@ export default function AdminVideos() {
         fd.append("file", editVideoFile);
         fd.append("folder", "spice-videos");
 
-        const { url } = await api.upload("/upload", fd);
+        const { url } = await api.upload("/upload/file", fd);
         newVideoUrl = url;
       }
 

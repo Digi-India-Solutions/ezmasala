@@ -23,7 +23,7 @@ export default function CreateBlogPage() {
       uploadFormData.append('file', file);
       uploadFormData.append('folder', 'blogs');
 
-      const data = await api.upload('/upload', uploadFormData);
+      const data = await api.upload('/upload/file', uploadFormData);
       setFormData(prev => ({ ...prev, image: data.url }));
       toast.success('Image uploaded successfully!');
     } catch (error) {

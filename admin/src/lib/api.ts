@@ -2,7 +2,6 @@ import axios from 'axios';
 
 // Single source of truth for backend URL
 const API_BASE_URL = 'https://api.iirhe.org/api';
-// const API_BASE_URL = 'http://localhost:5000/api';
 
 const axiosInstance = axios.create({
   baseURL: API_BASE_URL,
@@ -12,6 +11,20 @@ const axiosInstance = axios.create({
   },
   withCredentials: true,
 });
+
+// Request interceptor to attach auth token
+axiosInstance.interceptors.request.use(
+  (config) => {
+    if (typeof window !== 'undefined') {
+      const token = localStorage.getItem('adminToken');
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
 
 // Response interceptor for error handling
 axiosInstance.interceptors.response.use(

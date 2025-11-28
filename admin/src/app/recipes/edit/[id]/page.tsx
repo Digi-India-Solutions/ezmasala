@@ -45,7 +45,7 @@ export default function EditRecipePage() {
       formData.append('file', file);
       formData.append('folder', 'recipes');
 
-      const data = await api.upload('/upload', formData);
+      const data = await api.upload('/upload/file', formData);
       setFormData(prev => ({ ...prev, image: data.url }));
       toast.success('Image uploaded successfully!');
     } catch (error: any) {

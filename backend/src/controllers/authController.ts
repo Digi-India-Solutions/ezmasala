@@ -1,8 +1,12 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
 import Admin from '../models/Admin';
 import User from '../models/User';
+
+// Ensure environment variables are loaded
+dotenv.config();
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 
@@ -55,10 +59,11 @@ export const adminLogin = async (req: Request, res: Response) => {
     );
 
     // Set cookie for cross-domain
+    const isProduction = process.env.NODE_ENV === 'production';
     res.cookie('adminToken', token, {
       httpOnly: true,
-      secure: true,
-      sameSite: 'none',
+      secure: isProduction,
+      sameSite: isProduction ? 'none' : 'lax',
       path: '/',
       maxAge: 60 * 60 * 24 * 7 * 1000 // 7 days in ms
     });
@@ -104,10 +109,11 @@ export const userSignup = async (req: Request, res: Response) => {
     );
 
     // Set cookie for cross-domain
+    const isProduction = process.env.NODE_ENV === 'production';
     res.cookie('token', token, {
       httpOnly: true,
-      secure: true,
-      sameSite: 'none',
+      secure: isProduction,
+      sameSite: isProduction ? 'none' : 'lax',
       path: '/',
       maxAge: 60 * 60 * 24 * 7 * 1000 // 7 days in ms
     });
@@ -148,10 +154,11 @@ export const userLogin = async (req: Request, res: Response) => {
     );
 
     // Set cookie for cross-domain
+    const isProduction = process.env.NODE_ENV === 'production';
     res.cookie('token', token, {
       httpOnly: true,
-      secure: true,
-      sameSite: 'none',
+      secure: isProduction,
+      sameSite: isProduction ? 'none' : 'lax',
       path: '/',
       maxAge: 60 * 60 * 24 * 7 * 1000 // 7 days in ms
     });

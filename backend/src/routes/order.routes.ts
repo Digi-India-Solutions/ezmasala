@@ -7,9 +7,13 @@ const router = Router();
 // Public/Optional auth routes
 router.get('/', optionalAuth, orderController.getAll);
 router.post('/', optionalAuth, orderController.create);
-router.get('/:id', optionalAuth, orderController.getById);
 
-// Admin only routes
+// Admin only routes - must be before /:id to avoid conflicts
+router.post('/export', authenticate, requireAdmin, orderController.exportOrders);
+
+// Order by ID routes
+router.get('/:id', optionalAuth, orderController.getById);
+router.get('/:id/invoice', authenticate, requireAdmin, orderController.generateInvoice);
 router.patch('/:id', authenticate, requireAdmin, orderController.updateStatus);
 
 export default router;

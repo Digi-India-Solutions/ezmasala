@@ -17,6 +17,20 @@ export const getAll = async (req: Request, res: Response) => {
   }
 };
 
+// GET /api/blogs/:id
+export const getById = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const blog = await Blog.findById(id).lean();
+    if (!blog) {
+      return res.status(404).json({ error: 'Blog not found' });
+    }
+    res.json(blog);
+  } catch (error: any) {
+    res.status(404).json({ error: error.message });
+  }
+};
+
 // GET /api/blogs/slug/:slug
 export const getBySlug = async (req: Request, res: Response) => {
   try {
