@@ -160,7 +160,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
                 <p className="text-sm text-gray-600 mb-4">Author</p>
                 <div className="pt-4 border-t border-gray-200">
                   <p className="text-sm text-gray-600">
-                    Expert in Indian spices and traditional cooking methods
+                    Expert in Indian masalas and traditional cooking methods
                   </p>
                 </div>
               </div>

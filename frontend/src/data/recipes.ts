@@ -64,7 +64,7 @@ export const recipeCategories: RecipeCategory[] = [
           "Kasuri methi for garnish"
         ],
         steps: [
-          "Marinate chicken with yogurt and spices for 30 mins",
+          "Marinate chicken with yogurt and masalas for 30 mins",
           "Grill or pan-fry chicken pieces until golden",
           "In another pan, melt butter and sauté onions",
           "Add tomato puree and EZ Masala Butter Masala",
@@ -174,7 +174,7 @@ export const recipeCategories: RecipeCategory[] = [
         ],
         steps: [
           "Marinate chicken with yogurt and biryani masala",
-          "Par-boil rice with whole spices",
+          "Par-boil rice with whole masalas",
           "Layer marinated chicken in a pot",
           "Top with rice, fried onions, herbs, and saffron milk",
           "Cook on dum (slow steam) for 30 minutes",

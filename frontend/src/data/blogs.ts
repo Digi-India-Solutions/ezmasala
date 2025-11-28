@@ -15,7 +15,7 @@ export const blogs: Blog[] = [
     id: "1",
     title: "The Health Benefits of Turmeric",
     slug: "health-benefits-of-turmeric",
-    excerpt: "Discover why turmeric is called the golden spice and its amazing health benefits",
+    excerpt: "Discover why turmeric is called the golden masala and its amazing health benefits",
     content: `Turmeric, known as Haldi in India, has been used for thousands of years in Ayurvedic medicine. The active compound curcumin gives turmeric its bright yellow color and powerful anti-inflammatory properties.
 
 ## Health Benefits
@@ -47,8 +47,8 @@ Remember to always use high-quality, pure turmeric powder like EZ Masala for max
     id: "2",
     title: "Everything You Need to Know About Garam Masala",
     slug: "everything-about-garam-masala",
-    excerpt: "Learn about the king of Indian spice blends and how to use it in your cooking",
-    content: `Garam Masala is the backbone of Indian cuisine, a warming spice blend that adds depth and complexity to countless dishes.
+    excerpt: "Learn about the king of Indian masala blends and how to use it in your cooking",
+    content: `Garam Masala is the backbone of Indian cuisine, a warming masala blend that adds depth and complexity to countless dishes.
 
 ## What's in Garam Masala?
 
@@ -64,7 +64,7 @@ Traditional garam masala typically contains:
 ## Regional Variations
 
 Different regions of India have their own versions:
-- North Indian: More warming spices like cloves and cinnamon
+- North Indian: More warming masalas like cloves and cinnamon
 - South Indian: Includes curry leaves and dried red chilies
 - Bengali: Sweeter with more cinnamon and cloves
 
@@ -75,7 +75,7 @@ Different regions of India have their own versions:
 3. **Store Properly**: Keep in an airtight container away from light
 4. **Use Sparingly**: A little goes a long way
 
-EZ Masala Garam Masala is carefully crafted with the perfect blend of premium spices.`,
+EZ Masala Garam Masala is carefully crafted with the perfect blend of premium masalas.`,
     image: "/spice/1.jpg",
     date: "2024-01-10",
     author: "Chef Rajesh Kumar",
@@ -119,7 +119,7 @@ Store in a cool, dry place away from moisture. Whole dried chillies last longer 
 Choose EZ Masala Red Chilli Powder for consistent quality and heat level.`,
     image: "/spice/3.jpg",
     date: "2024-01-05",
-    author: "Spice Expert Anjali Mehta",
+    author: "Masala Expert Anjali Mehta",
     readTime: "4 min read"
   },
   {
@@ -127,7 +127,7 @@ Choose EZ Masala Red Chilli Powder for consistent quality and heat level.`,
     title: "The Magic of Cumin Seeds",
     slug: "magic-of-cumin-seeds",
     excerpt: "Explore the aromatic world of cumin and its importance in Indian cooking",
-    content: `Cumin (Jeera) is one of the most essential spices in Indian cuisine, known for its distinctive earthy aroma.
+    content: `Cumin (Jeera) is one of the most essential masalas in Indian cuisine, known for its distinctive earthy aroma.
 
 ## Why Cumin is Essential
 

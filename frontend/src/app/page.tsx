@@ -49,7 +49,7 @@ export default function Home() {
         <div className="md:hidden w-full h-72 relative mb-10">
           <Image
             src="/spice/8.jpg"
-            alt="Fresh spices"
+            alt="Fresh masalas"
             fill
             className="object-cover rounded-none"
           />
@@ -58,7 +58,7 @@ export default function Home() {
         <div className="hidden md:block absolute top-0 left-0 w-1/2 h-full">
           <Image
             src="/spice/8.jpg"
-            alt="Fresh spices"
+            alt="Fresh masalas"
             fill
             className="object-cover rounded-none"
           />
@@ -184,7 +184,7 @@ export default function Home() {
               Cook with True Flavours of India
             </h2>
             <p className="text-gray-600 text-lg font-dm-sans">
-              Discover our most loved spices, handpicked for quality and taste
+              Discover our most loved masalas, handpicked for quality and taste
             </p>
           </div>
 
@@ -357,7 +357,7 @@ export default function Home() {
             </span>
             <h2 className="text-4xl md:text-5xl font-dm-sans font-black mb-3 text-black tracking-tight">Hot Deals</h2>
             <p className="text-gray-700 text-lg font-dm-sans">
-              Save up to 20% on our premium spice selection
+              Save up to 20% on our premium masala selection
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -374,7 +374,7 @@ export default function Home() {
             <span className="text-sm font-dm-sans font-bold tracking-widest text-gray-500 bg-gray-100 px-4 py-2 rounded-full mb-4 inline-block">RECIPE INSPIRATION</span>
             <h2 className="text-4xl md:text-5xl font-dm-sans font-black mb-4 text-gray-900 tracking-tight">Cook With EZ Masala</h2>
             <p className="text-gray-600 text-base font-dm-sans max-w-2xl mx-auto leading-relaxed mb-8">
-              Discover delicious recipes and cooking tips to make the most of your spices
+              Discover delicious recipes and cooking tips to make the most of your masalas
             </p>
             <Link href="/cook">
               <button className="bg-white text-black border-2 border-black px-8 py-4 rounded-2xl font-dm-sans font-bold hover:bg-black hover:text-white transition-all duration-200 shadow-xl hover:shadow-2xl transform hover:-translate-y-1 inline-flex items-center gap-3 group">

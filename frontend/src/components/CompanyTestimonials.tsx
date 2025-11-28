@@ -7,25 +7,25 @@ const companyTestimonials = [
     id: 1,
     company: "Business Standard",
     type: "Press",
-    text: "EZ Masala has revolutionized the spice industry with their commitment to quality and authenticity. Their products have become a household name across India."
+    text: "EZ Masala has revolutionized the masala industry with their commitment to quality and authenticity. Their products have become a household name across India."
   },
   {
     id: 2,
     company: "Economic Times",
     type: "Article",
-    text: "A trusted brand that delivers on its promise of pure and natural spices. EZ Masala's growth trajectory is a testament to their quality-first approach."
+    text: "A trusted brand that delivers on its promise of pure and natural masalas. EZ Masala's growth trajectory is a testament to their quality-first approach."
   },
   {
     id: 3,
     company: "The Hindu",
     type: "Press",
-    text: "EZ Masala stands out in the crowded spice market with their FSSAI certified products and traditional processing methods that preserve natural flavors."
+    text: "EZ Masala stands out in the crowded masala market with their FSSAI certified products and traditional processing methods that preserve natural flavors."
   },
   {
     id: 4,
     company: "Times of India",
     type: "Article",
-    text: "From traditional households to modern kitchens, EZ Masala has captured the essence of authentic Indian cooking with their premium spice range."
+    text: "From traditional households to modern kitchens, EZ Masala has captured the essence of authentic Indian cooking with their premium masala range."
   }
 ];
 

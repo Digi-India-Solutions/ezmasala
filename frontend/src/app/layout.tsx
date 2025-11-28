@@ -64,8 +64,8 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "EZ Masala - Pure, Authentic, Fresh Spices",
-  description: "Premium quality spices and masalas for authentic Indian cooking. Shop our range of pure and fresh spice blends.",
+  title: "EZ Masala - Pure, Authentic, Fresh Masalas",
+  description: "Premium quality masalas for authentic Indian cooking. Shop our range of pure and fresh masala blends.",
   icons: {
     icon: '/logo.png',
     apple: '/logo.png',

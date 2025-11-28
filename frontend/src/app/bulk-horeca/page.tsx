@@ -154,7 +154,7 @@ export default function BulkHorecaPage() {
                   Time Savings
                 </h3>
                 <p className="text-sm text-gray-700">
-                  Less confusion about spices, faster batch preparation.
+                  Less confusion about masalas, faster batch preparation.
                 </p>
               </div>
             </div>

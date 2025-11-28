@@ -16,7 +16,7 @@ const faqs: FAQItem[] = [
     answer: (
       <>
         <p className="mb-4">
-          EZ Masala is a ready cooking support, not just a dry spice powder and not a ready-to-eat curry. It works as a flavour base for your dishes so that you can cook dal, gravies and curries with less confusion and more consistency.
+          EZ Masala is a ready cooking support, not just a dry masala powder and not a ready-to-eat curry. It works as a flavour base for your dishes so that you can cook dal, gravies and curries with less confusion and more consistency.
         </p>
         <ul className="list-disc ml-6 mb-4 space-y-2">
           <li><strong>EZ Masala J</strong> – North Indian style support</li>
@@ -88,7 +88,7 @@ const faqs: FAQItem[] = [
           <li>For home cooking, start with 1–2 spoons for a family-sized portion.</li>
           <li>Taste the final dish and note whether you want more or less next time.</li>
         </ul>
-        <p className="mb-2">Spice level and flavour strength depend on:</p>
+        <p className="mb-2">Masala level and flavour strength depend on:</p>
         <ul className="list-disc ml-6 space-y-2">
           <li>Your personal taste</li>
           <li>The quantity of dish you are cooking</li>

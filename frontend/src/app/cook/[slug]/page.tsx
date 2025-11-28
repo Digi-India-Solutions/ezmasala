@@ -90,7 +90,7 @@ export default async function RecipeDetailPage({ params }: { params: Promise<{ s
               </div>
 
               <p className="text-gray-700 leading-relaxed mb-6">
-                A delicious recipe using our premium EZ Masala spices. Follow the steps below for a perfect dish every time.
+                A delicious recipe using our premium EZ Masala. Follow the steps below for a perfect dish every time.
               </p>
             </div>
           </div>
@@ -141,11 +141,11 @@ export default async function RecipeDetailPage({ params }: { params: Promise<{ s
             <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-6 bg-black text-white rounded-2xl">
               <div>
                 <h3 className="text-xl font-bold mb-1">Enjoy Your Meal!</h3>
-                <p className="text-gray-300 text-sm">Made with love and EZ Masala spices</p>
+                <p className="text-gray-300 text-sm">Made with love and EZ Masala</p>
               </div>
               <Link href="/collections">
                 <button className="bg-white text-black px-6 py-3 rounded-xl font-bold hover:bg-gray-100 transition-all duration-200 shadow-lg">
-                  Shop Spices
+                  Shop Masalas
                 </button>
               </Link>
             </div>

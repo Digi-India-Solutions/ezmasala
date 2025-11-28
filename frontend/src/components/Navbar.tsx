@@ -20,7 +20,7 @@ export default function Navbar() {
   const links = [
     { href: "/about", label: "About Us" },
     { href: "/cook", label: "Cooking With EZ Masala" },
-    { href: "/blog", label: "Know Your Spice" },
+    { href: "/blog", label: "Know Your Masala" },
     { href: "/faq", label: "FAQ" },
     { href: "/bulk-horeca", label: "Bulk & HoReCa" },
     { href: "/contact", label: "Contact" }

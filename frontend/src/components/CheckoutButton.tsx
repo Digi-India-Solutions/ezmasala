@@ -60,7 +60,7 @@ export default function CheckoutButton({ onSuccess, onFailure }: CheckoutButtonP
         amount: orderData.order.amount,
         currency: orderData.order.currency,
         name: 'EZ Masala',
-        description: 'Spice Order Payment',
+        description: 'Masala Order Payment',
         order_id: orderData.order.id,
         handler: async (response: RazorpayPaymentResponse) => {
           try {

@@ -22,7 +22,7 @@ const customerReviews = [
     id: 3,
     name: "Anjali Desai",
     rating: 5,
-    text: "Absolutely love the red chili powder! Perfect spice level and authentic taste. EZ Masala never disappoints.",
+    text: "Absolutely love the red chili powder! Perfect masala level and authentic taste. EZ Masala never disappoints.",
     spiceImage: "/spice/3.jpg"
   },
   {
@@ -36,14 +36,14 @@ const customerReviews = [
     id: 5,
     name: "Meera Patel",
     rating: 5,
-    text: "Amazing quality and authentic flavors! The packaging is also great and keeps the spices fresh. Very satisfied!",
+    text: "Amazing quality and authentic flavors! The packaging is also great and keeps the masalas fresh. Very satisfied!",
     spiceImage: "/spice/5.jpg"
   },
   {
     id: 6,
     name: "Arjun Reddy",
     rating: 5,
-    text: "EZ Masala has become my go-to brand for all spices. The quality is consistent and the prices are reasonable.",
+    text: "EZ Masala has become my go-to brand for all masalas. The quality is consistent and the prices are reasonable.",
     spiceImage: "/spice/6.jpg"
   }
 ];

@@ -12,14 +12,14 @@ export const categories: Category[] = [
     name: "Best Sellers",
     slug: "best-sellers",
     image: "/spice/21.jpg",
-    description: "Our most popular spices loved by customers"
+    description: "Our most popular masalas loved by customers"
   },
   {
     id: "2",
-    name: "Combo Spices",
+    name: "Combo Masalas",
     slug: "combo-spices",
     image: "/spice/14.jpg",
-    description: "Ready-to-use spice blends for every dish"
+    description: "Ready-to-use masala blends for every dish"
   },
   {
     id: "3",
@@ -30,23 +30,23 @@ export const categories: Category[] = [
   },
   {
     id: "4",
-    name: "Whole Spices",
+    name: "Whole Masalas",
     slug: "whole-spices",
     image: "/spice/11.jpg",
-    description: "Premium whole spices for authentic taste"
+    description: "Premium whole masalas for authentic taste"
   },
   {
     id: "5",
-    name: "Tea Spices",
+    name: "Tea Masalas",
     slug: "tea-spices",
     image: "/spice/1.jpg",
     description: "Perfect blends for your chai"
   },
   {
     id: "6",
-    name: "Premium Spices",
+    name: "Premium Masalas",
     slug: "premium-spices",
     image: "/spice/20.jpg",
-    description: "Exclusive and rare spices"
+    description: "Exclusive and rare masalas"
   }
 ];

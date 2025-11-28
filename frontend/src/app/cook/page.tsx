@@ -43,7 +43,7 @@ export default function CookPage() {
         </h1>
 
         <p className="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
-          Discover delicious recipes and cooking inspiration using our premium spices
+          Discover delicious recipes and cooking inspiration using our premium masalas
         </p>
 
         {/* Skeleton Loader  */}

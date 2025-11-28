@@ -13,7 +13,7 @@ export const testimonials: Testimonial[] = [
     name: "Priya Sharma",
     location: "Mumbai",
     rating: 5,
-    comment: "EZ Masala has transformed my cooking! The quality is exceptional and the flavors are authentic. My family loves every dish I make with these spices.",
+    comment: "EZ Masala has transformed my cooking! The quality is exceptional and the flavors are authentic. My family loves every dish I make with these masalas.",
     avatar: "/spice/1.jpg"
   },
   {
@@ -21,7 +21,7 @@ export const testimonials: Testimonial[] = [
     name: "Rajesh Kumar",
     location: "Delhi",
     rating: 5,
-    comment: "Best spices I've ever used. The aroma is incredible and they stay fresh for so long. Highly recommend the garam masala and biryani masala!",
+    comment: "Best masalas I've ever used. The aroma is incredible and they stay fresh for so long. Highly recommend the garam masala and biryani masala!",
     avatar: "/spice/2.jpg"
   },
   {
@@ -29,7 +29,7 @@ export const testimonials: Testimonial[] = [
     name: "Anjali Patel",
     location: "Ahmedabad",
     rating: 4,
-    comment: "Great quality spices at reasonable prices. The packaging keeps them fresh, and the variety is impressive. My go-to brand for all my spice needs.",
+    comment: "Great quality masalas at reasonable prices. The packaging keeps them fresh, and the variety is impressive. My go-to brand for all my masala needs.",
     avatar: "/spice/3.jpg"
   },
   {

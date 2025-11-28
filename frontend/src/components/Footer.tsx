@@ -37,7 +37,7 @@ export default function Footer() {
               <li><Link href="/collections" className="underline underline-offset-4 decoration-black hover:text-green-600 transition">Shop All</Link></li>
               <li><Link href="/about" className="underline underline-offset-4 decoration-black hover:text-green-600 transition">About Us</Link></li>
               <li><Link href="/cook" className="underline underline-offset-4 decoration-black hover:text-green-600 transition">Cooking With EZ Masala</Link></li>
-              <li><Link href="/blog" className="underline underline-offset-4 decoration-black hover:text-green-600 transition">Know Your Spice</Link></li>
+              <li><Link href="/blog" className="underline underline-offset-4 decoration-black hover:text-green-600 transition">Know Your Masala</Link></li>
               <li><Link href="/faq" className="underline underline-offset-4 decoration-black hover:text-green-600 transition">FAQ</Link></li>
               <li><Link href="/bulk-horeca" className="underline underline-offset-4 decoration-black hover:text-green-600 transition">Bulk & HoReCa</Link></li>
             </ul>

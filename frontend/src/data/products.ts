@@ -18,7 +18,7 @@ export const products: Product[] = [
     image: "/spice/1.jpg",
     rating: 4.5,
     reviews: 234,
-    description: "Premium blend of aromatic spices"
+    description: "Premium blend of aromatic masalas"
   },
   {
     id: "2",
@@ -58,7 +58,7 @@ export const products: Product[] = [
     image: "/spice/5.jpg",
     rating: 4.7,
     reviews: 345,
-    description: "All-in-one spice blend"
+    description: "All-in-one masala blend"
   },
   {
     id: "6",
@@ -68,7 +68,7 @@ export const products: Product[] = [
     image: "/spice/6.jpg",
     rating: 4.5,
     reviews: 278,
-    description: "Authentic Mumbai street food spice"
+    description: "Authentic Mumbai street food masala"
   },
   {
     id: "7",
@@ -78,7 +78,7 @@ export const products: Product[] = [
     image: "/spice/7.jpg",
     rating: 4.8,
     reviews: 512,
-    description: "Perfect biryani spice blend"
+    description: "Perfect biryani masala blend"
   },
   {
     id: "8",
@@ -88,7 +88,7 @@ export const products: Product[] = [
     image: "/spice/8.jpg",
     rating: 4.6,
     reviews: 189,
-    description: "Spice mix for chickpea curry"
+    description: "Masala mix for chickpea curry"
   },
   {
     id: "9",
@@ -158,7 +158,7 @@ export const products: Product[] = [
     image: "/spice/15.jpg",
     rating: 4.7,
     reviews: 456,
-    description: "Aromatic tea spice blend"
+    description: "Aromatic tea masala blend"
   },
   {
     id: "16",
