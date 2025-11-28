@@ -10,9 +10,29 @@ dotenv.config();
 
 const app = express();
 
-// Middleware
+// CORS configuration
+const allowedOrigins = [
+  'http://localhost:3000',
+  'http://localhost:3001',
+  process.env.FRONTEND_URL,
+  process.env.ADMIN_URL,
+  'https://admin.iirhe.org',
+  'https://iirhe.org',
+  'https://www.iirhe.org',
+].filter(Boolean) as string[];
+
 app.use(cors({
-  origin: ['http://localhost:3000', 'http://localhost:3001', process.env.FRONTEND_URL || ''].filter(Boolean),
+  origin: (origin, callback) => {
+    // Allow requests with no origin (mobile apps, curl, etc.)
+    if (!origin) return callback(null, true);
+
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      console.log('CORS blocked origin:', origin);
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin'],
