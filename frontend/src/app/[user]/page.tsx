@@ -1,0 +1,374 @@
+'use client';
+
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { useAppSelector, useAppDispatch } from '@/store/hooks';
+import { logoutUser } from '@/store/slices/authSlice';
+import { toast } from 'sonner';
+import Loader from '@/components/Loader';
+import Image from 'next/image';
+import api from '@/lib/api';
+
+export default function UserProfilePage() {
+  const router = useRouter();
+  const dispatch = useAppDispatch();
+  const { user, userToken } = useAppSelector((state) => state.auth);
+  const [loading, setLoading] = useState(true);
+  const [addresses, setAddresses] = useState<any[]>([]);
+  const [orders, setOrders] = useState<any[]>([]);
+  const [showAddForm, setShowAddForm] = useState(false);
+  const [newAddress, setNewAddress] = useState({
+    street: '',
+    city: '',
+    state: '',
+    zipCode: '',
+    country: '',
+    phone: '',
+    isDefault: false,
+  });
+
+  useEffect(() => {
+    if (user) {
+      fetchUserData();
+      fetchUserOrders();
+    } else {
+      setLoading(false);
+    }
+  }, [user]);
+
+  const fetchUserData = async () => {
+    if (!user) return;
+    try {
+      const data = await api.get(`/user/${user.id}`);
+      setAddresses(data.addresses || []);
+    } catch (error) {
+      console.error('Failed to fetch user data');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchUserOrders = async () => {
+    if (!user) return;
+    try {
+      const data = await api.get(`/orders?userId=${user.id}`);
+      setOrders(data.orders || []);
+    } catch (error) {
+      console.error('Failed to fetch orders');
+    }
+  };
+
+  const handleAddAddress = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!user) return;
+
+    // Validate phone number
+    const phoneRegex = /^\d{10}$/;
+    if (!newAddress.phone || !phoneRegex.test(newAddress.phone)) {
+      toast.error('Please enter a valid 10-digit phone number');
+      return;
+    }
+
+    try {
+      const updatedAddresses = await api.post(`/user/${user.id}/addresses`, newAddress);
+      setAddresses(updatedAddresses);
+      setShowAddForm(false);
+      setNewAddress({ street: '', city: '', state: '', zipCode: '', country: '', phone: '', isDefault: false });
+      toast.success('Address added successfully!');
+    } catch (error) {
+      toast.error('Failed to add address');
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      await api.post('/auth/user/logout');
+    } catch (error) {
+      // Ignore logout errors
+    }
+    dispatch(logoutUser());
+    toast.success('Logged out successfully');
+    router.push('/');
+  };
+
+  const getOrderStatusSteps = (status: string) => {
+    const allSteps = ['pending', 'confirmed', 'shipped', 'delivered'];
+    const currentIndex = allSteps.indexOf(status);
+    return allSteps.map((step, index) => ({
+      label: step.charAt(0).toUpperCase() + step.slice(1),
+      completed: index <= currentIndex,
+      active: index === currentIndex,
+    }));
+  };
+
+  if (loading) return <Loader text="Loading profile..." />;
+
+  if (!user) {
+    return (
+      <div className="container mx-auto px-4 md:px-6 py-12 bg-white min-h-screen">
+        <p className="text-center text-black">Please log in to view your profile.</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-white">
+      <div className="container mx-auto px-4 md:px-6 py-6 md:py-12">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 md:mb-8 gap-4">
+          <div className="flex items-center gap-4">
+            <div className="w-16 h-16 bg-gray-200 rounded-full flex items-center justify-center">
+              <svg className="w-8 h-8 text-gray-600" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
+              </svg>
+            </div>
+            <div>
+              <h1 className="text-2xl md:text-4xl font-black text-black">{user.firstName} {user.lastName}</h1>
+              <p className="text-gray-600">{user.email}</p>
+            </div>
+          </div>
+          <button
+            onClick={handleLogout}
+            className="bg-red-600 text-white px-4 md:px-6 py-2 rounded-xl font-semibold hover:bg-red-700 transition text-sm md:text-base"
+          >
+            Logout
+          </button>
+        </div>
+
+        <div className="bg-white p-6 md:p-8 rounded-2xl shadow-lg mb-6 md:mb-8 border border-gray-200">
+          <h2 className="text-xl md:text-2xl font-bold mb-6 text-black">Recent Orders</h2>
+          <div className="space-y-6">
+            {orders.length === 0 ? (
+              <p className="text-black text-sm md:text-base">No orders yet.</p>
+            ) : (
+              orders.slice(0, 5).map((order) => {
+                const statusSteps = getOrderStatusSteps(order.status || 'pending');
+                return (
+                  <div key={order._id} className="border-2 border-gray-200 p-4 md:p-6 rounded-xl hover:border-black transition">
+                    <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-4 mb-4">
+                      <div>
+                        <p className="text-black font-bold text-base md:text-lg mb-1">Order #{order.orderId || order._id.slice(-8)}</p>
+                        <p className="text-sm text-gray-600">
+                          {new Date(order.createdAt).toLocaleDateString('en-US', {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric'
+                          })}
+                        </p>
+                      </div>
+                      <span className={`text-sm font-bold px-4 py-2 rounded-full w-fit ${order.status === 'delivered' ? 'bg-green-100 text-green-700' :
+                        order.status === 'shipped' ? 'bg-blue-100 text-blue-700' :
+                          order.status === 'confirmed' ? 'bg-yellow-100 text-yellow-700' :
+                            'bg-gray-100 text-gray-700'
+                        }`}>
+                        {(order.status || 'Pending').toUpperCase()}
+                      </span>
+                    </div>
+
+                    {/* Order Tracking */}
+                    <div className="mb-6">
+                      <div className="flex items-center justify-between relative">
+                        {statusSteps.map((step, index) => (
+                          <div key={step.label} className="flex flex-col items-center relative z-20 flex-1">
+                            <div className={`w-10 h-10 rounded-full flex items-center justify-center mb-2 ${step.completed ? 'bg-green-600 text-white' :
+                              step.active ? 'bg-blue-600 text-white' :
+                                'bg-gray-200 text-gray-500'
+                              }`}>
+                              {step.completed ? (
+                                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                </svg>
+                              ) : (
+                                <span className="text-sm font-bold">{index + 1}</span>
+                              )}
+                            </div>
+
+                            <p className={`text-xs font-semibold ${step.completed || step.active ? 'text-black' : 'text-gray-400'
+                              }`}>
+                              {step.label}
+                            </p>
+                            {index < statusSteps.length - 1 && (
+                              <div
+                                className={`absolute top-5 h-1 ${statusSteps[index + 1].completed ? 'bg-green-600' : 'bg-gray-300'
+                                  }`}
+                                style={{
+                                  left: 'calc(50% + 20px)',
+                                  width: 'calc(100% - 40px)',
+                                  transform: 'translateY(-50%)',
+                                  zIndex: 0,
+                                }}
+                              ></div>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Delivery Address */}
+                    {order.address && (
+                      <div className="mb-4 bg-gray-50 p-4 rounded-lg">
+                        <p className="text-sm font-bold text-black mb-2">Delivery Address:</p>
+                        <div className="text-sm text-gray-700">
+                          {order.address.name && <p className="font-semibold text-black">{order.address.name}</p>}
+                          {order.address.addressLine && <p>{order.address.addressLine}</p>}
+                          {order.address.street && <p>{order.address.street}</p>}
+                          <p>
+                            {[order.address.city, order.address.state, order.address.pincode || order.address.zipCode].filter(Boolean).join(', ')}
+                          </p>
+                          {order.address.country && <p>{order.address.country}</p>}
+                          {order.address.phone && <p className="mt-1">Phone: {order.address.phone}</p>}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Product Images & Titles */}
+                    {order.items && order.items.length > 0 && (
+                      <div className="mb-4">
+                        <p className="text-sm font-bold text-black mb-3">Items ({order.items.length}):</p>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                          {order.items.map((item: any, idx: number) => (
+                            <div key={idx} className="flex items-center gap-3 bg-gray-50 p-3 rounded-lg">
+                              <div className="relative w-16 h-16 flex-shrink-0">
+                                <Image
+                                  src={item.image || '/spice/1.jpg'}
+                                  alt={item.title || 'Product'}
+                                  fill
+                                  className="object-cover rounded-lg"
+                                />
+                              </div>
+                              <div className="flex-1 min-w-0">
+                                <p className="font-semibold text-black text-sm truncate">{item.title || 'Product'}</p>
+                                <p className="text-xs text-gray-600">Qty: {item.quantity || 1}</p>
+                                <p className="text-sm font-bold text-black">₹{item.price || 0}</p>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    <div className="pt-4 border-t border-gray-200">
+                      <p className="text-black font-bold text-lg">
+                        Total: ₹{order.total || order.totalAmount}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })
+            )}
+          </div>
+        </div>
+
+        <div className="bg-white p-6 md:p-8 rounded-2xl shadow-lg border border-gray-200">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+            <h2 className="text-xl md:text-2xl font-bold text-black">My Addresses</h2>
+            <button
+              onClick={() => setShowAddForm(!showAddForm)}
+              className="bg-black text-white px-4 md:px-6 py-2 rounded-xl font-semibold hover:bg-gray-800 text-sm md:text-base"
+            >
+              {showAddForm ? 'Cancel' : 'Add Address'}
+            </button>
+          </div>
+
+          {showAddForm && (
+            <form onSubmit={handleAddAddress} className="bg-gray-50 p-4 md:p-6 rounded-xl mb-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
+                <div>
+                  <label className="block text-black font-semibold mb-2 text-sm md:text-base">Street</label>
+                  <input
+                    type="text"
+                    value={newAddress.street}
+                    onChange={(e) => setNewAddress({ ...newAddress, street: e.target.value })}
+                    className="w-full px-3 md:px-4 py-2 border-2 border-gray-300 rounded-xl focus:border-black outline-none text-black text-sm md:text-base"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-black font-semibold mb-2 text-sm md:text-base">City</label>
+                  <input
+                    type="text"
+                    value={newAddress.city}
+                    onChange={(e) => setNewAddress({ ...newAddress, city: e.target.value })}
+                    className="w-full px-3 md:px-4 py-2 border-2 border-gray-300 rounded-xl focus:border-black outline-none text-black text-sm md:text-base"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-black font-semibold mb-2 text-sm md:text-base">State</label>
+                  <input
+                    type="text"
+                    value={newAddress.state}
+                    onChange={(e) => setNewAddress({ ...newAddress, state: e.target.value })}
+                    className="w-full px-3 md:px-4 py-2 border-2 border-gray-300 rounded-xl focus:border-black outline-none text-black text-sm md:text-base"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-black font-semibold mb-2 text-sm md:text-base">Zip Code</label>
+                  <input
+                    type="text"
+                    value={newAddress.zipCode}
+                    onChange={(e) => setNewAddress({ ...newAddress, zipCode: e.target.value })}
+                    className="w-full px-3 md:px-4 py-2 border-2 border-gray-300 rounded-xl focus:border-black outline-none text-black text-sm md:text-base"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-black font-semibold mb-2 text-sm md:text-base">Country</label>
+                  <input
+                    type="text"
+                    value={newAddress.country}
+                    onChange={(e) => setNewAddress({ ...newAddress, country: e.target.value })}
+                    className="w-full px-3 md:px-4 py-2 border-2 border-gray-300 rounded-xl focus:border-black outline-none text-black text-sm md:text-base"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-black font-semibold mb-2 text-sm md:text-base">Phone Number</label>
+                  <input
+                    type="tel"
+                    value={newAddress.phone}
+                    onChange={(e) => setNewAddress({ ...newAddress, phone: e.target.value })}
+                    placeholder="10-digit phone number"
+                    maxLength={10}
+                    className="w-full px-3 md:px-4 py-2 border-2 border-gray-300 rounded-xl focus:border-black outline-none text-black text-sm md:text-base"
+                    required
+                  />
+                </div>
+                <div className="flex items-center md:col-span-2">
+                  <label className="flex items-center text-black text-sm md:text-base">
+                    <input
+                      type="checkbox"
+                      checked={newAddress.isDefault}
+                      onChange={(e) => setNewAddress({ ...newAddress, isDefault: e.target.checked })}
+                      className="mr-2"
+                    />
+                    Set as default address
+                  </label>
+                </div>
+              </div>
+              <button type="submit" className="mt-4 bg-black text-white px-4 md:px-6 py-2 rounded-xl font-semibold hover:bg-gray-800 text-sm md:text-base">
+                Save Address
+              </button>
+            </form>
+          )}
+
+          <div className="space-y-3 md:space-y-4">
+            {addresses.length === 0 ? (
+              <p className="text-black text-sm md:text-base">No addresses added yet.</p>
+            ) : (
+              addresses.map((address, index) => (
+                <div key={index} className="border-2 border-gray-200 p-3 md:p-4 rounded-xl">
+                  <p className="text-black font-semibold text-sm md:text-base break-words">{address.street}</p>
+                  <p className="text-black text-sm md:text-base break-words">{address.city}, {address.state} {address.zipCode}</p>
+                  <p className="text-black text-sm md:text-base break-words">{address.country}</p>
+                  {address.phone && <p className="text-black text-sm md:text-base mt-1"><span className="font-semibold">Phone:</span> {address.phone}</p>}
+                  {address.isDefault && <span className="text-green-600 font-semibold text-xs md:text-sm">Default</span>}
+                </div>
+              ))
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

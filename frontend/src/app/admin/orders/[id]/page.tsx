@@ -1,0 +1,290 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+import { useRouter, useParams } from 'next/navigation';
+import Link from 'next/link';
+import Image from 'next/image';
+import { toast } from 'sonner';
+import { isAdminAuthenticated, clearAdminAuth } from '@/utils/adminAuth';
+import api from "@/lib/api";
+
+interface OrderDetails {
+  _id: string;
+  orderId: string;
+  userId: string | null;
+  items: Array<{
+    productId: string;
+    title: string;
+    price: number;
+    quantity: number;
+    image: string;
+  }>;
+  address: {
+    street: string;
+    city: string;
+    state: string;
+    zipCode: string;
+    country: string;
+  };
+  subtotal: number;
+  tax: number;
+  total: number;
+  paymentMethod: string;
+  paymentStatus: string;
+  razorpayOrderId?: string;
+  razorpayPaymentId?: string;
+  status: string;
+  createdAt: string;
+}
+
+export default function OrderDetailsPage() {
+  const router = useRouter();
+  const params = useParams();
+  const [order, setOrder] = useState<OrderDetails | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [updating, setUpdating] = useState(false);
+
+  useEffect(() => {
+    if (!isAdminAuthenticated()) {
+      router.push('/admin/login');
+      return;
+    }
+    if (params.id) {
+      fetchOrderDetails();
+    }
+  }, [params.id, router]);
+
+  const fetchOrderDetails = async () => {
+    try {
+      const data = await api.get(`/orders/${params.id}`);
+      if (data.success) {
+        setOrder(data.order);
+      } else {
+        toast.error('Order not found');
+        router.push('/admin/orders');
+      }
+    } catch (error) {
+      console.error('Failed to fetch order:', error);
+      toast.error('Failed to load order details');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const updateOrderStatus = async (newStatus: string) => {
+    if (!order) return;
+
+    setUpdating(true);
+    try {
+      const data = await api.patch(`/orders/${order._id}`, { status: newStatus });
+      if (data.success) {
+        setOrder({ ...order, status: newStatus });
+        toast.success('Order status updated successfully');
+      } else {
+        toast.error('Failed to update order status');
+      }
+    } catch (error) {
+      console.error('Failed to update status:', error);
+      toast.error('An error occurred');
+    } finally {
+      setUpdating(false);
+    }
+  };
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'pending': return 'bg-yellow-100 text-yellow-800';
+      case 'confirmed': return 'bg-blue-100 text-blue-800';
+      case 'shipped': return 'bg-purple-100 text-purple-800';
+      case 'delivered': return 'bg-green-100 text-green-800';
+      case 'cancelled': return 'bg-red-100 text-red-800';
+      default: return 'bg-gray-100 text-gray-800';
+    }
+  };
+
+  const getPaymentStatusColor = (status: string) => {
+    switch (status) {
+      case 'paid': return 'bg-green-100 text-green-800';
+      case 'pending': return 'bg-yellow-100 text-yellow-800';
+      case 'failed': return 'bg-red-100 text-red-800';
+      default: return 'bg-gray-100 text-gray-800';
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-black"></div>
+          <p className="mt-4 text-black font-semibold">Loading order details...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!order) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-gray-600">Order not found</p>
+          <Link href="/admin/orders" className="text-amber-600 hover:text-amber-700 font-semibold mt-4 inline-block">
+            ← Back to Orders
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <div className="container mx-auto px-4 py-8">
+        {/* Header */}
+        <div className="flex justify-between items-center mb-8">
+          <div>
+            <Link href="/admin/orders" className="text-amber-600 hover:text-amber-700 font-semibold mb-2 inline-block">
+              ← Back to Orders
+            </Link>
+            <h1 className="text-3xl font-black text-black">Order Details</h1>
+            <p className="text-gray-600 font-mono mt-1">{order.orderId}</p>
+          </div>
+          <div className="text-right">
+            <div className="text-sm text-gray-600">Order Date</div>
+            <div className="font-semibold text-black">{new Date(order.createdAt).toLocaleDateString()}</div>
+            <div className="text-sm text-gray-500">{new Date(order.createdAt).toLocaleTimeString()}</div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Main Content */}
+          <div className="lg:col-span-2 space-y-6">
+            {/* Order Items */}
+            <div className="bg-white rounded-xl shadow-sm p-6">
+              <h2 className="text-xl font-bold text-black mb-4">Order Items</h2>
+              <div className="space-y-4">
+                {order.items.map((item, index) => (
+                  <div key={index} className="flex gap-4 items-center pb-4 border-b last:border-b-0">
+                    <div className="w-20 h-20 relative bg-gray-100 rounded-lg flex-shrink-0">
+                      {item.image && (
+                        <Image
+                          src={item.image}
+                          alt={item.title}
+                          fill
+                          className="object-cover rounded-lg"
+                        />
+                      )}
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-semibold text-black">{item.title}</h3>
+                      <p className="text-sm text-gray-600">Quantity: {item.quantity}</p>
+                      <p className="text-sm text-gray-600">Price: ₹{item.price}</p>
+                    </div>
+                    <div className="font-bold text-black">
+                      ₹{(item.price * item.quantity).toFixed(2)}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Delivery Address */}
+            <div className="bg-white rounded-xl shadow-sm p-6">
+              <h2 className="text-xl font-bold text-black mb-4">Delivery Address</h2>
+              <div className="text-gray-700">
+                <p>{order.address.street}</p>
+                <p>{order.address.city}, {order.address.state} - {order.address.zipCode}</p>
+                <p>{order.address.country}</p>
+              </div>
+            </div>
+
+            {/* Payment Information */}
+            <div className="bg-white rounded-xl shadow-sm p-6">
+              <h2 className="text-xl font-bold text-black mb-4">Payment Information</h2>
+              <div className="space-y-3">
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Payment Method:</span>
+                  <span className="font-semibold text-black capitalize">{order.paymentMethod}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Payment Status:</span>
+                  <span className={`px-3 py-1 text-sm font-semibold rounded-full ${getPaymentStatusColor(order.paymentStatus)}`}>
+                    {order.paymentStatus}
+                  </span>
+                </div>
+                {order.razorpayOrderId && (
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Razorpay Order ID:</span>
+                    <span className="font-mono text-sm text-black">{order.razorpayOrderId}</span>
+                  </div>
+                )}
+                {order.razorpayPaymentId && (
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Razorpay Payment ID:</span>
+                    <span className="font-mono text-sm text-black">{order.razorpayPaymentId}</span>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* Sidebar */}
+          <div className="space-y-6">
+            {/* Order Status */}
+            <div className="bg-white rounded-xl shadow-sm p-6">
+              <h2 className="text-xl font-bold text-black mb-4">Order Status</h2>
+              <div className="mb-4">
+                <span className={`px-4 py-2 text-sm font-semibold rounded-full ${getStatusColor(order.status)}`}>
+                  {order.status}
+                </span>
+              </div>
+              <div className="space-y-2">
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Update Status:
+                </label>
+                <select
+                  value={order.status}
+                  onChange={(e) => updateOrderStatus(e.target.value)}
+                  disabled={updating}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg text-black disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <option value="pending">Pending</option>
+                  <option value="confirmed">Confirmed</option>
+                  <option value="shipped">Shipped</option>
+                  <option value="delivered">Delivered</option>
+                  <option value="cancelled">Cancelled</option>
+                </select>
+                {updating && (
+                  <p className="text-sm text-gray-600 mt-2">Updating...</p>
+                )}
+              </div>
+            </div>
+
+            {/* Order Summary */}
+            <div className="bg-white rounded-xl shadow-sm p-6">
+              <h2 className="text-xl font-bold text-black mb-4">Order Summary</h2>
+              <div className="space-y-3">
+                <div className="flex justify-between text-gray-700">
+                  <span>Subtotal:</span>
+                  <span>₹{order.subtotal.toFixed(2)}</span>
+                </div>
+                <div className="flex justify-between text-gray-700">
+                  <span>Tax (18% GST):</span>
+                  <span>₹{order.tax.toFixed(2)}</span>
+                </div>
+                <div className="flex justify-between text-gray-700">
+                  <span>Shipping:</span>
+                  <span className="text-green-600 font-semibold">Free</span>
+                </div>
+                <div className="border-t-2 pt-3">
+                  <div className="flex justify-between text-xl font-bold text-black">
+                    <span>Total:</span>
+                    <span>₹{order.total.toFixed(2)}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
