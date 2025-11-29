@@ -335,7 +335,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="py-20 my-10 bg-white">
+      <section className="py-8 my-4 bg-white">
         <div className="container mx-auto px-6 text-center">
           <Image
             src="/Certifications.jpg"

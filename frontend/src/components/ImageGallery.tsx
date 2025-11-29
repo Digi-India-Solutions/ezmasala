@@ -99,9 +99,8 @@ export default function ImageGallery({ mainImage, additionalImages, title }: Ima
                       setSelectedImage(img);
                     }
                   }}
-                  className={`relative aspect-square rounded-xl overflow-hidden border-2 transition ${
-                    selectedImage === img ? 'border-black' : 'border-gray-200 hover:border-gray-400'
-                  }`}
+                  className={`relative aspect-square rounded-xl overflow-hidden border-2 transition ${selectedImage === img ? 'border-black' : 'border-gray-200 hover:border-gray-400'
+                    }`}
                 >
                   <Image
                     src={img}
@@ -132,7 +131,7 @@ export default function ImageGallery({ mainImage, additionalImages, title }: Ima
           {/* Close Button */}
           <button
             onClick={() => setShowModal(false)}
-            className="absolute top-4 right-4 text-white bg-black/50 hover:bg-black/70 rounded-full p-3 z-10 transition"
+            className="absolute top-14 right-4 text-white bg-black/50 hover:bg-black/70 rounded-full p-3 z-10 transition"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -187,9 +186,8 @@ export default function ImageGallery({ mainImage, additionalImages, title }: Ima
                 <button
                   key={idx}
                   onClick={() => setModalImageIndex(idx)}
-                  className={`relative w-16 h-16 flex-shrink-0 rounded-lg overflow-hidden border-2 transition ${
-                    modalImageIndex === idx ? 'border-white' : 'border-transparent opacity-60 hover:opacity-100'
-                  }`}
+                  className={`relative w-16 h-16 flex-shrink-0 rounded-lg overflow-hidden border-2 transition ${modalImageIndex === idx ? 'border-white' : 'border-transparent opacity-60 hover:opacity-100'
+                    }`}
                 >
                   <Image
                     src={img}

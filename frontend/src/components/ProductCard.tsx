@@ -106,7 +106,7 @@ export default function ProductCard({ product, onCartOpen }: ProductCardProps) {
         {/* Title */}
         <div className="h-14 overflow-hidden">
           <Link href={`/product/${productId}`}>
-            <h3 className="font-fraunces text-xl text-black line-clamp-2 hover:underline cursor-pointer">
+            <h3 className="font-montserrat font-semibold text-lg text-black line-clamp-2 hover:underline cursor-pointer">
               {product.title}
             </h3>
           </Link>
