@@ -16,9 +16,9 @@ const allowedOrigins = [
   'http://localhost:3001',
   process.env.FRONTEND_URL,
   process.env.ADMIN_URL,
-  'https://admin.iirhe.org',
-  'https://iirhe.org',
-  'https://www.iirhe.org',
+  'https://admin.ezmasalaa.com',
+  'https://ezmasalaa.com',
+  'https://www.ezmasalaa.com',
 ].filter(Boolean) as string[];
 
 app.use(cors({

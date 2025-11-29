@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Single source of truth for backend URL
 // const API_BASE_URL = 'http://localhost:5000/api';
-const API_BASE_URL = 'https://api.iirhe.org/api';
+const API_BASE_URL = 'https://api.ezmasalaa.com/api';
 
 const axiosInstance = axios.create({
   baseURL: API_BASE_URL,
