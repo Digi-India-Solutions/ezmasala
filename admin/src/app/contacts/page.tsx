@@ -61,50 +61,87 @@ export default function AdminContactsPage() {
           <div className="text-gray-600 font-semibold">Total: {contacts.length}</div>
         </div>
 
-        <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
-          <div className="overflow-x-auto">
-            <table className="w-full min-w-[800px]">
-              <thead className="bg-gray-100">
-                <tr>
-                  <th className="px-3 sm:px-6 py-3 sm:py-4 text-left text-black font-bold text-sm sm:text-base">Name</th>
-                  <th className="px-3 sm:px-6 py-3 sm:py-4 text-left text-black font-bold text-sm sm:text-base">Email</th>
-                  <th className="px-3 sm:px-6 py-3 sm:py-4 text-left text-black font-bold text-sm sm:text-base">Message</th>
-                  <th className="px-3 sm:px-6 py-3 sm:py-4 text-left text-black font-bold text-sm sm:text-base">Date</th>
-                  <th className="px-3 sm:px-6 py-3 sm:py-4 text-left text-black font-bold text-sm sm:text-base">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {contacts.length === 0 ? (
-                  <tr>
-                    <td colSpan={5} className="px-6 py-8 text-center text-gray-500">
-                      No contact submissions yet
-                    </td>
-                  </tr>
-                ) : (
-                  contacts.map((contact: any) => (
-                    <tr key={contact._id} className="border-t">
-                      <td className="px-3 sm:px-6 py-3 sm:py-4 text-black text-sm sm:text-base">{contact.name}</td>
-                      <td className="px-3 sm:px-6 py-3 sm:py-4 text-black text-sm sm:text-base">{contact.email}</td>
-                      <td className="px-3 sm:px-6 py-3 sm:py-4 text-black text-sm sm:text-base max-w-xs truncate" title={contact.message}>
-                        {contact.message}
-                      </td>
-                      <td className="px-3 sm:px-6 py-3 sm:py-4 text-black text-sm sm:text-base">{new Date(contact.createdAt).toLocaleDateString()}</td>
-                      <td className="px-3 sm:px-6 py-3 sm:py-4">
-                        <button
-                          onClick={() => handleDelete(contact._id)}
-                          disabled={deletingId === contact._id}
-                          className="bg-red-600 text-white px-2 sm:px-4 py-1 sm:py-2 rounded-lg text-xs sm:text-sm font-semibold hover:bg-red-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
-                        >
-                          {deletingId === contact._id ? "Deleting..." : "Delete"}
-                        </button>
-                      </td>
-                    </tr>
-                  ))
-                )}
-              </tbody>
-            </table>
+        {contacts.length === 0 ? (
+          <div className="bg-white rounded-2xl shadow-lg p-8 text-center text-gray-500">
+            No contact submissions yet
           </div>
-        </div>
+        ) : (
+          <div className="space-y-4">
+            {contacts.map((contact: any) => (
+              <div key={contact._id} className="bg-white rounded-2xl shadow-lg p-6 border border-gray-200">
+                <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start gap-4">
+                  <div className="flex-1 space-y-3">
+                    {/* Header with name and query type */}
+                    <div className="flex flex-wrap items-center gap-3">
+                      <h3 className="text-xl font-bold text-black">{contact.name}</h3>
+                      {contact.queryType && (
+                        <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                          contact.queryType === 'bulk' ? 'bg-orange-100 text-orange-700' :
+                          contact.queryType === 'order-delivery' ? 'bg-blue-100 text-blue-700' :
+                          contact.queryType === 'how-to-use' ? 'bg-green-100 text-green-700' :
+                          'bg-gray-100 text-gray-700'
+                        }`}>
+                          {contact.queryType === 'bulk' ? 'Bulk / HoReCa' :
+                           contact.queryType === 'order-delivery' ? 'Order / Delivery' :
+                           contact.queryType === 'how-to-use' ? 'How to Use' :
+                           contact.queryType === 'general' ? 'General' :
+                           contact.queryType}
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Contact details grid */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-sm">
+                      <div>
+                        <span className="text-gray-500 font-medium">Email:</span>
+                        <p className="text-black">{contact.email}</p>
+                      </div>
+                      {contact.mobile && (
+                        <div>
+                          <span className="text-gray-500 font-medium">Mobile:</span>
+                          <p className="text-black">{contact.mobile}</p>
+                        </div>
+                      )}
+                      {contact.city && (
+                        <div>
+                          <span className="text-gray-500 font-medium">City:</span>
+                          <p className="text-black">{contact.city}</p>
+                        </div>
+                      )}
+                      <div>
+                        <span className="text-gray-500 font-medium">Date:</span>
+                        <p className="text-black">{new Date(contact.createdAt).toLocaleDateString('en-US', {
+                          year: 'numeric',
+                          month: 'short',
+                          day: 'numeric',
+                          hour: '2-digit',
+                          minute: '2-digit'
+                        })}</p>
+                      </div>
+                    </div>
+
+                    {/* Message */}
+                    <div className="pt-3 border-t border-gray-100">
+                      <span className="text-gray-500 font-medium text-sm">Message:</span>
+                      <p className="text-black mt-1 whitespace-pre-wrap">{contact.message}</p>
+                    </div>
+                  </div>
+
+                  {/* Delete button */}
+                  <div className="flex-shrink-0">
+                    <button
+                      onClick={() => handleDelete(contact._id)}
+                      disabled={deletingId === contact._id}
+                      className="bg-red-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-red-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      {deletingId === contact._id ? "Deleting..." : "Delete"}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

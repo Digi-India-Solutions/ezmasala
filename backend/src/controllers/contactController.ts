@@ -28,13 +28,13 @@ export const getById = async (req: Request, res: Response) => {
 // POST /api/contacts
 export const create = async (req: Request, res: Response) => {
   try {
-    const { name, email, message } = req.body;
+    const { name, email, mobile, city, queryType, message } = req.body;
 
     if (!name || !email || !message) {
       return res.status(400).json({ error: 'Name, email, and message are required' });
     }
 
-    const contact = await Contact.create({ name, email, message });
+    const contact = await Contact.create({ name, email, mobile, city, queryType, message });
     res.status(201).json({ success: true, contact });
   } catch (error: any) {
     res.status(400).json({ error: error.message });
