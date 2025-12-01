@@ -17,7 +17,8 @@ export default function AdminBannersPage() {
 
   const fetchBanners = async () => {
     try {
-      const data = await api.get('/banners');
+      // Fetch all banners including inactive ones for admin panel
+      const data = await api.get('/banners?all=true');
       setBanners(data.banners || []);
     } catch (error) {
       console.error('Failed to fetch banners:', error);

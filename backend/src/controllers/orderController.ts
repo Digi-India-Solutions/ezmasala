@@ -1,7 +1,9 @@
 import { Request, Response } from 'express';
 import mongoose from 'mongoose';
 import Order from '../models/Order';
+import User from '../models/User';
 import { AuthRequest } from '../middleware/auth';
+import { sendEmail, getOrderConfirmationTemplate, getOrderNotificationTemplate } from '../utils/email';
 
 // POST /api/orders
 export const create = async (req: AuthRequest, res: Response) => {
@@ -108,6 +110,48 @@ export const create = async (req: AuthRequest, res: Response) => {
     };
 
     const order = await Order.create(orderData);
+
+    // Send order confirmation email to customer and notification to admin
+    try {
+      let customerEmail = address?.email || null;
+      let customerName = address?.name || 'Customer';
+
+      // If user is logged in, get their details
+      const finalUserId = requestUserId || userId;
+      if (finalUserId) {
+        const user = await User.findById(finalUserId);
+        if (user) {
+          customerEmail = user.email;
+          customerName = `${user.firstName} ${user.lastName}`.trim() || customerName;
+        }
+      }
+
+      // Send confirmation email to customer
+      if (customerEmail) {
+        const emailHtml = getOrderConfirmationTemplate(order.toObject(), customerName);
+        await sendEmail({
+          to: customerEmail,
+          subject: `Order Confirmed - ${order.orderId}`,
+          html: emailHtml
+        });
+        console.log(`Order confirmation email sent to ${customerEmail}`);
+      }
+
+      // Send notification email to admin/website owner
+      const notificationEmail = process.env.NOTIFICATION_EMAIL || process.env.SMTP_FROM_EMAIL;
+      if (notificationEmail) {
+        const adminEmailHtml = getOrderNotificationTemplate(order.toObject(), customerName);
+        sendEmail({
+          to: notificationEmail,
+          subject: `New Order Received - ${order.orderId} - ₹${order.total?.toFixed(2)}`,
+          html: adminEmailHtml
+        }).catch(err => console.error('Failed to send admin order notification:', err));
+        console.log(`Order notification email sent to admin: ${notificationEmail}`);
+      }
+    } catch (emailError: any) {
+      console.error('Failed to send order confirmation email:', emailError.message);
+      // Don't fail the order if email fails
+    }
 
     res.json({
       success: true,

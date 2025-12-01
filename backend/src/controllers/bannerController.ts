@@ -3,9 +3,16 @@ import Banner from '../models/Banner';
 import { uploadToCloudinary } from '../config/cloudinary';
 
 // GET /api/banners
+// Query params: ?all=true to get all banners (for admin), default returns only active banners
 export const getAll = async (req: Request, res: Response) => {
   try {
-    const banners = await Banner.find({ isActive: true })
+    const { all } = req.query;
+
+    // If all=true, return all banners (for admin panel)
+    // Otherwise, return only active banners (for frontend)
+    const query = all === 'true' ? {} : { isActive: true };
+
+    const banners = await Banner.find(query)
       .sort({ priority: -1, createdAt: -1 })
       .lean();
     res.json({ banners });
