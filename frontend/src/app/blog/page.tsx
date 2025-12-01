@@ -70,11 +70,8 @@ export default function BlogPage() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {paginatedBlogs.map((blog: any) => (
-              <article
-                key={blog._id}
-                className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition"
-              >
-                <Link href={`/blog/${blog.slug}`}>
+              <Link key={blog._id} href={`/blog/${blog.slug}`}>
+                <article className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition cursor-pointer h-full">
                   <div className="aspect-video relative bg-gray-100">
                     <Image
                       src={blog.image}
@@ -83,28 +80,23 @@ export default function BlogPage() {
                       className="object-cover"
                     />
                   </div>
-                </Link>
-                <div className="p-6">
-                  <div className="flex items-center gap-4 text-sm text-gray-600 mb-3">
-                    <span>{new Date(blog.createdAt).toLocaleDateString()}</span>
-                  </div>
-                  <Link href={`/blog/${blog.slug}`}>
+                  <div className="p-6">
+                    <div className="flex items-center gap-4 text-sm text-gray-600 mb-3">
+                      <span>{new Date(blog.createdAt).toLocaleDateString()}</span>
+                    </div>
                     <h2 className="font-bold text-xl mb-3 hover:text-gray-600 transition text-black">
                       {blog.title}
                     </h2>
-                  </Link>
-                  <p className="text-gray-600 text-sm mb-4">{blog.content.substring(0, 150)}...</p>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-600">By {blog.author}</span>
-                    <Link
-                      href={`/blog/${blog.slug}`}
-                      className="text-black font-semibold hover:underline text-sm"
-                    >
-                      Read More →
-                    </Link>
+                    <p className="text-gray-600 text-sm mb-4">{blog.content.substring(0, 150)}...</p>
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-gray-600">By {blog.author}</span>
+                      <span className="text-black font-semibold hover:underline text-sm">
+                        Read More →
+                      </span>
+                    </div>
                   </div>
-                </div>
-              </article>
+                </article>
+              </Link>
             ))}
           </div>
         )}
