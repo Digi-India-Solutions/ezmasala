@@ -93,7 +93,7 @@ export default function PaymentPage() {
       if (data.success) {
         dispatch(clearCart());
         localStorage.removeItem('selectedAddress');
-        toast.custom((t) => <OrderSuccessToast orderId={data.order._id} toastId={t} />, {
+        toast.custom((t) => <OrderSuccessToast orderId={data.order.orderId} toastId={t} />, {
           duration: 10000,
         });
         setProcessing(false);
@@ -202,7 +202,7 @@ export default function PaymentPage() {
               if (dbData.success) {
                 dispatch(clearCart());
                 localStorage.removeItem('selectedAddress');
-                toast.custom((t) => <OrderSuccessToast orderId={dbData.order._id} toastId={t} />, {
+                toast.custom((t) => <OrderSuccessToast orderId={dbData.order.orderId} toastId={t} />, {
                   duration: 10000,
                 });
                 setProcessing(false);
