@@ -372,7 +372,7 @@ export default function AdminOrdersPage() {
                         </span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="flex gap-2">
+                        <div className="flex gap-2 items-center">
                           <Link
                             href={`/orders/${order._id}`}
                             className="text-amber-600 hover:text-amber-700 font-semibold text-sm"
@@ -380,11 +380,22 @@ export default function AdminOrdersPage() {
                             View
                           </Link>
                           <span className="text-gray-300">|</span>
+                          <Link
+                            href={`/orders/${order._id}/invoice`}
+                            className="text-green-600 hover:text-green-700 font-semibold text-sm"
+                            title="View Invoice"
+                          >
+                            Invoice
+                          </Link>
+                          <span className="text-gray-300">|</span>
                           <button
                             onClick={() => handleDownloadInvoice(order._id, order.orderId)}
                             className="text-blue-600 hover:text-blue-700 font-semibold text-sm"
+                            title="Download Invoice"
                           >
-                            Invoice
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                            </svg>
                           </button>
                         </div>
                       </td>

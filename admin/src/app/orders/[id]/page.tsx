@@ -378,32 +378,46 @@ export default function OrderDetailsPage() {
               </div>
             </div>
 
-            {/* Invoice Download */}
+            {/* Invoice Actions */}
             <div className="bg-white rounded-xl shadow-sm p-6">
               <h2 className="text-xl font-bold text-black mb-4">Invoice</h2>
+              <div className="space-y-3">
+                <Link
+                  href={`/orders/${order._id}/invoice`}
+                  className="w-full bg-amber-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-amber-600 transition flex items-center justify-center gap-2"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                  </svg>
+                  View Invoice
+                </Link>
+                <button
+                  onClick={async () => {
+                    try {
+                      const response = await api.getBlob(`/orders/${order._id}/invoice`);
+                      const blob = new Blob([response.data]);
+                      const url = window.URL.createObjectURL(blob);
+                      const a = document.createElement("a");
+                      a.href = url;
+                      a.download = `invoice-${order.orderId}.html`;
+                      a.click();
+                      window.URL.revokeObjectURL(url);
 
-              <button
-                onClick={async () => {
-                  try {
-                    const response = await api.getBlob(`/orders/${order._id}/invoice`);
-                    const blob = new Blob([response.data]);
-                    const url = window.URL.createObjectURL(blob);
-                    const a = document.createElement("a");
-                    a.href = url;
-                    a.download = `invoice-${order.orderId}.pdf`;
-                    a.click();
-                    window.URL.revokeObjectURL(url);
-
-                    toast.success("Invoice downloaded");
-                  } catch (err) {
-                    console.error(err);
-                    toast.error("Failed to download invoice");
-                  }
-                }}
-                className="w-full bg-black text-white px-4 py-2 rounded-lg font-semibold hover:bg-gray-900 transition"
-              >
-                Download Invoice (PDF)
-              </button>
+                      toast.success("Invoice downloaded");
+                    } catch (err) {
+                      console.error(err);
+                      toast.error("Failed to download invoice");
+                    }
+                  }}
+                  className="w-full bg-black text-white px-4 py-2 rounded-lg font-semibold hover:bg-gray-900 transition flex items-center justify-center gap-2"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                  </svg>
+                  Download Invoice
+                </button>
+              </div>
             </div>
           </div>
         </div>

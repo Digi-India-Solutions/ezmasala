@@ -47,8 +47,12 @@ router.use('/upload', uploadRoutes);
 // Payment routes
 router.use('/razorpay', razorpayRoutes);
 
-// Seed route (for development)
+// Seed route (for development ONLY - disabled in production)
 router.get('/seed', async (req, res) => {
+  if (process.env.NODE_ENV === 'production') {
+    return res.status(403).json({ error: 'Seed route is disabled in production' });
+  }
+
   try {
     const bcrypt = require('bcryptjs');
     const Admin = require('../models/Admin').default;
