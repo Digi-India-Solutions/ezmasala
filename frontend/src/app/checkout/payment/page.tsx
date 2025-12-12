@@ -146,7 +146,7 @@ export default function PaymentPage() {
 
       // Razorpay options
       const options = {
-        key: 'your_razorpay_key_id', // TODO: Replace with actual Razorpay key
+        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || '',
         amount: orderData.order.amount,
         currency: orderData.order.currency,
         name: 'EZ Masala',
