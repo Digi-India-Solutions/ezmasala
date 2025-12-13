@@ -16,6 +16,9 @@ import categoryRoutes from './category.routes';
 import searchRoutes from './search.routes';
 import uploadRoutes from './upload.routes';
 import razorpayRoutes from './razorpay.routes';
+import couponRoutes from './coupon.routes';
+import wishlistRoutes from './wishlist.routes';
+import contactInfoRoutes from './contactInfo.routes';
 
 const router = Router();
 
@@ -34,6 +37,9 @@ router.use('/videos', videoRoutes);
 router.use('/icons', iconRoutes);
 router.use('/deals', dealRoutes);
 router.use('/contacts', contactRoutes);
+router.use('/coupons', couponRoutes);
+router.use('/wishlist', wishlistRoutes);
+router.use('/contact-info', contactInfoRoutes);
 
 // User routes
 router.use('/users', userRoutes);

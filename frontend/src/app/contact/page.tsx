@@ -1,9 +1,23 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { toast } from "sonner";
 import Breadcrumb from "@/components/Breadcrumb";
 import api from "@/lib/api";
+
+interface ContactInfo {
+  companyName: string;
+  tagline?: string;
+  email: string;
+  phone: string;
+  whatsapp?: string;
+  address: string;
+  city: string;
+  state: string;
+  pincode: string;
+  country: string;
+  businessHours: string;
+}
 
 export default function ContactPage() {
   const [name, setName] = useState("");
@@ -13,6 +27,21 @@ export default function ContactPage() {
   const [queryType, setQueryType] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const [contactInfo, setContactInfo] = useState<ContactInfo | null>(null);
+
+  useEffect(() => {
+    const fetchContactInfo = async () => {
+      try {
+        const data = await api.get('/contact-info');
+        if (data.success && data.contactInfo) {
+          setContactInfo(data.contactInfo);
+        }
+      } catch (error) {
+        console.error('Failed to fetch contact info:', error);
+      }
+    };
+    fetchContactInfo();
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -40,6 +69,10 @@ export default function ContactPage() {
     }
   };
 
+  const fullAddress = contactInfo
+    ? `${contactInfo.address}, ${contactInfo.city}-${contactInfo.pincode}`
+    : 'B1-236, Naraina Industrial Area, Phase-I, New Delhi-110028';
+
   return (
     <div className="py-4 md:py-8 text-black bg-gray-50 min-h-screen">
       <div className="container mx-auto px-4">
@@ -62,9 +95,9 @@ export default function ContactPage() {
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
               </svg>
-              Shine Exports (India)
+              {contactInfo?.companyName || 'Shine Exports (India)'}
             </h3>
-            <p className="text-gray-600 mb-6 text-sm">Makers of EZ Masala J & EZ Masala M</p>
+            <p className="text-gray-600 mb-6 text-sm">{contactInfo?.tagline || 'Makers of EZ Masala J & EZ Masala M'}</p>
 
             <div className="space-y-6">
               <div>
@@ -74,7 +107,7 @@ export default function ContactPage() {
                   </svg>
                   Email:
                 </h4>
-                <p className="text-gray-700 ml-7">info@ezmasalaa.com</p>
+                <p className="text-gray-700 ml-7">{contactInfo?.email || 'info@ezmasalaa.com'}</p>
               </div>
 
               <div>
@@ -84,7 +117,7 @@ export default function ContactPage() {
                   </svg>
                   Phone / WhatsApp:
                 </h4>
-                <p className="text-gray-700 ml-7">+91-XXXXXXXXXX</p>
+                <p className="text-gray-700 ml-7">{contactInfo?.phone || contactInfo?.whatsapp || '+91-XXXXXXXXXX'}</p>
               </div>
 
               <div>
@@ -94,7 +127,7 @@ export default function ContactPage() {
                   </svg>
                   Address:
                 </h4>
-                <p className="text-gray-700 ml-7">B1-236, Naraina Industrial Area, Phase-I, New Delhi-110028</p>
+                <p className="text-gray-700 ml-7">{fullAddress}</p>
               </div>
 
               <div>
@@ -104,7 +137,7 @@ export default function ContactPage() {
                   </svg>
                   Business Hours:
                 </h4>
-                <p className="text-gray-700 ml-7">Mon – Sat, 10:00 AM to 6:00 PM (IST)</p>
+                <p className="text-gray-700 ml-7">{contactInfo?.businessHours || 'Mon – Sat, 10:00 AM to 6:00 PM (IST)'}</p>
               </div>
 
               <div className="bg-orange-50 p-4 rounded-lg border-l-4 border-orange-500 mt-6">

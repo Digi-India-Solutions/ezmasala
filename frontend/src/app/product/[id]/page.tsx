@@ -5,6 +5,7 @@ import { useParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { addToCart } from "@/store/slices/cartSlice";
+import { addToWishlist, removeFromWishlist } from "@/store/slices/wishlistSlice";
 import { toast } from "sonner";
 import Loader from "@/components/Loader";
 import ImageGallery from "@/components/ImageGallery";
@@ -20,9 +21,11 @@ export default function ProductPage() {
 
   const { items } = useAppSelector((state) => state.cart);
   const { user } = useAppSelector((state) => state.auth);
+  const { items: wishlistItems } = useAppSelector((state) => state.wishlist);
 
   const [product, setProduct] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [wishlistLoading, setWishlistLoading] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const [userRating, setUserRating] = useState(5);
   const [reviewText, setReviewText] = useState("");
@@ -37,6 +40,7 @@ export default function ProductPage() {
   const reviewScrollRef = useRef<HTMLDivElement>(null);
 
   const isInCart = items.some((item) => item.id === id);
+  const isInWishlist = wishlistItems.some((item) => item.productId === id);
 
   useEffect(() => {
     fetchProduct();
@@ -174,6 +178,40 @@ export default function ProductPage() {
 
     // Redirect to checkout
     router.push("/checkout/address");
+  };
+
+  const handleWishlistToggle = async () => {
+    if (!user) {
+      toast.error("Please login to add items to wishlist");
+      return;
+    }
+
+    if (!product) return;
+
+    setWishlistLoading(true);
+    try {
+      if (isInWishlist) {
+        await api.delete(`/wishlist/remove/${id}`);
+        dispatch(removeFromWishlist(id));
+        toast.success("Removed from wishlist");
+      } else {
+        await api.post('/wishlist/add', { productId: id });
+        dispatch(addToWishlist({
+          productId: id,
+          title: product.title,
+          price: product.price,
+          originalPrice: product.originalPrice,
+          image: product.image,
+          stock: product.stock,
+          addedAt: new Date().toISOString(),
+        }));
+        toast.success("Added to wishlist");
+      }
+    } catch (error: any) {
+      toast.error(error.message || "Failed to update wishlist");
+    } finally {
+      setWishlistLoading(false);
+    }
   };
 
   // Parse description
@@ -374,6 +412,37 @@ export default function ProductPage() {
                   className="flex-1 py-4 rounded-4xl font-bold text-lg border border-black text-black bg-white hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   Buy Now
+                </button>
+
+                {/* Wishlist Button */}
+                <button
+                  onClick={handleWishlistToggle}
+                  disabled={wishlistLoading}
+                  className={`w-14 h-14 rounded-full flex items-center justify-center transition-all duration-200 ${
+                    isInWishlist
+                      ? 'bg-red-500 text-white hover:bg-red-600'
+                      : 'border-2 border-gray-300 text-gray-400 hover:border-red-500 hover:text-red-500'
+                  } ${wishlistLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  title={isInWishlist ? 'Remove from wishlist' : 'Add to wishlist'}
+                >
+                  {wishlistLoading ? (
+                    <div className="w-6 h-6 border-2 border-current border-t-transparent rounded-full animate-spin" />
+                  ) : (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-6 w-6"
+                      viewBox="0 0 24 24"
+                      fill={isInWishlist ? "currentColor" : "none"}
+                      stroke="currentColor"
+                      strokeWidth={2}
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                      />
+                    </svg>
+                  )}
                 </button>
               </div>
 

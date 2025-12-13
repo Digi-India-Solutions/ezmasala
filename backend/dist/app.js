@@ -13,9 +13,10 @@ const errorHandler_1 = require("./middleware/errorHandler");
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 // CORS configuration
+const isProduction = process.env.NODE_ENV === 'production';
 const allowedOrigins = [
-    'http://localhost:3000',
-    'http://localhost:3001',
+    // Only allow localhost in development
+    ...(isProduction ? [] : ['http://localhost:3000', 'http://localhost:3001']),
     process.env.FRONTEND_URL,
     process.env.ADMIN_URL,
     'https://admin.ezmasalaa.com',

@@ -1,9 +1,10 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useAppSelector, useAppDispatch } from '@/store/hooks';
 import { logoutUser } from '@/store/slices/authSlice';
+import { clearWishlist } from '@/store/slices/wishlistSlice';
 import { toast } from 'sonner';
 import Loader from '@/components/Loader';
 import Image from 'next/image';
@@ -11,12 +12,17 @@ import api from '@/lib/api';
 
 export default function UserProfilePage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const dispatch = useAppDispatch();
-  const { user, userToken } = useAppSelector((state) => state.auth);
+  const { user } = useAppSelector((state) => state.auth);
   const [loading, setLoading] = useState(true);
   const [addresses, setAddresses] = useState<any[]>([]);
   const [orders, setOrders] = useState<any[]>([]);
   const [showAddForm, setShowAddForm] = useState(false);
+  const [showCancelModal, setShowCancelModal] = useState(false);
+  const [selectedOrder, setSelectedOrder] = useState<any>(null);
+  const [cancelReason, setCancelReason] = useState('');
+  const [cancelLoading, setCancelLoading] = useState(false);
   const [newAddress, setNewAddress] = useState({
     street: '',
     city: '',
@@ -87,8 +93,37 @@ export default function UserProfilePage() {
       // Ignore logout errors
     }
     dispatch(logoutUser());
+    dispatch(clearWishlist());
     toast.success('Logged out successfully');
     router.push('/');
+  };
+
+  const handleRequestCancellation = async () => {
+    if (!selectedOrder) return;
+
+    setCancelLoading(true);
+    try {
+      const data = await api.post(`/orders/${selectedOrder._id}/request-cancellation`, {
+        reason: cancelReason || 'No reason provided'
+      });
+
+      if (data.success) {
+        toast.success('Cancellation request submitted successfully');
+        setShowCancelModal(false);
+        setSelectedOrder(null);
+        setCancelReason('');
+        fetchUserOrders();
+      }
+    } catch (error: any) {
+      toast.error(error.response?.data?.error || 'Failed to submit cancellation request');
+    } finally {
+      setCancelLoading(false);
+    }
+  };
+
+  const canRequestCancellation = (order: any) => {
+    return !['delivered', 'cancelled'].includes(order.status) &&
+           !order.cancellationRequested;
   };
 
   const getOrderStatusSteps = (status: string) => {
@@ -246,10 +281,29 @@ export default function UserProfilePage() {
                       </div>
                     )}
 
-                    <div className="pt-4 border-t border-gray-200">
+                    <div className="pt-4 border-t border-gray-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
                       <p className="text-black font-bold text-lg">
                         Total: ₹{order.total || order.totalAmount}
                       </p>
+                      {order.cancellationRequested ? (
+                        <div className={`px-4 py-2 rounded-lg text-sm font-semibold ${
+                          order.cancellationStatus === 'pending' ? 'bg-yellow-100 text-yellow-700' :
+                          order.cancellationStatus === 'approved' ? 'bg-green-100 text-green-700' :
+                          'bg-red-100 text-red-700'
+                        }`}>
+                          Cancellation {order.cancellationStatus}
+                        </div>
+                      ) : canRequestCancellation(order) && (
+                        <button
+                          onClick={() => {
+                            setSelectedOrder(order);
+                            setShowCancelModal(true);
+                          }}
+                          className="px-4 py-2 bg-red-600 text-white rounded-lg text-sm font-semibold hover:bg-red-700 transition"
+                        >
+                          Request Cancellation
+                        </button>
+                      )}
                     </div>
                   </div>
                 );
@@ -369,6 +423,58 @@ export default function UserProfilePage() {
           </div>
         </div>
       </div>
+
+      {/* Cancellation Request Modal */}
+      {showCancelModal && selectedOrder && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl w-full max-w-md">
+            <div className="p-6 border-b">
+              <h2 className="text-xl font-bold text-black">Request Cancellation</h2>
+              <p className="text-gray-600 text-sm mt-1">Order #{selectedOrder.orderId || selectedOrder._id.slice(-8)}</p>
+            </div>
+            <div className="p-6">
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Reason for cancellation (optional)
+              </label>
+              <textarea
+                value={cancelReason}
+                onChange={(e) => setCancelReason(e.target.value)}
+                placeholder="Please tell us why you want to cancel this order..."
+                className="w-full border border-gray-300 rounded-lg px-4 py-3 h-32 focus:ring-2 focus:ring-black focus:border-transparent text-black"
+              />
+              <p className="text-sm text-gray-500 mt-2">
+                Note: Cancellation requests are reviewed by our team. You will be notified once processed.
+              </p>
+            </div>
+            <div className="p-6 border-t flex gap-3">
+              <button
+                onClick={() => {
+                  setShowCancelModal(false);
+                  setSelectedOrder(null);
+                  setCancelReason('');
+                }}
+                className="flex-1 border border-gray-300 text-gray-700 py-3 rounded-lg font-semibold hover:bg-gray-50 transition"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleRequestCancellation}
+                disabled={cancelLoading}
+                className="flex-1 bg-red-600 text-white py-3 rounded-lg font-semibold hover:bg-red-700 transition disabled:opacity-50 flex items-center justify-center gap-2"
+              >
+                {cancelLoading ? (
+                  <>
+                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                    Submitting...
+                  </>
+                ) : (
+                  'Submit Request'
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

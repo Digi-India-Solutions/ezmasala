@@ -14,7 +14,10 @@ const PasswordReset_1 = __importDefault(require("../models/PasswordReset"));
 const email_1 = require("../utils/email");
 // Ensure environment variables are loaded
 dotenv_1.default.config();
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
+const JWT_SECRET = process.env.JWT_SECRET;
+if (!JWT_SECRET) {
+    throw new Error('FATAL: JWT_SECRET environment variable is not set. Server cannot start without it.');
+}
 // POST /api/admin/create
 const createAdmin = async (req, res) => {
     try {

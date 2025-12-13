@@ -8,7 +8,10 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const dotenv_1 = __importDefault(require("dotenv"));
 // Ensure environment variables are loaded
 dotenv_1.default.config();
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
+const JWT_SECRET = process.env.JWT_SECRET;
+if (!JWT_SECRET) {
+    throw new Error('FATAL: JWT_SECRET environment variable is not set. Server cannot start without it.');
+}
 const authenticate = (req, res, next) => {
     try {
         // Check for token - prioritize adminToken and Authorization header over user token

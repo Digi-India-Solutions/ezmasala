@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { addToCart, updateQuantity, removeFromCart } from "@/store/slices/cartSlice";
+import { addToWishlist, removeFromWishlist } from "@/store/slices/wishlistSlice";
 import { toast } from "sonner";
 import { useState, useEffect } from "react";
 import api from "@/lib/api";
@@ -16,8 +17,11 @@ interface ProductCardProps {
 export default function ProductCard({ product, onCartOpen }: ProductCardProps) {
   const dispatch = useAppDispatch();
   const { items } = useAppSelector((state) => state.cart);
+  const { user } = useAppSelector((state) => state.auth);
+  const { items: wishlistItems } = useAppSelector((state) => state.wishlist);
 
   const [availableIcons, setAvailableIcons] = useState<any[]>([]);
+  const [wishlistLoading, setWishlistLoading] = useState(false);
 
   useEffect(() => {
     fetchIcons();
@@ -37,6 +41,7 @@ export default function ProductCard({ product, onCartOpen }: ProductCardProps) {
 
   const cartItem = items.find((item) => item.id === productId);
   const isInCart = !!cartItem;
+  const isInWishlist = wishlistItems.some((item) => item.productId === productId);
 
   const hasDiscount =
     product.originalPrice &&
@@ -80,26 +85,88 @@ export default function ProductCard({ product, onCartOpen }: ProductCardProps) {
     }
   };
 
+  const handleWishlistToggle = async () => {
+    if (!user) {
+      toast.error("Please login to add items to wishlist");
+      return;
+    }
+
+    setWishlistLoading(true);
+    try {
+      if (isInWishlist) {
+        await api.delete(`/wishlist/remove/${productId}`);
+        dispatch(removeFromWishlist(productId));
+        toast.success("Removed from wishlist");
+      } else {
+        await api.post('/wishlist/add', { productId });
+        dispatch(addToWishlist({
+          productId,
+          title: product.title,
+          price: product.price,
+          originalPrice: product.originalPrice,
+          image: product.image,
+          stock: product.stock,
+          addedAt: new Date().toISOString(),
+        }));
+        toast.success("Added to wishlist");
+      }
+    } catch (error: any) {
+      toast.error(error.message || "Failed to update wishlist");
+    } finally {
+      setWishlistLoading(false);
+    }
+  };
+
   return (
     <div className="bg-white border border-gray-200 rounded-2xl overflow-hidden flex flex-col h-full">
-      <Link href={`/product/${productId}`}>
-        <div className="aspect-square relative bg-gray-100 overflow-hidden group">
+      <div className="aspect-square relative bg-gray-100 overflow-hidden group">
+        <Link href={`/product/${productId}`}>
           <Image
             src={product.image}
             alt={product.title}
             fill
             className="object-contain p-2 transition-transform bg-transparent duration-500 group-hover:scale-110"
           />
+        </Link>
 
-          {hasDiscount && (
-            <div className="absolute top-3 right-3 bg-red-600 text-white w-12 h-12 rounded-full flex flex-col items-center justify-center text-[10px] font-bold shadow-lg">
-              {discountPercent}%<br />OFF
-            </div>
+        {/* Wishlist Heart Button */}
+        <button
+          onClick={handleWishlistToggle}
+          disabled={wishlistLoading}
+          className={`absolute top-3 left-3 p-2 rounded-full shadow-md transition-all duration-200 z-10 ${
+            isInWishlist
+              ? 'bg-red-500 text-white hover:bg-red-600'
+              : 'bg-white text-gray-400 hover:text-red-500 hover:bg-red-50'
+          } ${wishlistLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+        >
+          {wishlistLoading ? (
+            <div className="w-5 h-5 border-2 border-current border-t-transparent rounded-full animate-spin" />
+          ) : (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5"
+              viewBox="0 0 24 24"
+              fill={isInWishlist ? "currentColor" : "none"}
+              stroke="currentColor"
+              strokeWidth={2}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+              />
+            </svg>
           )}
+        </button>
 
-          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-        </div>
-      </Link>
+        {hasDiscount && (
+          <div className="absolute top-3 right-3 bg-red-600 text-white w-12 h-12 rounded-full flex flex-col items-center justify-center text-[10px] font-bold shadow-lg">
+            {discountPercent}%<br />OFF
+          </div>
+        )}
+
+        <div className="absolute inset-0 bg-linear-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+      </div>
 
       <div className="p-5 flex flex-col gap-3 flex-1">
 

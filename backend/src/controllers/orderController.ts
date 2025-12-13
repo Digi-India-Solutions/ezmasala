@@ -17,6 +17,8 @@ export const create = async (req: AuthRequest, res: Response) => {
       subtotal,
       tax,
       total,
+      discount,
+      couponCode,
       paymentMethod,
       razorpayOrderId,
       razorpayPaymentId,
@@ -101,6 +103,8 @@ export const create = async (req: AuthRequest, res: Response) => {
       subtotal,
       tax,
       total,
+      discount: discount || 0,
+      couponCode: couponCode || null,
       paymentMethod: paymentMethod || 'cod',
       paymentStatus: paymentMethod === 'razorpay' ? 'paid' : 'pending',
       razorpayOrderId: razorpayOrderId || null,
@@ -471,6 +475,189 @@ export const generateInvoice = async (req: Request, res: Response) => {
     res.status(500).json({
       success: false,
       error: error.message || 'Failed to generate invoice'
+    });
+  }
+};
+
+// POST /api/orders/:id/request-cancellation - User requests order cancellation
+export const requestCancellation = async (req: AuthRequest, res: Response) => {
+  try {
+    const { id } = req.params;
+    const { reason } = req.body;
+    const userId = req.user?.id;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid order ID format'
+      });
+    }
+
+    const order = await Order.findById(id);
+
+    if (!order) {
+      return res.status(404).json({
+        success: false,
+        error: 'Order not found'
+      });
+    }
+
+    // Verify user owns this order
+    if (order.userId && order.userId.toString() !== userId) {
+      return res.status(403).json({
+        success: false,
+        error: 'You are not authorized to cancel this order'
+      });
+    }
+
+    // Check if order can be cancelled
+    if (['delivered', 'cancelled'].includes(order.status)) {
+      return res.status(400).json({
+        success: false,
+        error: `Cannot request cancellation for ${order.status} orders`
+      });
+    }
+
+    if (order.cancellationRequested) {
+      return res.status(400).json({
+        success: false,
+        error: 'Cancellation already requested for this order'
+      });
+    }
+
+    order.cancellationRequested = true;
+    order.cancellationReason = reason || 'No reason provided';
+    order.cancellationStatus = 'pending';
+    order.cancellationRequestedAt = new Date();
+
+    await order.save();
+
+    res.json({
+      success: true,
+      message: 'Cancellation request submitted successfully',
+      order
+    });
+  } catch (error: any) {
+    console.error('Request cancellation error:', error);
+    res.status(500).json({
+      success: false,
+      error: error.message || 'Failed to request cancellation'
+    });
+  }
+};
+
+// POST /api/orders/:id/approve-cancellation - Admin approves cancellation
+export const approveCancellation = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid order ID format'
+      });
+    }
+
+    const order = await Order.findById(id);
+
+    if (!order) {
+      return res.status(404).json({
+        success: false,
+        error: 'Order not found'
+      });
+    }
+
+    if (!order.cancellationRequested || order.cancellationStatus !== 'pending') {
+      return res.status(400).json({
+        success: false,
+        error: 'No pending cancellation request for this order'
+      });
+    }
+
+    order.cancellationStatus = 'approved';
+    order.status = 'cancelled';
+    order.cancellationProcessedAt = new Date();
+
+    await order.save();
+
+    res.json({
+      success: true,
+      message: 'Cancellation approved',
+      order
+    });
+  } catch (error: any) {
+    console.error('Approve cancellation error:', error);
+    res.status(500).json({
+      success: false,
+      error: error.message || 'Failed to approve cancellation'
+    });
+  }
+};
+
+// POST /api/orders/:id/reject-cancellation - Admin rejects cancellation
+export const rejectCancellation = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid order ID format'
+      });
+    }
+
+    const order = await Order.findById(id);
+
+    if (!order) {
+      return res.status(404).json({
+        success: false,
+        error: 'Order not found'
+      });
+    }
+
+    if (!order.cancellationRequested || order.cancellationStatus !== 'pending') {
+      return res.status(400).json({
+        success: false,
+        error: 'No pending cancellation request for this order'
+      });
+    }
+
+    order.cancellationStatus = 'rejected';
+    order.cancellationProcessedAt = new Date();
+
+    await order.save();
+
+    res.json({
+      success: true,
+      message: 'Cancellation rejected',
+      order
+    });
+  } catch (error: any) {
+    console.error('Reject cancellation error:', error);
+    res.status(500).json({
+      success: false,
+      error: error.message || 'Failed to reject cancellation'
+    });
+  }
+};
+
+// GET /api/orders/cancellation-requests - Get all orders with pending cancellation requests (admin)
+export const getCancellationRequests = async (req: Request, res: Response) => {
+  try {
+    const orders = await Order.find({
+      cancellationRequested: true,
+      cancellationStatus: 'pending'
+    })
+      .populate('userId', 'firstName lastName email')
+      .sort({ cancellationRequestedAt: -1 })
+      .lean();
+
+    res.json({ success: true, orders });
+  } catch (error: any) {
+    console.error('Fetch cancellation requests error:', error);
+    res.status(500).json({
+      success: false,
+      error: error.message || 'Failed to fetch cancellation requests'
     });
   }
 };

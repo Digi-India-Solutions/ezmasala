@@ -2,19 +2,25 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useAppSelector } from "@/store/hooks";
+import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import api from "@/lib/api";
+import { logoutUser } from "@/store/slices/authSlice";
+import { clearWishlist } from "@/store/slices/wishlistSlice";
 
 export default function Header() {
+  const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state.auth);
   const { items } = useAppSelector((state) => state.cart);
+  const { items: wishlistItems } = useAppSelector((state) => state.wishlist);
   const totalItemsCount = items.reduce((sum, item) => sum + item.quantity, 0);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<any[]>([]);
   const [showResults, setShowResults] = useState(false);
+  const [showUserDropdown, setShowUserDropdown] = useState(false);
   const searchRef = useRef<HTMLDivElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -22,10 +28,25 @@ export default function Header() {
       if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
         setShowResults(false);
       }
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setShowUserDropdown(false);
+      }
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  const handleLogout = async () => {
+    try {
+      await api.post('/auth/user/logout');
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
+    dispatch(logoutUser());
+    dispatch(clearWishlist());
+    setShowUserDropdown(false);
+    router.push('/');
+  };
 
   useEffect(() => {
     const searchProducts = async () => {
@@ -53,7 +74,7 @@ export default function Header() {
   };
 
   return (
-    <header className="border-b border-gray-200 backdrop-blur-sm bg-white/95">
+    <header className="border-b border-gray-200 bg-white relative z-[100]">
       <div className="container mx-auto px-3 md:px-6 py-2 md:py-3 flex items-center justify-between gap-2 md:gap-6">
 
         <div className="lg:hidden flex items-center justify-between w-full">
@@ -129,28 +150,117 @@ export default function Header() {
           )}
         </div>
 
-        <div className="hidden lg:flex items-center gap-2 md:gap-3 shrink-0">
-          {user ? (
-            <Link
-              href={`/${user.firstName.toLowerCase()}`}
-              className="group relative flex items-center gap-2 px-3 py-2.5 bg-white text-black border border-black rounded-3xl hover:bg-black hover:text-white transition-all duration-200 shadow-sm"
+        <div className="hidden lg:flex items-center gap-2 md:gap-3 shrink-0 relative z-50">
+          {/* User Account Dropdown */}
+          <div className="relative" ref={dropdownRef}>
+            <button
+              onClick={() => setShowUserDropdown(!showUserDropdown)}
+              className="group relative flex items-center gap-2 px-3 py-2.5 bg-red-600 text-white rounded-3xl hover:bg-red-700 transition-all duration-200 shadow-sm"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 transition-colors group-hover:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
               </svg>
-              <span className="font-semibold hidden lg:inline">{user.firstName}</span>
-            </Link>
-          ) : (
-            <Link
-              href="/account"
-              className="group relative flex items-center gap-2 px-3 py-2.5 bg-white text-black border border-black rounded-3xl hover:bg-black hover:text-white transition-all duration-200 shadow-sm hover:shadow-md"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 transition-colors group-hover:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-              </svg>
-              <span className="font-semibold hidden lg:inline">Account</span>
-            </Link>
-          )}
+              <span className="font-semibold hidden lg:inline">{user ? user.firstName : 'Login'}</span>
+            </button>
+
+            {/* Dropdown Menu */}
+            {showUserDropdown && (
+              <div className="absolute right-0 mt-2 w-56 rounded-xl shadow-2xl border border-gray-200 py-2 z-[9999]" style={{ backgroundColor: 'white' }}>
+                {user ? (
+                  <>
+                    <Link
+                      href={`/${user.firstName.toLowerCase()}`}
+                      onClick={() => setShowUserDropdown(false)}
+                      className="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-50 transition"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                      </svg>
+                      <span className="font-medium">My Profile</span>
+                    </Link>
+                    <Link
+                      href={`/${user.firstName.toLowerCase()}?tab=orders`}
+                      onClick={() => setShowUserDropdown(false)}
+                      className="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-50 transition"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                      </svg>
+                      <span className="font-medium">Orders</span>
+                    </Link>
+                    <Link
+                      href="/wishlist"
+                      onClick={() => setShowUserDropdown(false)}
+                      className="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-50 transition"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                      </svg>
+                      <span className="font-medium">Wishlist</span>
+                      {wishlistItems.length > 0 && (
+                        <span className="ml-auto bg-red-100 text-red-600 text-xs font-bold px-2 py-0.5 rounded-full">
+                          {wishlistItems.length}
+                        </span>
+                      )}
+                    </Link>
+                    <div className="border-t border-gray-100 my-1"></div>
+                    <button
+                      onClick={handleLogout}
+                      className="flex items-center gap-3 px-4 py-3 text-red-600 hover:bg-red-50 transition w-full"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                      </svg>
+                      <span className="font-medium">Logout</span>
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <div className="px-4 py-2 border-b border-gray-100">
+                      <p className="text-gray-600 text-sm">New customer?</p>
+                      <Link
+                        href="/account?mode=signup"
+                        onClick={() => setShowUserDropdown(false)}
+                        className="text-red-600 font-semibold hover:text-red-700"
+                      >
+                        Sign Up
+                      </Link>
+                    </div>
+                    <Link
+                      href="/account"
+                      onClick={() => setShowUserDropdown(false)}
+                      className="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-50 transition"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                      </svg>
+                      <span className="font-medium">My Profile</span>
+                    </Link>
+                    <Link
+                      href="/account"
+                      onClick={() => setShowUserDropdown(false)}
+                      className="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-50 transition"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                      </svg>
+                      <span className="font-medium">Orders</span>
+                    </Link>
+                    <Link
+                      href="/wishlist"
+                      onClick={() => setShowUserDropdown(false)}
+                      className="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-50 transition"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                      </svg>
+                      <span className="font-medium">Wishlist</span>
+                    </Link>
+                  </>
+                )}
+              </div>
+            )}
+          </div>
           <Link href="/cart" className="relative flex items-center gap-2 px-3 py-2.5 bg-black text-white rounded-3xl hover:bg-gray-900 transition-all duration-200 shadow-sm hover:shadow-md">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />

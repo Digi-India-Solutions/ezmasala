@@ -42,9 +42,14 @@ router.get('/', auth_1.optionalAuth, orderController.getAll);
 router.post('/', auth_1.optionalAuth, orderController.create);
 // Admin only routes - must be before /:id to avoid conflicts
 router.post('/export', auth_1.authenticate, auth_1.requireAdmin, orderController.exportOrders);
+router.get('/cancellation-requests', auth_1.authenticate, auth_1.requireAdmin, orderController.getCancellationRequests);
 // Order by ID routes
 router.get('/:id', auth_1.optionalAuth, orderController.getById);
 router.get('/:id/invoice', auth_1.authenticate, auth_1.requireAdmin, orderController.generateInvoice);
 router.patch('/:id', auth_1.authenticate, auth_1.requireAdmin, orderController.updateStatus);
+// Cancellation routes
+router.post('/:id/request-cancellation', auth_1.authenticate, orderController.requestCancellation);
+router.post('/:id/approve-cancellation', auth_1.authenticate, auth_1.requireAdmin, orderController.approveCancellation);
+router.post('/:id/reject-cancellation', auth_1.authenticate, auth_1.requireAdmin, orderController.rejectCancellation);
 exports.default = router;
 //# sourceMappingURL=order.routes.js.map

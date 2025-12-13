@@ -102,6 +102,35 @@ const OrderSchema = new mongoose_1.Schema({
         enum: ['pending', 'confirmed', 'shipped', 'delivered', 'cancelled'],
         default: 'pending'
     },
+    discount: {
+        type: Number,
+        default: 0
+    },
+    couponCode: {
+        type: String,
+        default: null
+    },
+    cancellationRequested: {
+        type: Boolean,
+        default: false
+    },
+    cancellationReason: {
+        type: String,
+        default: null
+    },
+    cancellationStatus: {
+        type: String,
+        enum: ['none', 'pending', 'approved', 'rejected'],
+        default: 'none'
+    },
+    cancellationRequestedAt: {
+        type: Date,
+        default: null
+    },
+    cancellationProcessedAt: {
+        type: Date,
+        default: null
+    },
     createdAt: {
         type: Date,
         default: Date.now

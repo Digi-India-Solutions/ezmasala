@@ -1,7 +1,40 @@
+'use client';
+
 import Link from "next/link";
 import Image from "next/image";
+import { useEffect, useState } from "react";
+import api from "@/lib/api";
+
+interface ContactInfo {
+  companyName?: string;
+  tagline?: string;
+  email?: string;
+  phone?: string;
+  whatsapp?: string;
+  address?: string;
+  city?: string;
+  state?: string;
+  pincode?: string;
+  country?: string;
+}
 
 export default function Footer() {
+  const [contactInfo, setContactInfo] = useState<ContactInfo | null>(null);
+
+  useEffect(() => {
+    const fetchContactInfo = async () => {
+      try {
+        const data = await api.get('/contact-info');
+        if (data.success && data.contactInfo) {
+          setContactInfo(data.contactInfo);
+        }
+      } catch (error) {
+        console.error('Failed to fetch contact info:', error);
+      }
+    };
+    fetchContactInfo();
+  }, []);
+
   return (
     <footer className="bg-white border-t border-gray-300 mt-24">
       <div className="container mx-auto px-6 md:px-12 py-20">
@@ -65,13 +98,14 @@ export default function Footer() {
             </h4>
 
             <ul className="space-y-2 text-base text-gray-700 font-inter">
-              <li className="text-lg">Phone: +01 9082730822</li>
+              <li className="text-lg">Phone: {contactInfo?.phone || '+91 9082730822'}</li>
               <li className="text-lg">
                 Email:
-                <a href="mailto:hello@ezmasala.com" className="ml-1 underline underline-offset-4 decoration-black hover:text-green-600 transition">
-                  hello@ezmasala.com
+                <a href={`mailto:${contactInfo?.email || 'hello@ezmasala.com'}`} className="ml-1 underline underline-offset-4 decoration-black hover:text-green-600 transition">
+                  {contactInfo?.email || 'hello@ezmasala.com'}
                 </a>
               </li>
+              
             </ul>
 
             {/* SOCIAL ICONS */}

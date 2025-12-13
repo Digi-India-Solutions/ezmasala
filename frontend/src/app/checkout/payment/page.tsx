@@ -20,9 +20,12 @@ export default function PaymentPage() {
   const [processing, setProcessing] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState('razorpay');
   const [showOrderModal, setShowOrderModal] = useState(false);
+  const [appliedCoupon, setAppliedCoupon] = useState<any>(null);
+  const [discount, setDiscount] = useState(0);
 
   const tax = totalAmount * 0.18;
-  const total = Math.round(totalAmount + tax);
+  const totalBeforeDiscount = totalAmount + tax;
+  const total = Math.round(totalBeforeDiscount - discount);
 
   useEffect(() => {
     if (!window.location.pathname.startsWith('/checkout/payment')) {
@@ -34,6 +37,18 @@ export default function PaymentPage() {
     if (!savedAddress || items.length === 0) {
       router.replace('/checkout/address');
       return;
+    }
+
+    // Load coupon from localStorage (applied in cart page)
+    const savedCoupon = localStorage.getItem('appliedCoupon');
+    if (savedCoupon) {
+      try {
+        const couponData = JSON.parse(savedCoupon);
+        setAppliedCoupon(couponData.coupon);
+        setDiscount(couponData.discount);
+      } catch (e) {
+        localStorage.removeItem('appliedCoupon');
+      }
     }
 
     setLoading(false);
@@ -84,15 +99,27 @@ export default function PaymentPage() {
         },
         subtotal: Number(totalAmount.toFixed(2)),
         tax: Number(tax.toFixed(2)),
+        discount: discount,
+        couponCode: appliedCoupon?.code || null,
         total: total,
         paymentMethod: 'cod'
       };
+
+      // Apply coupon usage if coupon was used
+      if (appliedCoupon?.code) {
+        try {
+          await api.post('/coupons/apply', { code: appliedCoupon.code });
+        } catch (err) {
+          console.error('Failed to apply coupon usage:', err);
+        }
+      }
 
       const data = await api.post('/orders', orderData);
 
       if (data.success) {
         dispatch(clearCart());
         localStorage.removeItem('selectedAddress');
+        localStorage.removeItem('appliedCoupon');
         toast.custom((t) => <OrderSuccessToast orderId={data.order.orderId} toastId={t} />, {
           duration: 10000,
         });
@@ -190,6 +217,8 @@ export default function PaymentPage() {
                 },
                 subtotal: Number(totalAmount.toFixed(2)),
                 tax: Number(tax.toFixed(2)),
+                discount: discount,
+                couponCode: appliedCoupon?.code || null,
                 total: total,
                 paymentMethod: 'razorpay',
                 razorpayOrderId: response.razorpay_order_id,
@@ -197,11 +226,21 @@ export default function PaymentPage() {
                 razorpaySignature: response.razorpay_signature
               };
 
+              // Apply coupon usage if coupon was used
+              if (appliedCoupon?.code) {
+                try {
+                  await api.post('/coupons/apply', { code: appliedCoupon.code });
+                } catch (err) {
+                  console.error('Failed to apply coupon usage:', err);
+                }
+              }
+
               const dbData = await api.post('/orders', dbOrderData);
 
               if (dbData.success) {
                 dispatch(clearCart());
                 localStorage.removeItem('selectedAddress');
+                localStorage.removeItem('appliedCoupon');
                 toast.custom((t) => <OrderSuccessToast orderId={dbData.order.orderId} toastId={t} />, {
                   duration: 10000,
                 });
@@ -310,6 +349,24 @@ export default function PaymentPage() {
               </div>
             </div>
 
+            {/* Applied Coupon Display */}
+            {appliedCoupon && (
+              <div className="p-6 rounded-2xl border border-gray-200 bg-gray-50">
+                <h2 className="text-xl font-bold text-black mb-4">Applied Coupon</h2>
+                <div className="flex items-center justify-between bg-green-50 border border-green-200 rounded-xl p-4">
+                  <div className="flex items-center gap-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <div>
+                      <p className="font-semibold text-green-800">{appliedCoupon.code}</p>
+                      <p className="text-sm text-green-600">You save ₹{discount.toFixed(2)}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
             <div className="p-6 rounded-2xl border border-gray-200 bg-gray-50">
               <h2 className="text-xl font-bold text-black mb-4">Order Total</h2>
               <div className="space-y-2">
@@ -321,6 +378,12 @@ export default function PaymentPage() {
                   <span>Tax (18% GST)</span>
                   <span>₹{tax.toFixed(2)}</span>
                 </div>
+                {discount > 0 && (
+                  <div className="flex justify-between text-green-600">
+                    <span>Discount</span>
+                    <span>-₹{discount.toFixed(2)}</span>
+                  </div>
+                )}
                 <div className="border-t-2 border-gray-300 pt-2 mt-2">
                   <div className="flex justify-between text-black text-xl font-bold">
                     <span>Total</span>

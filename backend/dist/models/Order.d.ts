@@ -25,12 +25,19 @@ export interface IOrder extends Document {
     subtotal: number;
     tax: number;
     total: number;
+    discount?: number;
+    couponCode?: string | null;
     paymentMethod: 'cod' | 'razorpay';
     paymentStatus: 'pending' | 'paid' | 'failed';
     razorpayOrderId?: string | null;
     razorpayPaymentId?: string | null;
     razorpaySignature?: string | null;
     status: 'pending' | 'confirmed' | 'shipped' | 'delivered' | 'cancelled';
+    cancellationRequested: boolean;
+    cancellationReason?: string;
+    cancellationStatus: 'none' | 'pending' | 'approved' | 'rejected';
+    cancellationRequestedAt?: Date;
+    cancellationProcessedAt?: Date;
     createdAt: Date;
 }
 declare const _default: mongoose.Model<IOrder, {}, {}, {}, mongoose.Document<unknown, {}, IOrder, {}, {}> & IOrder & Required<{

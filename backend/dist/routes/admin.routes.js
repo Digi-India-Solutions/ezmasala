@@ -35,8 +35,9 @@ var __importStar = (this && this.__importStar) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const authController = __importStar(require("../controllers/authController"));
+const auth_1 = require("../middleware/auth");
 const router = (0, express_1.Router)();
-// Create admin (should be protected in production)
-router.post('/create', authController.createAdmin);
+// Create admin (protected - only existing admins can create new admins)
+router.post('/create', auth_1.authenticate, auth_1.requireAdmin, authController.createAdmin);
 exports.default = router;
 //# sourceMappingURL=admin.routes.js.map

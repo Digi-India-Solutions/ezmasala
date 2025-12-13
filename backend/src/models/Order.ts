@@ -28,12 +28,19 @@ export interface IOrder extends Document {
   subtotal: number;
   tax: number;
   total: number;
+  discount?: number;
+  couponCode?: string | null;
   paymentMethod: 'cod' | 'razorpay';
   paymentStatus: 'pending' | 'paid' | 'failed';
   razorpayOrderId?: string | null;
   razorpayPaymentId?: string | null;
   razorpaySignature?: string | null;
   status: 'pending' | 'confirmed' | 'shipped' | 'delivered' | 'cancelled';
+  cancellationRequested: boolean;
+  cancellationReason?: string;
+  cancellationStatus: 'none' | 'pending' | 'approved' | 'rejected';
+  cancellationRequestedAt?: Date;
+  cancellationProcessedAt?: Date;
   createdAt: Date;
 }
 
@@ -104,6 +111,35 @@ const OrderSchema = new Schema<IOrder>({
     type: String,
     enum: ['pending', 'confirmed', 'shipped', 'delivered', 'cancelled'],
     default: 'pending'
+  },
+  discount: {
+    type: Number,
+    default: 0
+  },
+  couponCode: {
+    type: String,
+    default: null
+  },
+  cancellationRequested: {
+    type: Boolean,
+    default: false
+  },
+  cancellationReason: {
+    type: String,
+    default: null
+  },
+  cancellationStatus: {
+    type: String,
+    enum: ['none', 'pending', 'approved', 'rejected'],
+    default: 'none'
+  },
+  cancellationRequestedAt: {
+    type: Date,
+    default: null
+  },
+  cancellationProcessedAt: {
+    type: Date,
+    default: null
   },
   createdAt: {
     type: Date,
