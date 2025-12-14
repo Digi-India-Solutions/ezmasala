@@ -543,8 +543,8 @@ export const getOrderConfirmationTemplate = (order: any, customerName: string): 
           <!-- Success Icon -->
           <tr>
             <td style="padding: 30px 40px 0; text-align: center;">
-              <div style="width: 80px; height: 80px; background-color: #22c55e; border-radius: 50%; margin: 0 auto; display: flex; align-items: center; justify-content: center;">
-                <span style="color: white; font-size: 40px;">✓</span>
+              <div style="width: 80px; height: 80px; background-color: #22c55e; border-radius: 50%; margin: 0 auto; display: flex; align-items: center; justify-content: center; line-height: 80px; text-align: center;">
+                <span style="color: white; font-size: 40px; line-height: 80px; display: inline-block; vertical-align: middle;">✓</span>
               </div>
             </td>
           </tr>

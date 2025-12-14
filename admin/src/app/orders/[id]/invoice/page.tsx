@@ -143,6 +143,14 @@ export default function InvoicePage() {
       {/* Print Styles */}
       <style jsx global>{`
         @media print {
+          @page {
+            margin: 0.5cm;
+            size: A4 portrait;
+          }
+          html, body {
+            height: auto !important;
+            overflow: visible !important;
+          }
           body * {
             visibility: hidden;
           }
@@ -154,13 +162,93 @@ export default function InvoicePage() {
             left: 0;
             top: 0;
             width: 100%;
-            padding: 20px;
+            max-width: 100%;
+            padding: 0 !important;
+            margin: 0 !important;
+            box-shadow: none !important;
+            page-break-after: avoid;
+            page-break-before: avoid;
+            page-break-inside: avoid;
           }
           .no-print {
             display: none !important;
           }
           .print-only {
             display: block !important;
+          }
+          /* Compact spacing for print */
+          .invoice-container h1 {
+            font-size: 18px !important;
+          }
+          .invoice-container h2 {
+            font-size: 16px !important;
+          }
+          .invoice-container h3 {
+            font-size: 10px !important;
+          }
+          .invoice-container .p-8 {
+            padding: 10px !important;
+          }
+          .invoice-container .mb-4 {
+            margin-bottom: 8px !important;
+          }
+          .invoice-container .pb-4 {
+            padding-bottom: 8px !important;
+          }
+          .invoice-container .pb-5 {
+            padding-bottom: 10px !important;
+          }
+          .invoice-container .mb-6 {
+            margin-bottom: 10px !important;
+          }
+          .invoice-container .mt-1 {
+            margin-top: 6px !important;
+          }
+          .invoice-container .mt-6 {
+            margin-top: 10px !important;
+          }
+          .invoice-container .pt-4 {
+            padding-top: 6px !important;
+          }
+          .invoice-container .gap-4 {
+            gap: 6px !important;
+          }
+          .invoice-container .gap-5 {
+            gap: 8px !important;
+          }
+          .invoice-container .gap-6 {
+            gap: 10px !important;
+          }
+          .invoice-container .mb-3 {
+            margin-bottom: 6px !important;
+          }
+          .invoice-container table {
+            font-size: 11px !important;
+          }
+          .invoice-container table td,
+          .invoice-container table th {
+            padding: 3px 4px !important;
+            font-size: 10px !important;
+          }
+          .invoice-container .bg-gradient-to-r {
+            padding: 12px !important;
+          }
+          .invoice-container img {
+            height: 35px !important;
+          }
+          .invoice-container .bg-gray-50 {
+            padding: 8px !important;
+          }
+          .invoice-container .space-y-2 > * + * {
+            margin-top: 4px !important;
+          }
+          /* Remove extra margins at container level */
+          .container {
+            padding: 0 !important;
+            margin: 0 !important;
+          }
+          .min-h-screen {
+            min-height: auto !important;
           }
         }
         @media screen {
@@ -197,9 +285,12 @@ export default function InvoicePage() {
             {/* Invoice Header */}
             <div className="bg-gradient-to-r from-amber-500 to-orange-500 text-white p-8 rounded-t-xl">
               <div className="flex justify-between items-start">
-                <div>
-                  <h1 className="text-3xl font-black">EZ MASALA</h1>
-                  <p className="text-amber-100 mt-1">Premium Quality Spices</p>
+                <div className="flex items-center gap-4">
+                  <img src="/logo.png" alt="EZ Masala" className="h-16 w-auto bg-white rounded-lg px-2 py-1" />
+                  <div>
+                    <h1 className="text-3xl font-black">EZ MASALA</h1>
+                    <p className="text-amber-100 mt-1">Premium Quality Spices</p>
+                  </div>
                 </div>
                 <div className="text-right">
                   <h2 className="text-2xl font-bold">TAX INVOICE</h2>
@@ -210,39 +301,39 @@ export default function InvoicePage() {
 
             {/* Invoice Body */}
             <div className="p-8">
-              {/* Invoice Details Row */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 pb-8 border-b">
+              {/* Invoice Details Row - 3 Column Layout */}
+              <div className="grid grid-cols-3 gap-6 mb-6 pb-5 border-b">
                 {/* Bill To */}
                 <div>
-                  <h3 className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-3">Bill To</h3>
-                  <p className="font-bold text-lg text-black">{customerName}</p>
+                  <h3 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Bill To</h3>
+                  <p className="font-bold text-sm text-black">{customerName}</p>
                   {order.address.phone && (
-                    <p className="text-gray-600 mt-1">
+                    <p className="text-gray-600 text-xs mt-1">
                       <span className="font-medium">Phone:</span> {order.address.phone}
                     </p>
                   )}
                   {customerEmail !== 'N/A' && (
-                    <p className="text-gray-600">
+                    <p className="text-gray-600 text-xs">
                       <span className="font-medium">Email:</span> {customerEmail}
                     </p>
                   )}
                 </div>
 
-                {/* Shipping Address */}
+                {/* Ship To */}
                 <div>
-                  <h3 className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-3">Ship To</h3>
-                  <p className="text-gray-700">{order.address.street}</p>
-                  <p className="text-gray-700">
+                  <h3 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Ship To</h3>
+                  <p className="text-gray-700 text-xs">{order.address.street}</p>
+                  <p className="text-gray-700 text-xs">
                     {order.address.city}, {order.address.state} - {order.address.zipCode}
                   </p>
-                  <p className="text-gray-700">{order.address.country}</p>
+                  <p className="text-gray-700 text-xs">{order.address.country}</p>
                 </div>
 
-                {/* Invoice Info */}
+                {/* Invoice Details */}
                 <div>
-                  <h3 className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-3">Invoice Details</h3>
-                  <div className="space-y-2">
-                    <p className="text-gray-700">
+                  <h3 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Invoice Details</h3>
+                  <div className="space-y-1">
+                    <p className="text-gray-700 text-xs">
                       <span className="font-medium">Date:</span>{' '}
                       {new Date(order.createdAt).toLocaleDateString('en-IN', {
                         day: '2-digit',
@@ -250,14 +341,7 @@ export default function InvoicePage() {
                         year: 'numeric'
                       })}
                     </p>
-                    <p className="text-gray-700">
-                      <span className="font-medium">Time:</span>{' '}
-                      {new Date(order.createdAt).toLocaleTimeString('en-IN', {
-                        hour: '2-digit',
-                        minute: '2-digit'
-                      })}
-                    </p>
-                    <p className="text-gray-700">
+                    <p className="text-gray-700 text-xs">
                       <span className="font-medium">Order Status:</span>{' '}
                       <span className={`font-semibold ${
                         order.status === 'delivered' ? 'text-green-600' :
@@ -274,30 +358,29 @@ export default function InvoicePage() {
               </div>
 
               {/* Items Table */}
-              <div className="mb-8">
-                <h3 className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-4">Order Items</h3>
+              <div className="mb-6 mt-1">
+                <h3 className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-3">Order Items</h3>
                 <div className="overflow-x-auto">
-                  <table className="w-full">
+                  <table className="w-full text-sm">
                     <thead>
                       <tr className="border-b-2 border-gray-200">
-                        <th className="text-left py-3 px-2 text-gray-600 font-bold">#</th>
-                        <th className="text-left py-3 px-2 text-gray-600 font-bold">Product</th>
-                        <th className="text-center py-3 px-2 text-gray-600 font-bold">Qty</th>
-                        <th className="text-right py-3 px-2 text-gray-600 font-bold">Unit Price</th>
-                        <th className="text-right py-3 px-2 text-gray-600 font-bold">Total</th>
+                        <th className="text-left py-2 px-2 text-gray-600 font-bold">#</th>
+                        <th className="text-left py-2 px-2 text-gray-600 font-bold">Product</th>
+                        <th className="text-center py-2 px-2 text-gray-600 font-bold">Qty</th>
+                        <th className="text-right py-2 px-2 text-gray-600 font-bold">Unit Price</th>
+                        <th className="text-right py-2 px-2 text-gray-600 font-bold">Total</th>
                       </tr>
                     </thead>
                     <tbody>
                       {order.items.map((item, index) => (
                         <tr key={index} className="border-b border-gray-100">
-                          <td className="py-4 px-2 text-gray-600">{index + 1}</td>
-                          <td className="py-4 px-2">
+                          <td className="py-2 px-2 text-gray-600">{index + 1}</td>
+                          <td className="py-2 px-2">
                             <p className="font-semibold text-black">{item.title}</p>
-                            <p className="text-xs text-gray-500">ID: {item.productId}</p>
                           </td>
-                          <td className="py-4 px-2 text-center text-gray-700">{item.quantity}</td>
-                          <td className="py-4 px-2 text-right text-gray-700">₹{item.price.toFixed(2)}</td>
-                          <td className="py-4 px-2 text-right font-semibold text-black">
+                          <td className="py-2 px-2 text-center text-gray-700">{item.quantity}</td>
+                          <td className="py-2 px-2 text-right text-gray-700">₹{item.price.toFixed(2)}</td>
+                          <td className="py-2 px-2 text-right font-semibold text-black">
                             ₹{(item.price * item.quantity).toFixed(2)}
                           </td>
                         </tr>
@@ -308,11 +391,11 @@ export default function InvoicePage() {
               </div>
 
               {/* Summary Section */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 text-sm mt-1">
                 {/* Payment Information */}
-                <div className="bg-gray-50 rounded-lg p-6">
-                  <h3 className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-4">Payment Information</h3>
-                  <div className="space-y-3">
+                <div className="bg-gray-50 rounded-lg p-4">
+                  <h3 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Payment Information</h3>
+                  <div className="space-y-2">
                     <div className="flex justify-between">
                       <span className="text-gray-600">Payment Method:</span>
                       <span className="font-semibold text-black">{getPaymentMethodLabel(order.paymentMethod)}</span>
@@ -330,22 +413,16 @@ export default function InvoicePage() {
                     {order.razorpayPaymentId && (
                       <div className="flex justify-between">
                         <span className="text-gray-600">Transaction ID:</span>
-                        <span className="font-mono text-sm text-black">{order.razorpayPaymentId}</span>
-                      </div>
-                    )}
-                    {order.razorpayOrderId && (
-                      <div className="flex justify-between">
-                        <span className="text-gray-600">Razorpay Order:</span>
-                        <span className="font-mono text-sm text-black">{order.razorpayOrderId}</span>
+                        <span className="font-mono text-xs text-black">{order.razorpayPaymentId}</span>
                       </div>
                     )}
                   </div>
                 </div>
 
                 {/* Order Totals */}
-                <div className="bg-gray-50 rounded-lg p-6">
-                  <h3 className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-4">Order Summary</h3>
-                  <div className="space-y-3">
+                <div className="bg-gray-50 rounded-lg p-4">
+                  <h3 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Order Summary</h3>
+                  <div className="space-y-2">
                     <div className="flex justify-between">
                       <span className="text-gray-600">Subtotal:</span>
                       <span className="text-black">₹{order.subtotal.toFixed(2)}</span>
@@ -358,10 +435,10 @@ export default function InvoicePage() {
                       <span className="text-gray-600">Shipping:</span>
                       <span className="text-green-600 font-semibold">FREE</span>
                     </div>
-                    <div className="border-t-2 border-gray-300 pt-3 mt-3">
+                    <div className="border-t-2 border-gray-300 pt-2 mt-2">
                       <div className="flex justify-between">
-                        <span className="text-xl font-bold text-black">Grand Total:</span>
-                        <span className="text-xl font-bold text-amber-600">₹{order.total.toFixed(2)}</span>
+                        <span className="text-lg font-bold text-black">Grand Total:</span>
+                        <span className="text-lg font-bold text-amber-600">₹{order.total.toFixed(2)}</span>
                       </div>
                     </div>
                   </div>
@@ -369,21 +446,19 @@ export default function InvoicePage() {
               </div>
 
               {/* Footer */}
-              <div className="mt-10 pt-8 border-t text-center">
-                <div className="mb-4">
-                  <p className="text-gray-600">Thank you for shopping with <span className="font-bold text-amber-600">EZ Masala</span>!</p>
-                  <p className="text-gray-500 text-sm mt-1">We appreciate your business and hope you enjoy our premium quality spices.</p>
+              <div className="mt-6 pt-4 border-t text-center">
+                <div className="mb-2">
+                  <p className="text-gray-600 text-sm">Thank you for shopping with <span className="font-bold text-amber-600">EZ Masala</span>!</p>
                 </div>
-                <div className="text-sm text-gray-500 space-y-1">
-                  <p>For any queries, please contact us at:</p>
+                <div className="text-xs text-gray-500">
                   <p className="font-medium">Email: support@ezmasalaa.com | Website: www.ezmasalaa.com</p>
                 </div>
               </div>
 
               {/* Terms & Conditions - Print Only */}
-              <div className="print-only mt-8 pt-6 border-t text-xs text-gray-500">
-                <p className="font-bold mb-2">Terms & Conditions:</p>
-                <ol className="list-decimal list-inside space-y-1">
+              <div className="print-only mt-4 pt-3 border-t text-xs text-gray-500">
+                <p className="font-bold mb-1">Terms & Conditions:</p>
+                <ol className="list-decimal list-inside space-y-0.5">
                   <li>Goods once sold will not be taken back or exchanged.</li>
                   <li>All disputes are subject to local jurisdiction only.</li>
                   <li>This is a computer-generated invoice and does not require a signature.</li>
