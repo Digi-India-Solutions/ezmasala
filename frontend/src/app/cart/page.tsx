@@ -39,6 +39,16 @@ export default function CartPage() {
     }
   }, []);
 
+  // Auto-remove coupon when cart is empty
+  useEffect(() => {
+    if (items.length === 0 && appliedCoupon) {
+      setCouponCode('');
+      setAppliedCoupon(null);
+      setDiscount(0);
+      localStorage.removeItem('appliedCoupon');
+    }
+  }, [items.length, appliedCoupon]);
+
   // Revalidate coupon when cart total changes
   useEffect(() => {
     if (appliedCoupon && totalAmount > 0) {
