@@ -18,7 +18,7 @@ router.get('/:id/invoice', authenticate, requireAdmin, orderController.generateI
 router.patch('/:id', authenticate, requireAdmin, orderController.updateStatus);
 
 // Cancellation routes
-router.post('/:id/request-cancellation', authenticate, orderController.requestCancellation);
+router.post('/:id/request-cancellation', optionalAuth, orderController.requestCancellation);
 router.post('/:id/approve-cancellation', authenticate, requireAdmin, orderController.approveCancellation);
 router.post('/:id/reject-cancellation', authenticate, requireAdmin, orderController.rejectCancellation);
 

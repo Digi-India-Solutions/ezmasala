@@ -13,6 +13,29 @@ const axiosInstance = axios.create({
   withCredentials: true,
 });
 
+// Request interceptor to add token from localStorage
+axiosInstance.interceptors.request.use(
+  (config) => {
+    // Try to get token from localStorage (persisted Redux state)
+    const persistedState = localStorage.getItem('persist:root');
+    if (persistedState) {
+      try {
+        const parsed = JSON.parse(persistedState);
+        const authState = parsed.auth ? JSON.parse(parsed.auth) : null;
+        const token = authState?.userToken || authState?.adminToken;
+
+        if (token && config.headers) {
+          config.headers.Authorization = `Bearer ${token}`;
+        }
+      } catch (error) {
+        // Ignore parsing errors
+      }
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
 // Response interceptor for error handling
 axiosInstance.interceptors.response.use(
   (response) => response.data,
