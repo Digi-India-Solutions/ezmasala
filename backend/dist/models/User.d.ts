@@ -13,6 +13,7 @@ export interface IUser extends Document {
     lastName: string;
     email: string;
     password: string;
+    phone?: string;
     addresses: IAddress[];
     createdAt: Date;
 }

@@ -57,3 +57,24 @@ body {
 .font-dm-sans {
   font-family: var(--font-dm-sans), "DM Sans", sans-serif;
 }
+
+/* Sonner Toast Customization */
+[data-sonner-toast] [data-close-button] {
+  width: 20px !important;
+  height: 20px !important;
+  border: none !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  opacity: 0.7 !important;
+  transition: opacity 0.2s !important;
+}
+
+[data-sonner-toast] [data-close-button]:hover {
+  opacity: 1 !important;
+}
+
+[data-sonner-toast] [data-close-button] svg {
+  width: 14px !important;
+  height: 14px !important;
+}

@@ -29,6 +29,7 @@ export default function UserProfilePage() {
     firstName: '',
     lastName: '',
     email: '',
+    phone: '',
   });
   const [newAddress, setNewAddress] = useState({
     street: '',
@@ -48,6 +49,7 @@ export default function UserProfilePage() {
         firstName: user.firstName || '',
         lastName: user.lastName || '',
         email: user.email || '',
+        phone: user.phone || '',
       });
     } else {
       setLoading(false);
@@ -264,6 +266,17 @@ export default function UserProfilePage() {
                   required
                 />
               </div>
+              <div>
+                <label className="block text-black font-semibold mb-2 text-sm md:text-base">Phone Number</label>
+                <input
+                  type="tel"
+                  value={profileData.phone}
+                  onChange={(e) => setProfileData({ ...profileData, phone: e.target.value })}
+                  placeholder="Enter 10-digit phone number"
+                  maxLength={10}
+                  className="w-full px-3 md:px-4 py-2 border-2 border-gray-300 rounded-xl focus:border-blue-600 outline-none text-black text-sm md:text-base"
+                />
+              </div>
               <div className="bg-blue-50 border-l-4 border-blue-600 p-4 rounded">
                 <p className="text-sm text-gray-700">
                   <span className="font-semibold">Note:</span> When you update your profile, you will receive a confirmation email with details of the changes made.
@@ -292,6 +305,7 @@ export default function UserProfilePage() {
                       firstName: user.firstName || '',
                       lastName: user.lastName || '',
                       email: user.email || '',
+                      phone: user.phone || '',
                     });
                   }}
                   className="border-2 border-gray-300 text-gray-700 px-6 py-3 rounded-xl font-semibold hover:bg-gray-50 transition"
@@ -324,10 +338,12 @@ export default function UserProfilePage() {
                           })}
                         </p>
                       </div>
-                      <span className={`text-sm font-bold px-4 py-2 rounded-full w-fit ${order.status === 'delivered' ? 'bg-green-100 text-green-700' :
+                      <span className={`text-sm font-bold px-4 py-2 rounded-full w-fit ${
+                        order.status === 'cancelled' ? 'bg-red-100 text-red-700' :
+                        order.status === 'delivered' ? 'bg-green-100 text-green-700' :
                         order.status === 'shipped' ? 'bg-blue-100 text-blue-700' :
-                          order.status === 'confirmed' ? 'bg-yellow-100 text-yellow-700' :
-                            'bg-gray-100 text-gray-700'
+                        order.status === 'confirmed' ? 'bg-yellow-100 text-yellow-700' :
+                        'bg-gray-100 text-gray-700'
                         }`}>
                         {(order.status || 'Pending').toUpperCase()}
                       </span>

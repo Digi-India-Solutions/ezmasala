@@ -70,6 +70,7 @@ export const adminLogin = async (req: Request, res: Response) => {
       httpOnly: true,
       secure: isProduction,
       sameSite: isProduction ? 'none' : 'lax',
+      domain: isProduction ? '.ezmasalaa.com' : undefined,
       path: '/',
       maxAge: 60 * 60 * 24 * 7 * 1000 // 7 days in ms
     });
@@ -86,7 +87,14 @@ export const adminLogin = async (req: Request, res: Response) => {
 
 // POST /api/auth/admin/logout
 export const adminLogout = async (req: Request, res: Response) => {
-  res.clearCookie('adminToken');
+  const isProduction = process.env.NODE_ENV === 'production';
+  res.clearCookie('adminToken', {
+    httpOnly: true,
+    secure: isProduction,
+    sameSite: isProduction ? 'none' : 'lax',
+    domain: isProduction ? '.ezmasalaa.com' : undefined,
+    path: '/',
+  });
   res.json({ success: true });
 };
 
@@ -191,6 +199,7 @@ export const verifySignupOTP = async (req: Request, res: Response) => {
       httpOnly: true,
       secure: isProduction,
       sameSite: isProduction ? 'none' : 'lax',
+      domain: isProduction ? '.ezmasalaa.com' : undefined,
       path: '/',
       maxAge: 60 * 60 * 24 * 7 * 1000 // 7 days in ms
     });
@@ -286,6 +295,7 @@ export const userSignup = async (req: Request, res: Response) => {
       httpOnly: true,
       secure: isProduction,
       sameSite: isProduction ? 'none' : 'lax',
+      domain: isProduction ? '.ezmasalaa.com' : undefined,
       path: '/',
       maxAge: 60 * 60 * 24 * 7 * 1000 // 7 days in ms
     });
@@ -331,6 +341,7 @@ export const userLogin = async (req: Request, res: Response) => {
       httpOnly: true,
       secure: isProduction,
       sameSite: isProduction ? 'none' : 'lax',
+      domain: isProduction ? '.ezmasalaa.com' : undefined,
       path: '/',
       maxAge: 60 * 60 * 24 * 7 * 1000 // 7 days in ms
     });
@@ -351,7 +362,14 @@ export const userLogin = async (req: Request, res: Response) => {
 
 // POST /api/auth/user/logout
 export const userLogout = async (req: Request, res: Response) => {
-  res.clearCookie('token');
+  const isProduction = process.env.NODE_ENV === 'production';
+  res.clearCookie('token', {
+    httpOnly: true,
+    secure: isProduction,
+    sameSite: isProduction ? 'none' : 'lax',
+    domain: isProduction ? '.ezmasalaa.com' : undefined,
+    path: '/',
+  });
   res.json({ message: 'Logged out successfully' });
 };
 

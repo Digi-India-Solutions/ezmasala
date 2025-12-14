@@ -48,6 +48,7 @@ const UserSchema = new mongoose_1.Schema({
     lastName: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
+    phone: { type: String, required: false },
     addresses: { type: [AddressSchema], default: [] },
     createdAt: { type: Date, default: Date.now }
 });

@@ -15,6 +15,7 @@ export interface IUser extends Document {
   lastName: string;
   email: string;
   password: string;
+  phone?: string;
   addresses: IAddress[];
   createdAt: Date;
 }
@@ -34,6 +35,7 @@ const UserSchema = new Schema<IUser>({
   lastName: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
+  phone: { type: String, required: false },
   addresses: { type: [AddressSchema], default: [] },
   createdAt: { type: Date, default: Date.now }
 });

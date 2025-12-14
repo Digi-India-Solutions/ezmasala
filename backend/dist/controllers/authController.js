@@ -62,6 +62,7 @@ const adminLogin = async (req, res) => {
             httpOnly: true,
             secure: isProduction,
             sameSite: isProduction ? 'none' : 'lax',
+            domain: isProduction ? '.ezmasalaa.com' : undefined,
             path: '/',
             maxAge: 60 * 60 * 24 * 7 * 1000 // 7 days in ms
         });
@@ -78,7 +79,14 @@ const adminLogin = async (req, res) => {
 exports.adminLogin = adminLogin;
 // POST /api/auth/admin/logout
 const adminLogout = async (req, res) => {
-    res.clearCookie('adminToken');
+    const isProduction = process.env.NODE_ENV === 'production';
+    res.clearCookie('adminToken', {
+        httpOnly: true,
+        secure: isProduction,
+        sameSite: isProduction ? 'none' : 'lax',
+        domain: isProduction ? '.ezmasalaa.com' : undefined,
+        path: '/',
+    });
     res.json({ success: true });
 };
 exports.adminLogout = adminLogout;
@@ -164,6 +172,7 @@ const verifySignupOTP = async (req, res) => {
             httpOnly: true,
             secure: isProduction,
             sameSite: isProduction ? 'none' : 'lax',
+            domain: isProduction ? '.ezmasalaa.com' : undefined,
             path: '/',
             maxAge: 60 * 60 * 24 * 7 * 1000 // 7 days in ms
         });
@@ -245,6 +254,7 @@ const userSignup = async (req, res) => {
             httpOnly: true,
             secure: isProduction,
             sameSite: isProduction ? 'none' : 'lax',
+            domain: isProduction ? '.ezmasalaa.com' : undefined,
             path: '/',
             maxAge: 60 * 60 * 24 * 7 * 1000 // 7 days in ms
         });
@@ -282,6 +292,7 @@ const userLogin = async (req, res) => {
             httpOnly: true,
             secure: isProduction,
             sameSite: isProduction ? 'none' : 'lax',
+            domain: isProduction ? '.ezmasalaa.com' : undefined,
             path: '/',
             maxAge: 60 * 60 * 24 * 7 * 1000 // 7 days in ms
         });
@@ -302,7 +313,14 @@ const userLogin = async (req, res) => {
 exports.userLogin = userLogin;
 // POST /api/auth/user/logout
 const userLogout = async (req, res) => {
-    res.clearCookie('token');
+    const isProduction = process.env.NODE_ENV === 'production';
+    res.clearCookie('token', {
+        httpOnly: true,
+        secure: isProduction,
+        sameSite: isProduction ? 'none' : 'lax',
+        domain: isProduction ? '.ezmasalaa.com' : undefined,
+        path: '/',
+    });
     res.json({ message: 'Logged out successfully' });
 };
 exports.userLogout = userLogout;

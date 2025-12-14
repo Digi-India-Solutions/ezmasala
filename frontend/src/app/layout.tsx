@@ -83,7 +83,16 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} ${inter.variable} ${poppins.variable} ${montserrat.variable} ${lora.variable} ${raleway.variable} ${fraunces.variable} ${dmSans.variable}  antialiased`}
       >
         <ReduxProvider>
-          <Toaster position="top-right" richColors />
+          <Toaster
+            position="top-right"
+            richColors
+            closeButton
+            toastOptions={{
+              style: {
+                padding: '16px',
+              },
+            }}
+          />
           <LayoutWrapper>{children}</LayoutWrapper>
         </ReduxProvider>
       </body>

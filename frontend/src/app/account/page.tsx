@@ -380,14 +380,14 @@ export default function AccountPage() {
       // SIGNUP OTP VERIFICATION
       case 'signupOtp':
         return (
-          <div className="p-6 md:p-8">
-            <h2 className="text-xl md:text-2xl font-bold text-center text-black mb-2">Verify Email</h2>
-            <p className="text-sm text-gray-600 text-center mb-6">
+          <div className="p-8 md:p-12">
+            <h2 className="text-2xl md:text-3xl font-bold text-center text-black mb-4">Verify Email</h2>
+            <p className="text-base text-gray-600 text-center mb-8">
               We've sent a 6-digit OTP to<br />
               <span className="font-semibold text-black">{signupData.email}</span>
             </p>
 
-            <form onSubmit={handleSignupVerifyOtp} className="space-y-5">
+            <form onSubmit={handleSignupVerifyOtp} className="space-y-6">
               <div>
                 <label className="block text-sm font-semibold text-black mb-3 text-center">Enter OTP</label>
                 {renderOtpInputs()}
@@ -396,7 +396,7 @@ export default function AccountPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-black text-white py-2.5 md:py-3 rounded-xl font-semibold hover:bg-gray-900 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full bg-black text-white py-3.5 md:py-4 rounded-xl font-semibold text-base md:text-lg hover:bg-gray-900 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {loading ? 'Verifying...' : 'Verify & Create Account'}
               </button>
@@ -431,21 +431,21 @@ export default function AccountPage() {
       // FORGOT PASSWORD - EMAIL
       case 'forgotPassword':
         return (
-          <div className="p-6 md:p-8">
-            <h2 className="text-xl md:text-2xl font-bold text-center text-black mb-2">Forgot Password?</h2>
-            <p className="text-sm text-gray-600 text-center mb-6">
+          <div className="p-8 md:p-12">
+            <h2 className="text-2xl md:text-3xl font-bold text-center text-black mb-4">Forgot Password?</h2>
+            <p className="text-base text-gray-600 text-center mb-8">
               Enter your email and we'll send you an OTP to reset your password.
             </p>
 
-            <form onSubmit={handleForgotSendOtp} className="space-y-5">
+            <form onSubmit={handleForgotSendOtp} className="space-y-6">
               <div>
-                <label className="block text-sm font-semibold mb-2 text-gray-700">Email</label>
+                <label className="block text-base font-semibold mb-3 text-gray-700">Email</label>
                 <input
                   type="email"
                   required
                   value={forgotEmail}
                   onChange={(e) => setForgotEmail(e.target.value)}
-                  className="w-full px-4 py-2 md:py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-black focus:border-transparent text-black"
+                  className="w-full px-4 py-3.5 md:py-4 text-base border border-gray-300 rounded-xl focus:ring-2 focus:ring-black focus:border-transparent text-black"
                   placeholder="your@email.com"
                 />
               </div>
@@ -453,7 +453,7 @@ export default function AccountPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-black text-white py-2.5 md:py-3 rounded-xl font-semibold hover:bg-gray-900 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full bg-black text-white py-3.5 md:py-4 rounded-xl font-semibold text-base md:text-lg hover:bg-gray-900 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {loading ? 'Sending OTP...' : 'Send OTP'}
               </button>
@@ -472,14 +472,14 @@ export default function AccountPage() {
       // FORGOT PASSWORD - OTP
       case 'forgotOtp':
         return (
-          <div className="p-6 md:p-8">
-            <h2 className="text-xl md:text-2xl font-bold text-center text-black mb-2">Verify OTP</h2>
-            <p className="text-sm text-gray-600 text-center mb-6">
+          <div className="p-8 md:p-12">
+            <h2 className="text-2xl md:text-3xl font-bold text-center text-black mb-4">Verify OTP</h2>
+            <p className="text-base text-gray-600 text-center mb-8">
               We've sent a 6-digit OTP to<br />
               <span className="font-semibold text-black">{forgotEmail}</span>
             </p>
 
-            <form onSubmit={handleForgotVerifyOtp} className="space-y-5">
+            <form onSubmit={handleForgotVerifyOtp} className="space-y-6">
               <div>
                 <label className="block text-sm font-semibold text-black mb-3 text-center">Enter OTP</label>
                 {renderOtpInputs()}
@@ -488,7 +488,7 @@ export default function AccountPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-black text-white py-2.5 md:py-3 rounded-xl font-semibold hover:bg-gray-900 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full bg-black text-white py-3.5 md:py-4 rounded-xl font-semibold text-base md:text-lg hover:bg-gray-900 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {loading ? 'Verifying...' : 'Verify OTP'}
               </button>
@@ -523,22 +523,22 @@ export default function AccountPage() {
       // RESET PASSWORD
       case 'resetPassword':
         return (
-          <div className="p-6 md:p-8">
-            <h2 className="text-xl md:text-2xl font-bold text-center text-black mb-2">Set New Password</h2>
-            <p className="text-sm text-gray-600 text-center mb-6">
+          <div className="p-8 md:p-12">
+            <h2 className="text-2xl md:text-3xl font-bold text-center text-black mb-4">Set New Password</h2>
+            <p className="text-base text-gray-600 text-center mb-8">
               Create a strong password for your account
             </p>
 
-            <form onSubmit={handleResetPassword} className="space-y-5">
+            <form onSubmit={handleResetPassword} className="space-y-6">
               <div>
-                <label className="block text-sm font-semibold mb-2 text-gray-700">New Password</label>
+                <label className="block text-base font-semibold mb-3 text-gray-700">New Password</label>
                 <div className="relative">
                   <input
                     type={showPassword ? "text" : "password"}
                     required
                     value={newPassword}
                     onChange={(e) => setNewPassword(e.target.value)}
-                    className="w-full px-4 py-2 md:py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-black focus:border-transparent text-black pr-12"
+                    className="w-full px-4 py-3.5 md:py-4 text-base border border-gray-300 rounded-xl focus:ring-2 focus:ring-black focus:border-transparent text-black pr-12"
                     placeholder="••••••••"
                   />
                   <button
@@ -552,14 +552,14 @@ export default function AccountPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-semibold mb-2 text-gray-700">Confirm New Password</label>
+                <label className="block text-base font-semibold mb-3 text-gray-700">Confirm New Password</label>
                 <div className="relative">
                   <input
                     type={showConfirmPassword ? "text" : "password"}
                     required
                     value={confirmNewPassword}
                     onChange={(e) => setConfirmNewPassword(e.target.value)}
-                    className="w-full px-4 py-2 md:py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-black focus:border-transparent text-black pr-12"
+                    className="w-full px-4 py-3.5 md:py-4 text-base border border-gray-300 rounded-xl focus:ring-2 focus:ring-black focus:border-transparent text-black pr-12"
                     placeholder="••••••••"
                   />
                   <button
@@ -575,7 +575,7 @@ export default function AccountPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-black text-white py-2.5 md:py-3 rounded-xl font-semibold hover:bg-gray-900 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full bg-black text-white py-3.5 md:py-4 rounded-xl font-semibold text-base md:text-lg hover:bg-gray-900 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {loading ? 'Resetting...' : 'Reset Password'}
               </button>
@@ -602,23 +602,23 @@ export default function AccountPage() {
               </button>
             </div>
 
-            <div className="p-6 md:p-8">
-              <form onSubmit={handleLogin} className="space-y-4 md:space-y-5">
+            <div className="p-8 md:p-12">
+              <form onSubmit={handleLogin} className="space-y-6">
                 <div>
-                  <label className="block text-sm font-semibold mb-2 text-gray-700">Email</label>
+                  <label className="block text-base font-semibold mb-3 text-gray-700">Email</label>
                   <input
                     type="email"
                     required
                     value={loginData.email}
                     onChange={(e) => setLoginData({ ...loginData, email: e.target.value })}
-                    className="w-full px-4 py-2 md:py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-black focus:border-transparent text-black"
+                    className="w-full px-4 py-3.5 md:py-4 text-base border border-gray-300 rounded-xl focus:ring-2 focus:ring-black focus:border-transparent text-black"
                     placeholder="your@email.com"
                   />
                 </div>
 
                 <div>
-                  <div className="flex justify-between items-center mb-2">
-                    <label className="block text-sm font-semibold text-gray-700">Password</label>
+                  <div className="flex justify-between items-center mb-3">
+                    <label className="block text-base font-semibold text-gray-700">Password</label>
                     <button
                       type="button"
                       onClick={() => setView('forgotPassword')}
@@ -633,7 +633,7 @@ export default function AccountPage() {
                       required
                       value={loginData.password}
                       onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
-                      className="w-full px-4 py-2 md:py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-black focus:border-transparent text-black pr-12"
+                      className="w-full px-4 py-3.5 md:py-4 text-base border border-gray-300 rounded-xl focus:ring-2 focus:ring-black focus:border-transparent text-black pr-12"
                       placeholder="••••••••"
                     />
                     <button
@@ -649,7 +649,7 @@ export default function AccountPage() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full bg-black text-white py-2.5 md:py-3 rounded-xl font-semibold hover:bg-gray-900 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full bg-black text-white py-3.5 md:py-4 rounded-xl font-semibold text-base md:text-lg hover:bg-gray-900 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {loading ? 'Logging in...' : 'Log In'}
                 </button>
@@ -677,54 +677,54 @@ export default function AccountPage() {
               </button>
             </div>
 
-            <div className="p-6 md:p-8">
-              <form onSubmit={handleSignupSendOtp} className="space-y-4 md:space-y-5">
-                <div className="grid grid-cols-2 gap-3 md:gap-4">
+            <div className="p-8 md:p-12">
+              <form onSubmit={handleSignupSendOtp} className="space-y-6">
+                <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-semibold mb-2 text-gray-700">First Name</label>
+                    <label className="block text-base font-semibold mb-3 text-gray-700">First Name</label>
                     <input
                       type="text"
                       required
                       value={signupData.firstName}
                       onChange={(e) => setSignupData({ ...signupData, firstName: e.target.value })}
-                      className="w-full px-3 md:px-4 py-2 md:py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-black focus:border-transparent text-black"
+                      className="w-full px-4 py-3.5 md:py-4 text-base border border-gray-300 rounded-xl focus:ring-2 focus:ring-black focus:border-transparent text-black"
                       placeholder="John"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-semibold mb-2 text-gray-700">Last Name</label>
+                    <label className="block text-base font-semibold mb-3 text-gray-700">Last Name</label>
                     <input
                       type="text"
                       required
                       value={signupData.lastName}
                       onChange={(e) => setSignupData({ ...signupData, lastName: e.target.value })}
-                      className="w-full px-3 md:px-4 py-2 md:py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-black focus:border-transparent text-black"
+                      className="w-full px-4 py-3.5 md:py-4 text-base border border-gray-300 rounded-xl focus:ring-2 focus:ring-black focus:border-transparent text-black"
                       placeholder="Doe"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold mb-2 text-gray-700">Email</label>
+                  <label className="block text-base font-semibold mb-3 text-gray-700">Email</label>
                   <input
                     type="email"
                     required
                     value={signupData.email}
                     onChange={(e) => setSignupData({ ...signupData, email: e.target.value })}
-                    className="w-full px-4 py-2 md:py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-black focus:border-transparent text-black"
+                    className="w-full px-4 py-3.5 md:py-4 text-base border border-gray-300 rounded-xl focus:ring-2 focus:ring-black focus:border-transparent text-black"
                     placeholder="your@email.com"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold mb-2 text-gray-700">Password</label>
+                  <label className="block text-base font-semibold mb-3 text-gray-700">Password</label>
                   <div className="relative">
                     <input
                       type={showPassword ? "text" : "password"}
                       required
                       value={signupData.password}
                       onChange={(e) => setSignupData({ ...signupData, password: e.target.value })}
-                      className="w-full px-4 py-2 md:py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-black focus:border-transparent text-black pr-12"
+                      className="w-full px-4 py-3.5 md:py-4 text-base border border-gray-300 rounded-xl focus:ring-2 focus:ring-black focus:border-transparent text-black pr-12"
                       placeholder="••••••••"
                     />
                     <button
@@ -738,14 +738,14 @@ export default function AccountPage() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold mb-2 text-gray-700">Confirm Password</label>
+                  <label className="block text-base font-semibold mb-3 text-gray-700">Confirm Password</label>
                   <div className="relative">
                     <input
                       type={showConfirmPassword ? "text" : "password"}
                       required
                       value={signupData.confirmPassword}
                       onChange={(e) => setSignupData({ ...signupData, confirmPassword: e.target.value })}
-                      className="w-full px-4 py-2 md:py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-black focus:border-transparent text-black pr-12"
+                      className="w-full px-4 py-3.5 md:py-4 text-base border border-gray-300 rounded-xl focus:ring-2 focus:ring-black focus:border-transparent text-black pr-12"
                       placeholder="••••••••"
                     />
                     <button
@@ -761,7 +761,7 @@ export default function AccountPage() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full bg-black text-white py-2.5 md:py-3 rounded-xl font-semibold hover:bg-gray-900 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full bg-black text-white py-3.5 md:py-4 rounded-xl font-semibold text-base md:text-lg hover:bg-gray-900 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {loading ? 'Sending OTP...' : 'Continue'}
                 </button>
@@ -776,9 +776,9 @@ export default function AccountPage() {
   };
 
   return (
-    <div className="py-8 md:py-16 bg-white min-h-screen flex items-center">
+    <div className="py-4 md:py-8 bg-white min-h-screen flex items-center">
       <div className="container mx-auto px-4">
-        <div className="max-w-md mx-auto bg-white rounded-2xl shadow-xl overflow-hidden">
+        <div className="max-w-2xl w-full mx-auto bg-white rounded-2xl shadow-xl overflow-hidden">
           {renderContent()}
         </div>
       </div>
