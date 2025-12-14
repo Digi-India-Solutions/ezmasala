@@ -79,7 +79,7 @@ export default function Header() {
 
         <div className="lg:hidden flex items-center justify-between w-full">
           <button
-            onClick={() => document.dispatchEvent(new Event("open-mobile-menu"))}
+            onClick={() => document.dispatchEvent(new Event("toggle-mobile-menu"))}
             className="p-2 text-gray-700 hover:text-black transition"
           >
             <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -91,16 +91,7 @@ export default function Header() {
             <Image src="/logo.png" alt="EZ Masala" width={160} height={70} className="h-12 w-auto" priority />
           </Link>
 
-          <Link href="/cart" className="relative p-2">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-            </svg>
-            {totalItemsCount > 0 && (
-              <span className="bg-black text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center absolute -top-1 -right-1">
-                {totalItemsCount}
-              </span>
-            )}
-          </Link>
+          <div className="w-8"></div>
         </div>
 
         <Link href="/" className="hidden lg:flex items-center hover:opacity-80 transition shrink-0">
@@ -152,18 +143,35 @@ export default function Header() {
 
         <div className="hidden lg:flex items-center gap-2 md:gap-3 shrink-0 relative z-50">
           {/* User Account Dropdown */}
-          <div className="relative" ref={dropdownRef}>
-            <button
-              onClick={() => setShowUserDropdown(!showUserDropdown)}
-              className="group relative flex items-center gap-2 px-3 py-2.5 bg-red-600 text-white rounded-3xl hover:bg-red-700 transition-all duration-200 shadow-sm"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-              </svg>
-              <span className="font-semibold hidden lg:inline">{user ? user.firstName : 'Login'}</span>
-            </button>
+          <div
+            className="relative"
+            ref={dropdownRef}
+            onMouseEnter={() => !user && setShowUserDropdown(true)}
+            onMouseLeave={() => !user && setShowUserDropdown(false)}
+          >
+            {user ? (
+              <button
+                onClick={() => setShowUserDropdown(!showUserDropdown)}
+                className="group relative flex items-center gap-2 px-3 py-2.5 bg-red-600 text-white rounded-3xl hover:bg-red-700 transition-all duration-200 shadow-sm"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+                <span className="font-semibold hidden lg:inline">{user.firstName}</span>
+              </button>
+            ) : (
+              <Link
+                href="/account"
+                className="group relative flex items-center gap-2 px-3 py-2.5 bg-red-600 text-white rounded-3xl hover:bg-red-700 transition-all duration-200 shadow-sm"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+                <span className="font-semibold hidden lg:inline">Login</span>
+              </Link>
+            )}
 
-            {/* Dropdown Menu */}
+            {/* Dropdown Menu - Shows on hover for non-logged-in, on click for logged-in */}
             {showUserDropdown && (
               <div className="absolute right-0 mt-2 w-56 rounded-xl shadow-2xl border border-gray-200 py-2 z-[9999]" style={{ backgroundColor: 'white' }}>
                 {user ? (
@@ -220,7 +228,6 @@ export default function Header() {
                       <p className="text-gray-600 text-sm">New customer?</p>
                       <Link
                         href="/account?mode=signup"
-                        onClick={() => setShowUserDropdown(false)}
                         className="text-red-600 font-semibold hover:text-red-700"
                       >
                         Sign Up
@@ -228,7 +235,6 @@ export default function Header() {
                     </div>
                     <Link
                       href="/account"
-                      onClick={() => setShowUserDropdown(false)}
                       className="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-50 transition"
                     >
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -238,7 +244,6 @@ export default function Header() {
                     </Link>
                     <Link
                       href="/account"
-                      onClick={() => setShowUserDropdown(false)}
                       className="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-50 transition"
                     >
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -248,7 +253,6 @@ export default function Header() {
                     </Link>
                     <Link
                       href="/wishlist"
-                      onClick={() => setShowUserDropdown(false)}
                       className="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-50 transition"
                     >
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -261,16 +265,35 @@ export default function Header() {
               </div>
             )}
           </div>
-          <Link href="/cart" className="relative flex items-center gap-2 px-3 py-2.5 bg-black text-white rounded-3xl hover:bg-gray-900 transition-all duration-200 shadow-sm hover:shadow-md">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-            </svg>
-            <span className="font-semibold hidden lg:inline">Cart</span>
-            {totalItemsCount > 0 && (
-              <span className="bg-white text-black text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center absolute -top-1 -right-1">
-                {totalItemsCount}
-              </span>
-            )}
+
+          {/* Wishlist Icon */}
+          <Link href="/wishlist" className="flex flex-col items-center gap-1 px-2 py-1 rounded-lg hover:bg-gray-100 transition">
+            <div className="relative">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+              </svg>
+              {wishlistItems.length > 0 && (
+                <span className="bg-red-600 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center absolute -top-2 -right-2">
+                  {wishlistItems.length}
+                </span>
+              )}
+            </div>
+            <span className="text-xs font-medium text-gray-700">Wishlist</span>
+          </Link>
+
+          {/* Cart Icon */}
+          <Link href="/cart" className="flex flex-col items-center gap-1 px-2 py-1 rounded-lg hover:bg-gray-100 transition">
+            <div className="relative">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+              </svg>
+              {totalItemsCount > 0 && (
+                <span className="bg-black text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center absolute -top-2 -right-2">
+                  {totalItemsCount}
+                </span>
+              )}
+            </div>
+            <span className="text-xs font-medium text-gray-700">Cart</span>
           </Link>
         </div>
       </div>

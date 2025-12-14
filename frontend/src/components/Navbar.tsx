@@ -12,9 +12,9 @@ export default function Navbar() {
   const [isShopOpen, setIsShopOpen] = useState(false);
 
   useEffect(() => {
-    const open = () => setIsOpen(true);
-    document.addEventListener("open-mobile-menu", open);
-    return () => document.removeEventListener("open-mobile-menu", open);
+    const toggle = () => setIsOpen(prev => !prev);
+    document.addEventListener("toggle-mobile-menu", toggle);
+    return () => document.removeEventListener("toggle-mobile-menu", toggle);
   }, []);
 
   const links = [

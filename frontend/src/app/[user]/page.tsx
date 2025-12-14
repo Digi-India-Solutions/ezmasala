@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useAppSelector, useAppDispatch } from '@/store/hooks';
-import { logoutUser } from '@/store/slices/authSlice';
+import { logoutUser, updateUserProfile } from '@/store/slices/authSlice';
 import { clearWishlist } from '@/store/slices/wishlistSlice';
 import { toast } from 'sonner';
 import Loader from '@/components/Loader';
@@ -23,6 +23,13 @@ export default function UserProfilePage() {
   const [selectedOrder, setSelectedOrder] = useState<any>(null);
   const [cancelReason, setCancelReason] = useState('');
   const [cancelLoading, setCancelLoading] = useState(false);
+  const [showEditProfile, setShowEditProfile] = useState(false);
+  const [editLoading, setEditLoading] = useState(false);
+  const [profileData, setProfileData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+  });
   const [newAddress, setNewAddress] = useState({
     street: '',
     city: '',
@@ -37,6 +44,11 @@ export default function UserProfilePage() {
     if (user) {
       fetchUserData();
       fetchUserOrders();
+      setProfileData({
+        firstName: user.firstName || '',
+        lastName: user.lastName || '',
+        email: user.email || '',
+      });
     } else {
       setLoading(false);
     }
@@ -83,6 +95,44 @@ export default function UserProfilePage() {
       toast.success('Address added successfully!');
     } catch (error) {
       toast.error('Failed to add address');
+    }
+  };
+
+  const handleUpdateProfile = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!user) return;
+
+    // Validate email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!profileData.email || !emailRegex.test(profileData.email)) {
+      toast.error('Please enter a valid email address');
+      return;
+    }
+
+    // Validate names
+    if (!profileData.firstName.trim() || !profileData.lastName.trim()) {
+      toast.error('First name and last name are required');
+      return;
+    }
+
+    setEditLoading(true);
+    try {
+      const response = await api.put(`/user/${user.id}/profile`, profileData);
+      toast.success(response.message || 'Profile updated successfully! Check your email for confirmation.');
+      setShowEditProfile(false);
+
+      // Update Redux store with new user data
+      if (response.user) {
+        dispatch(updateUserProfile({
+          firstName: response.user.firstName,
+          lastName: response.user.lastName,
+          email: response.user.email,
+        }));
+      }
+    } catch (error: any) {
+      toast.error(error.message || 'Failed to update profile');
+    } finally {
+      setEditLoading(false);
     }
   };
 
@@ -161,13 +211,97 @@ export default function UserProfilePage() {
               <p className="text-gray-600">{user.email}</p>
             </div>
           </div>
-          <button
-            onClick={handleLogout}
-            className="bg-red-600 text-white px-4 md:px-6 py-2 rounded-xl font-semibold hover:bg-red-700 transition text-sm md:text-base"
-          >
-            Logout
-          </button>
+          <div className="flex gap-2">
+            <button
+              onClick={() => setShowEditProfile(!showEditProfile)}
+              className="bg-blue-600 text-white px-4 md:px-6 py-2 rounded-xl font-semibold hover:bg-blue-700 transition text-sm md:text-base"
+            >
+              {showEditProfile ? 'Cancel Edit' : 'Edit Profile'}
+            </button>
+            <button
+              onClick={handleLogout}
+              className="bg-red-600 text-white px-4 md:px-6 py-2 rounded-xl font-semibold hover:bg-red-700 transition text-sm md:text-base"
+            >
+              Logout
+            </button>
+          </div>
         </div>
+
+        {/* Edit Profile Form */}
+        {showEditProfile && (
+          <div className="bg-white p-6 md:p-8 rounded-2xl shadow-lg mb-6 md:mb-8 border border-gray-200">
+            <h2 className="text-xl md:text-2xl font-bold mb-6 text-black">Edit Profile</h2>
+            <form onSubmit={handleUpdateProfile} className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-black font-semibold mb-2 text-sm md:text-base">First Name</label>
+                  <input
+                    type="text"
+                    value={profileData.firstName}
+                    onChange={(e) => setProfileData({ ...profileData, firstName: e.target.value })}
+                    className="w-full px-3 md:px-4 py-2 border-2 border-gray-300 rounded-xl focus:border-blue-600 outline-none text-black text-sm md:text-base"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-black font-semibold mb-2 text-sm md:text-base">Last Name</label>
+                  <input
+                    type="text"
+                    value={profileData.lastName}
+                    onChange={(e) => setProfileData({ ...profileData, lastName: e.target.value })}
+                    className="w-full px-3 md:px-4 py-2 border-2 border-gray-300 rounded-xl focus:border-blue-600 outline-none text-black text-sm md:text-base"
+                    required
+                  />
+                </div>
+              </div>
+              <div>
+                <label className="block text-black font-semibold mb-2 text-sm md:text-base">Email</label>
+                <input
+                  type="email"
+                  value={profileData.email}
+                  onChange={(e) => setProfileData({ ...profileData, email: e.target.value })}
+                  className="w-full px-3 md:px-4 py-2 border-2 border-gray-300 rounded-xl focus:border-blue-600 outline-none text-black text-sm md:text-base"
+                  required
+                />
+              </div>
+              <div className="bg-blue-50 border-l-4 border-blue-600 p-4 rounded">
+                <p className="text-sm text-gray-700">
+                  <span className="font-semibold">Note:</span> When you update your profile, you will receive a confirmation email with details of the changes made.
+                </p>
+              </div>
+              <div className="flex gap-3">
+                <button
+                  type="submit"
+                  disabled={editLoading}
+                  className="bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-700 transition disabled:opacity-50 flex items-center justify-center gap-2"
+                >
+                  {editLoading ? (
+                    <>
+                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                      Updating...
+                    </>
+                  ) : (
+                    'Save Changes'
+                  )}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowEditProfile(false);
+                    setProfileData({
+                      firstName: user.firstName || '',
+                      lastName: user.lastName || '',
+                      email: user.email || '',
+                    });
+                  }}
+                  className="border-2 border-gray-300 text-gray-700 px-6 py-3 rounded-xl font-semibold hover:bg-gray-50 transition"
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+        )}
 
         <div className="bg-white p-6 md:p-8 rounded-2xl shadow-lg mb-6 md:mb-8 border border-gray-200">
           <h2 className="text-xl md:text-2xl font-bold mb-6 text-black">Recent Orders</h2>

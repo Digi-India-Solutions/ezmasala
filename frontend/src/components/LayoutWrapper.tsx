@@ -5,6 +5,7 @@ import Header from "./Header";
 import NavWrapper from "./NavWrapper";
 import Footer from "./Footer";
 import DealsBanner from "./DealsBanner";
+import MobileBottomNav from "./MobileBottomNav";
 
 export default function LayoutWrapper({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -21,8 +22,9 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
       <DealsBanner />
       <Header />
       <NavWrapper />
-      <main className="min-h-screen">{children}</main>
+      <main className="min-h-screen pb-20 lg:pb-0">{children}</main>
       <Footer />
+      <MobileBottomNav />
     </>
   );
 }

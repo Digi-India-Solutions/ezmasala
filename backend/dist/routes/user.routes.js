@@ -41,6 +41,8 @@ const router = (0, express_1.Router)();
 router.get('/', auth_1.authenticate, auth_1.requireAdmin, userController.getAll);
 // Get user by ID (user can view own profile, admin can view any)
 router.get('/:id', auth_1.optionalAuth, userController.getById);
+// Profile update (requires authentication)
+router.put('/:id/profile', auth_1.authenticate, userController.updateProfile);
 // Address management (requires authentication)
 router.post('/:id/addresses', auth_1.authenticate, userController.addAddress);
 router.put('/:id/addresses', auth_1.authenticate, userController.updateAddresses);

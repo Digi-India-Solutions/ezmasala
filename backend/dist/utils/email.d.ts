@@ -16,6 +16,7 @@ export declare const getContactFormEmailTemplate: (contact: {
     message: string;
 }) => string;
 export declare const getOrderNotificationTemplate: (order: any, customerName: string) => string;
+export declare const getProfileUpdateConfirmationTemplate: (userName: string, changes: string[]) => string;
 export declare const getOrderConfirmationTemplate: (order: any, customerName: string) => string;
 export {};
 //# sourceMappingURL=email.d.ts.map
