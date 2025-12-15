@@ -163,23 +163,24 @@ export default function Header() {
                 </svg>
               </button>
             ) : (
-              <button
-                onMouseEnter={() => setShowUserDropdown(true)}
+              <Link
+                href="/account"
                 className="group relative flex items-center gap-2 px-3 py-2.5 bg-red-600 text-white rounded-3xl hover:bg-red-700 transition-all duration-200 shadow-sm"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                 </svg>
-                <span className="font-semibold hidden lg:inline">Login/Signup</span>
+                <span className="font-semibold hidden lg:inline">Profile</span>
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
-              </button>
+              </Link>
             )}
 
             {/* Dropdown Menu - Shows on hover for non-logged-in, on click for logged-in */}
             {showUserDropdown && (
-              <div className="absolute right-0 mt-2 w-56 rounded-xl shadow-2xl border border-gray-200 py-2 z-[9999]" style={{ backgroundColor: 'white' }}>
+              <div className="absolute right-0 top-full pt-2 z-[9999]">
+                <div className="w-56 rounded-xl shadow-2xl border border-gray-200 py-2 bg-white">
                 {user ? (
                   <>
                     <Link
@@ -230,15 +231,6 @@ export default function Header() {
                   </>
                 ) : (
                   <>
-                    <div className="px-4 py-2 border-b border-gray-100">
-                      <p className="text-gray-600 text-sm">New customer?</p>
-                      <Link
-                        href="/account?mode=signup"
-                        className="text-red-600 font-semibold hover:text-red-700"
-                      >
-                        Sign Up
-                      </Link>
-                    </div>
                     <Link
                       href="/account"
                       className="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-gray-50 transition"
@@ -246,7 +238,7 @@ export default function Header() {
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                       </svg>
-                      <span className="font-medium">My Profile</span>
+                      <span className="font-medium">Login/Signup</span>
                     </Link>
                     <Link
                       href="/account"
@@ -268,6 +260,7 @@ export default function Header() {
                     </Link>
                   </>
                 )}
+                </div>
               </div>
             )}
           </div>

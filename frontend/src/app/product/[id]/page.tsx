@@ -316,10 +316,10 @@ export default function ProductPage() {
 
               <h1
                 className="
-                  mb-5 text-black font-medium font-dm 
-                  text-[calc(38px/60*var(--base-headings-size))] 
-                  leading-[44.8px]
-                  lg:text-[37.33px] lg:h-[89.58px]
+                  mb-5 text-black font-medium font-dm
+                  text-[28px]
+                  leading-[36px]
+                  lg:text-[32px] lg:leading-[42px]
                 "
               >
                 {product.title}
@@ -375,21 +375,21 @@ export default function ProductPage() {
 
               {/* Quantity + Add to Cart */}
               <div className="flex flex-wrap items-center gap-4 w-full mt-6">
-                <div className="flex items-center gap-4 w-full sm:w-auto justify-center sm:justify-start">
+                <div className="flex items-center gap-2 w-full sm:w-auto justify-center sm:justify-start">
                   <button
                     onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                    className="w-14 h-14 sm:w-12 sm:h-12 border-2 border-gray-300 rounded-full flex items-center justify-center text-2xl font-bold"
+                    className="w-10 h-10 sm:w-9 sm:h-9 border-2 border-gray-300 rounded-lg flex items-center justify-center text-xl font-bold hover:bg-gray-100 transition"
                   >
                     −
                   </button>
 
-                  <span className="text-2xl font-bold w-10 text-center">
+                  <span className="text-xl font-bold w-8 text-center">
                     {quantity}
                   </span>
 
                   <button
                     onClick={() => setQuantity(Math.min(product.stock, quantity + 1))}
-                    className="w-14 h-14 sm:w-12 sm:h-12 border-2 border-gray-300 rounded-full flex items-center justify-center text-2xl font-bold"
+                    className="w-10 h-10 sm:w-9 sm:h-9 border-2 border-gray-300 rounded-lg flex items-center justify-center text-xl font-bold hover:bg-gray-100 transition"
                   >
                     +
                   </button>

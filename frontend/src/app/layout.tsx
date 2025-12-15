@@ -91,6 +91,9 @@ export default function RootLayout({
               style: {
                 padding: '16px',
               },
+              classNames: {
+                closeButton: 'toast-close-button',
+              },
             }}
           />
           <LayoutWrapper>{children}</LayoutWrapper>

@@ -59,22 +59,42 @@ body {
 }
 
 /* Sonner Toast Customization */
-[data-sonner-toast] [data-close-button] {
-  width: 20px !important;
-  height: 20px !important;
+[data-sonner-toast] {
+  padding-right: 48px !important;
+  padding-left: 16px !important;
+}
+
+[data-sonner-toast] [data-close-button],
+[data-sonner-toast] button[data-close-button],
+[data-sonner-toast] > button[aria-label="Close toast"] {
+  position: absolute !important;
+  right: 12px !important;
+  left: auto !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  width: 32px !important;
+  height: 32px !important;
   border: none !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  opacity: 0.7 !important;
-  transition: opacity 0.2s !important;
+  opacity: 0.9 !important;
+  transition: all 0.2s !important;
+  background-color: rgba(0, 0, 0, 0.15) !important;
+  border-radius: 50% !important;
 }
 
-[data-sonner-toast] [data-close-button]:hover {
+[data-sonner-toast] [data-close-button]:hover,
+[data-sonner-toast] button[data-close-button]:hover,
+[data-sonner-toast] > button[aria-label="Close toast"]:hover {
   opacity: 1 !important;
+  background-color: rgba(0, 0, 0, 0.25) !important;
+  transform: translateY(-50%) scale(1.05) !important;
 }
 
-[data-sonner-toast] [data-close-button] svg {
-  width: 14px !important;
-  height: 14px !important;
+[data-sonner-toast] [data-close-button] svg,
+[data-sonner-toast] button[data-close-button] svg,
+[data-sonner-toast] > button[aria-label="Close toast"] svg {
+  width: 20px !important;
+  height: 20px !important;
 }
