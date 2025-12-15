@@ -449,9 +449,13 @@ export const getProfileUpdateConfirmationTemplate = (userName: string, changes: 
           <!-- Icon -->
           <tr>
             <td style="padding: 30px 40px 0; text-align: center;">
-              <div style="width: 80px; height: 80px; background-color: #dbeafe; border-radius: 50%; margin: 0 auto; display: flex; align-items: center; justify-content: center;">
-                <span style="font-size: 40px;">✓</span>
-              </div>
+              <table role="presentation" style="margin: 0 auto;">
+                <tr>
+                  <td style="width: 80px; height: 80px; background-color: #dbeafe; border-radius: 50%; text-align: center; vertical-align: middle;">
+                    <span style="font-size: 40px; line-height: 80px; color: #3b82f6;">✓</span>
+                  </td>
+                </tr>
+              </table>
             </td>
           </tr>
 
