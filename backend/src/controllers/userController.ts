@@ -83,7 +83,7 @@ export const updateAddresses = async (req: AuthRequest, res: Response) => {
 export const updateProfile = async (req: AuthRequest, res: Response) => {
   try {
     const { id } = req.params;
-    const { firstName, lastName, email } = req.body;
+    const { firstName, lastName, email, phone } = req.body;
 
     // Verify the user making the request is the owner or admin
     if (req.user?.id !== id && req.user?.type !== 'admin') {
@@ -118,6 +118,15 @@ export const updateProfile = async (req: AuthRequest, res: Response) => {
       }
       changes.push(`Email updated to: ${email}`);
       user.email = email;
+    }
+
+    if (phone !== undefined && phone !== user.phone) {
+      if (phone) {
+        changes.push(`Phone Number updated to: ${phone}`);
+      } else {
+        changes.push(`Phone Number removed`);
+      }
+      user.phone = phone;
     }
 
     // Save user

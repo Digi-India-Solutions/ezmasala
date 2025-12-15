@@ -117,10 +117,25 @@ export default function UserProfilePage() {
       return;
     }
 
+    // Validate phone number if provided
+    if (profileData.phone && profileData.phone.trim()) {
+      const phoneRegex = /^\d{10}$/;
+      if (!phoneRegex.test(profileData.phone)) {
+        toast.error('Please enter a valid 10-digit phone number');
+        return;
+      }
+    }
+
     setEditLoading(true);
     try {
       const response = await api.put(`/user/${user.id}/profile`, profileData);
-      toast.success(response.message || 'Profile updated successfully! Check your email for confirmation.');
+
+      // Show success message with email confirmation
+      toast.success('Profile updated successfully!', {
+        description: 'A confirmation email has been sent to your email address.',
+        duration: 5000,
+      });
+
       setShowEditProfile(false);
 
       // Update Redux store with new user data
@@ -129,6 +144,7 @@ export default function UserProfilePage() {
           firstName: response.user.firstName,
           lastName: response.user.lastName,
           email: response.user.email,
+          phone: response.user.phone,
         }));
       }
     } catch (error: any) {
