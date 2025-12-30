@@ -24,7 +24,7 @@ export default function TestimonialCard({ testimonial }: TestimonialCardProps) {
       <div className="flex items-center gap-4 pt-4 border-t border-gray-100">
         <div className="w-12 h-12 rounded-full bg-gradient-to-br from-gray-200 to-gray-300 relative overflow-hidden ring-2 ring-gray-100">
           <Image
-            src={testimonial.avatar}
+            src="https://via.placeholder.com/48?text=User"
             alt={testimonial.name}
             fill
             className="object-cover"

@@ -93,7 +93,7 @@ export default function BannerCarousel() {
               src={banner}
               alt=""
               width={1920}
-              height={700}
+              height={500}
               className="w-full h-auto object-contain"
               priority
             />

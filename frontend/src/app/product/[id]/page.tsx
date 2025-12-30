@@ -627,10 +627,12 @@ export default function ProductPage() {
                           className="review-card snap-center flex-shrink-0 w-[280px] sm:w-[320px] p-5 bg-white rounded-xl border-2 border-gray-200 shadow-sm hover:shadow-lg hover:border-black transition-all"
                         >
                           <div className="flex items-center gap-3 mb-4">
-                            <div className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center shrink-0">
-                              <svg className="w-5 h-5 text-white" fill="currentColor">
-                                <path d="M10 9a3 3 0 100-6 3 3 0 000 6zM3 18a7 7 0 1114 0H3z" />
-                              </svg>
+                            <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center shrink-0 overflow-hidden">
+                              <img 
+                                src="https://via.placeholder.com/40?text=User" 
+                                alt="User" 
+                                className="w-full h-full object-cover"
+                              />
                             </div>
                             <div className="flex-1 min-w-0">
                               <p className="font-bold text-black text-sm truncate">

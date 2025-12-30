@@ -1,7 +1,6 @@
 "use client";
 
 import { useRef, useState, useEffect } from "react";
-import Image from "next/image";
 
 const customerReviews = [
   {
@@ -133,12 +132,11 @@ export default function CustomerReviews() {
                 </p>
 
                 <div className="flex flex-col items-center pt-4 border-t border-gray-200">
-                  <div className="relative w-14 h-14 mb-3">
-                    <Image
-                      src={review.spiceImage}
+                  <div className="w-14 h-14 mb-3 rounded-lg overflow-hidden bg-gray-100">
+                    <img
+                      src="https://i.pinimg.com/736x/c2/a4/2c/c2a42cbf7c030126c548cabdef597adf.jpg"
                       alt="Product"
-                      fill
-                      className="object-cover rounded-lg"
+                      className="w-full h-full object-cover rounded-lg"
                     />
                   </div>
                   <p className="font-bold text-black">{review.name}</p>

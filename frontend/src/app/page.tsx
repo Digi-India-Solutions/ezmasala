@@ -47,17 +47,17 @@ export default function Home() {
 
         <div className="md:hidden w-full h-72 relative mb-10">
           <img
-            src="/spice/8.jpg"
-            alt="Fresh masalas"
-            className="w-full h-full object-cover rounded-none"
+            src="/about_us.png"
+            alt="About EZ Masala"
+            className="w-full h-full object-contain rounded-none"
           />
         </div>
 
         <div className="hidden md:block absolute top-0 left-0 w-1/2 h-full">
           <img
-            src="/spice/8.jpg"
-            alt="Fresh masalas"
-            className="w-full h-full object-cover rounded-none"
+            src="/about_us.png"
+            alt="About EZ Masala"
+            className="w-full h-full object-contain rounded-none"
           />
           <div className="absolute inset-0 pointer-events-none"></div>
         </div>
@@ -102,15 +102,8 @@ export default function Home() {
 
             {/* USP 1 - Chef Hat Icon */}
             <div className="flex flex-col items-center text-center p-6 bg-white rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 group">
-              <div className="w-20 h-20 bg-gradient-to-br from-amber-500 via-orange-500 to-red-500 rounded-full flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300">
-                <svg className="w-10 h-10 text-white" viewBox="0 0 64 64" fill="currentColor">
-                  <path d="M32 8c-8.8 0-16 7.2-16 16 0 2.4.5 4.6 1.5 6.6L16 52h32l-1.5-21.4c1-2 1.5-4.2 1.5-6.6 0-8.8-7.2-16-16-16z"/>
-                  <ellipse cx="32" cy="10" rx="8" ry="4" fill="currentColor" opacity="0.8"/>
-                  <rect x="14" y="52" width="36" height="4" rx="2" fill="currentColor"/>
-                  <circle cx="20" cy="18" r="4" fill="currentColor" opacity="0.6"/>
-                  <circle cx="44" cy="18" r="4" fill="currentColor" opacity="0.6"/>
-                  <circle cx="32" cy="14" r="5" fill="currentColor" opacity="0.7"/>
-                </svg>
+              <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300 overflow-hidden">
+                <img src="/usp1.png" alt="Easy for New & Experienced Cooks" className="w-14 h-14 object-cover" />
               </div>
               <h3 className="text-lg font-dm-sans font-bold text-gray-900 mb-2">Easy for New & Experienced Cooks</h3>
               <p className="text-sm text-gray-600 font-dm-sans">Designed for first-time cooks as well as trained chefs.</p>
@@ -118,16 +111,8 @@ export default function Home() {
 
             {/* USP 2 - Spice Mortar & Pestle Icon */}
             <div className="flex flex-col items-center text-center p-6 bg-white rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 group">
-              <div className="w-20 h-20 bg-gradient-to-br from-emerald-500 via-teal-500 to-cyan-600 rounded-full flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300">
-                <svg className="w-10 h-10 text-white" viewBox="0 0 64 64" fill="currentColor">
-                  <path d="M12 36c0 12 8.95 20 20 20s20-8 20-20c0-2-16-2-20-2s-20 0-20 2z"/>
-                  <ellipse cx="32" cy="34" rx="20" ry="6" fill="currentColor" opacity="0.8"/>
-                  <path d="M42 8l6 24-4 2-8-22z" fill="currentColor"/>
-                  <circle cx="44" cy="6" r="4" fill="currentColor" opacity="0.9"/>
-                  <ellipse cx="24" cy="38" rx="3" ry="2" fill="currentColor" opacity="0.5"/>
-                  <ellipse cx="36" cy="40" rx="2" ry="1.5" fill="currentColor" opacity="0.5"/>
-                  <ellipse cx="30" cy="42" rx="2.5" ry="1.5" fill="currentColor" opacity="0.4"/>
-                </svg>
+              <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300 overflow-hidden">
+                <img src="/usp2.png" alt="Consistent Taste, Every Time" className="w-14 h-14 object-cover" />
               </div>
               <h3 className="text-lg font-dm-sans font-bold text-gray-900 mb-2">Consistent Taste, Every Time</h3>
               <p className="text-sm text-gray-600 font-dm-sans">Fixed flavour support – less guesswork, more reliability.</p>
@@ -135,16 +120,8 @@ export default function Home() {
 
             {/* USP 3 - Cooking Pot with Steam Icon */}
             <div className="flex flex-col items-center text-center p-6 bg-white rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 group">
-              <div className="w-20 h-20 bg-gradient-to-br from-red-500 via-rose-500 to-pink-500 rounded-full flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300">
-                <svg className="w-10 h-10 text-white" viewBox="0 0 64 64" fill="currentColor">
-                  <path d="M12 28h40v4c0 12-8 20-20 20S12 44 12 32v-4z"/>
-                  <rect x="8" y="24" width="48" height="6" rx="3" fill="currentColor"/>
-                  <rect x="6" y="28" width="4" height="12" rx="2" fill="currentColor" opacity="0.8"/>
-                  <rect x="54" y="28" width="4" height="12" rx="2" fill="currentColor" opacity="0.8"/>
-                  <path d="M24 20c0-4 2-8 2-8s2 4 2 8" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" opacity="0.7"/>
-                  <path d="M32 18c0-5 2-10 2-10s2 5 2 10" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" opacity="0.7"/>
-                  <path d="M40 20c0-4 2-8 2-8s2 4 2 8" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" opacity="0.7"/>
-                </svg>
+              <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300 overflow-hidden">
+                <img src="/usp3.png" alt="One Base, Many Dishes" className="w-14 h-14 object-cover" />
               </div>
               <h3 className="text-lg font-dm-sans font-bold text-gray-900 mb-2">One Base, Many Dishes</h3>
               <p className="text-sm text-gray-600 font-dm-sans">Use the same pack to cook different gravies, dals and curries.</p>
@@ -152,18 +129,8 @@ export default function Home() {
 
             {/* USP 4 - Recipe Card with Spices Icon */}
             <div className="flex flex-col items-center text-center p-6 bg-white rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 group">
-              <div className="w-20 h-20 bg-gradient-to-br from-violet-500 via-purple-500 to-fuchsia-500 rounded-full flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300">
-                <svg className="w-10 h-10 text-white" viewBox="0 0 64 64" fill="currentColor">
-                  <rect x="10" y="8" width="36" height="48" rx="4" fill="currentColor" opacity="0.9"/>
-                  <rect x="14" y="14" width="20" height="3" rx="1.5" fill="currentColor" opacity="0.5"/>
-                  <rect x="14" y="20" width="28" height="2" rx="1" fill="currentColor" opacity="0.4"/>
-                  <rect x="14" y="25" width="24" height="2" rx="1" fill="currentColor" opacity="0.4"/>
-                  <rect x="14" y="30" width="26" height="2" rx="1" fill="currentColor" opacity="0.4"/>
-                  <circle cx="48" cy="44" r="12" fill="currentColor"/>
-                  <path d="M48 36v16M40 44h16" stroke="white" strokeWidth="3" strokeLinecap="round"/>
-                  <circle cx="20" cy="44" r="4" fill="currentColor" opacity="0.6"/>
-                  <circle cx="30" cy="42" r="3" fill="currentColor" opacity="0.5"/>
-                </svg>
+              <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300 overflow-hidden">
+                <img src="/usp4.jpg" alt="Clear Instructions on Every Box" className="w-14 h-14 object-cover" />
               </div>
               <h3 className="text-lg font-dm-sans font-bold text-gray-900 mb-2">Clear Instructions on Every Box</h3>
               <p className="text-sm text-gray-600 font-dm-sans">All sides of the box guide you step by step.</p>
@@ -335,9 +302,9 @@ export default function Home() {
       <section className="py-8 my-4 bg-white">
         <div className="container mx-auto px-6 text-center">
           <img
-            src="/Certifications.jpg"
-            alt="Certification"
-            className="mx-auto rounded-2xl shadow-lg max-w-full h-auto"
+            src="/Certificate.jpeg"
+            alt="Certificate"
+            className="mx-auto rounded-2xl shadow-lg h-auto w-full sm:w-3/4 lg:max-w-5xl"
           />
         </div>
       </section>
@@ -486,7 +453,7 @@ export default function Home() {
         </div>
       </section>
 
-      <CompanyTestimonials />
+      {/* <CompanyTestimonials /> */}
       <CustomerReviews />
 
       {/* SHINE EXPORTS INFO */}

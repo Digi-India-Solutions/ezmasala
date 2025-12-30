@@ -45,11 +45,11 @@ export default function MasalaMPage() {
           />
 
           {/* HERO SECTION */}
-          <div className="bg-gradient-to-br from-green-50 to-teal-50 rounded-3xl shadow-xl p-8 md:p-12 mb-10">
+          <div className="rounded-3xl shadow-xl p-8 md:p-12 mb-10" style={{ backgroundColor: '#eddee1' }}>
             <div className="max-w-4xl mx-auto text-center">
               <div className="inline-block mb-4">
-                <div className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto">
-                  <span className="text-white font-bold text-4xl">M</span>
+                <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto" style={{ backgroundColor: '#eddee1' }}>
+                  <span className="text-black font-bold text-4xl">M</span>
                 </div>
               </div>
               <h1 className="text-4xl md:text-6xl font-bold text-black mb-4">
@@ -79,7 +79,7 @@ export default function MasalaMPage() {
 
             <div className="space-y-4">
               <div className="flex gap-4 items-start">
-                <div className="flex-shrink-0 w-10 h-10 bg-green-500 rounded-full flex items-center justify-center text-white font-bold">
+                <div className="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-white font-bold" style={{ backgroundColor: '#eddee1', color: '#000' }}>
                   1
                 </div>
                 <div>
@@ -89,7 +89,7 @@ export default function MasalaMPage() {
               </div>
 
               <div className="flex gap-4 items-start">
-                <div className="flex-shrink-0 w-10 h-10 bg-green-500 rounded-full flex items-center justify-center text-white font-bold">
+                <div className="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-white font-bold" style={{ backgroundColor: '#eddee1', color: '#000' }}>
                   2
                 </div>
                 <div>
@@ -99,7 +99,7 @@ export default function MasalaMPage() {
               </div>
 
               <div className="flex gap-4 items-start">
-                <div className="flex-shrink-0 w-10 h-10 bg-green-500 rounded-full flex items-center justify-center text-white font-bold">
+                <div className="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-white font-bold" style={{ backgroundColor: '#eddee1', color: '#000' }}>
                   3
                 </div>
                 <div>
@@ -109,7 +109,7 @@ export default function MasalaMPage() {
               </div>
 
               <div className="flex gap-4 items-start">
-                <div className="flex-shrink-0 w-10 h-10 bg-green-500 rounded-full flex items-center justify-center text-white font-bold">
+                <div className="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-white font-bold" style={{ backgroundColor: '#eddee1', color: '#000' }}>
                   4
                 </div>
                 <div>
@@ -119,7 +119,7 @@ export default function MasalaMPage() {
               </div>
 
               <div className="flex gap-4 items-start">
-                <div className="flex-shrink-0 w-10 h-10 bg-green-500 rounded-full flex items-center justify-center text-white font-bold">
+                <div className="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-white font-bold" style={{ backgroundColor: '#eddee1', color: '#000' }}>
                   5
                 </div>
                 <div>
@@ -139,8 +139,8 @@ export default function MasalaMPage() {
             {/* RECIPE 1: SAMBAR */}
             <div className="bg-white rounded-2xl shadow-lg p-6 md:p-10 mb-8 max-w-5xl mx-auto">
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 bg-gradient-to-br from-green-400 to-teal-500 rounded-full flex items-center justify-center">
-                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="w-12 h-12 rounded-full flex items-center justify-center" style={{ backgroundColor: '#eddee1' }}>
+                  <svg className="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
                   </svg>
                 </div>
@@ -221,8 +221,8 @@ export default function MasalaMPage() {
             {/* RECIPE 2: RASAM */}
             <div className="bg-white rounded-2xl shadow-lg p-6 md:p-10 mb-8 max-w-5xl mx-auto">
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 bg-gradient-to-br from-teal-400 to-green-500 rounded-full flex items-center justify-center">
-                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="w-12 h-12 rounded-full flex items-center justify-center" style={{ backgroundColor: '#eddee1' }}>
+                  <svg className="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
                   </svg>
                 </div>
@@ -303,8 +303,8 @@ export default function MasalaMPage() {
             {/* RECIPE 3: VEGETABLE CURRY */}
             <div className="bg-white rounded-2xl shadow-lg p-6 md:p-10 mb-8 max-w-5xl mx-auto">
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 bg-gradient-to-br from-green-400 to-emerald-500 rounded-full flex items-center justify-center">
-                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="w-12 h-12 rounded-full flex items-center justify-center" style={{ backgroundColor: '#eddee1' }}>
+                  <svg className="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
                   </svg>
                 </div>
@@ -388,14 +388,14 @@ export default function MasalaMPage() {
           </div>
 
           {/* GENERAL COOKING TIPS */}
-          <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl shadow-lg p-6 md:p-10 mb-10 max-w-5xl mx-auto border-l-4 border-blue-500">
+          <div className="rounded-2xl shadow-lg p-6 md:p-10 mb-10 max-w-5xl mx-auto border-l-4" style={{ backgroundColor: '#eddee1', borderColor: '#d9c9cd' }}>
             <h2 className="text-2xl md:text-3xl font-bold text-black mb-6">
               General Cooking Tips with EZ Masala M
             </h2>
 
             <div className="space-y-4">
               <div className="flex gap-3 items-start">
-                <div className="flex-shrink-0 w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center mt-1">
+                <div className="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center mt-1" style={{ backgroundColor: '#d9c9cd' }}>
                   <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
@@ -442,15 +442,15 @@ export default function MasalaMPage() {
           </div>
 
           {/* CTA SECTION */}
-          <div className="bg-gradient-to-br from-green-500 to-teal-600 rounded-3xl shadow-2xl p-8 md:p-12 mb-10 max-w-5xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+          <div className="rounded-3xl shadow-2xl p-8 md:p-12 mb-10 max-w-5xl mx-auto text-center" style={{ backgroundColor: '#eddee1' }}>
+            <h2 className="text-3xl md:text-4xl font-bold text-black mb-4">
               Ready to Cook with EZ Masala M?
             </h2>
-            <p className="text-lg text-white/90 mb-8 max-w-2xl mx-auto">
+            <p className="text-lg text-gray-700 mb-8 max-w-2xl mx-auto">
               Choose your pack size and bring authentic South Indian flavours to your kitchen today.
             </p>
             <Link href="/collections">
-              <button className="bg-white text-green-600 px-8 py-4 rounded-xl font-bold hover:bg-gray-100 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1 inline-flex items-center gap-2">
+              <button className="bg-white text-black px-8 py-4 rounded-xl font-bold hover:bg-gray-100 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1 inline-flex items-center gap-2">
                 Shop EZ Masala M
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />

@@ -84,7 +84,8 @@ export default function Navbar() {
                 <div className="border-t border-gray-200 my-1"></div>
                 <Link
                   href="/collection/masala-j"
-                  className="block px-4 py-3 text-gray-700 hover:bg-orange-50 hover:text-orange-600 transition-colors"
+                  className="block px-4 py-3 text-gray-700 transition-colors"
+                  style={{ backgroundColor: '#eae6d2' }}
                 >
                   <div className="flex items-center gap-2">
                     <div className="w-6 h-6 bg-orange-500 rounded-full flex items-center justify-center">
@@ -98,7 +99,8 @@ export default function Navbar() {
                 </Link>
                 <Link
                   href="/collection/masala-m"
-                  className="block px-4 py-3 text-gray-700 hover:bg-green-50 hover:text-green-600 transition-colors"
+                  className="block px-4 py-3 text-gray-700 transition-colors"
+                  style={{ backgroundColor: '#eddee1' }}
                 >
                   <div className="flex items-center gap-2">
                     <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
