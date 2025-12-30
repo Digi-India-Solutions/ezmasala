@@ -4,6 +4,7 @@ const nextConfig: NextConfig = {
   output: "standalone",
 
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: "https",
@@ -19,7 +20,7 @@ const nextConfig: NextConfig = {
         headers: [
           {
             key: "Access-Control-Allow-Origin",
-            value: "https://admin.ezmasalaa.com", // ⚠️ DO NOT use "*"
+            value: "https://admin.ezmasalaa.com",
           },
           {
             key: "Access-Control-Allow-Methods",
@@ -45,5 +46,3 @@ const nextConfig: NextConfig = {
 
 export default nextConfig;
 // import type { NextConfig } from "next";
-
-// const nextConfig: NextConfig = {
