@@ -1,6 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  output: "standalone",
+
   images: {
     remotePatterns: [
       {
@@ -9,6 +11,7 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+
   async headers() {
     return [
       {
@@ -16,7 +19,7 @@ const nextConfig: NextConfig = {
         headers: [
           {
             key: "Access-Control-Allow-Origin",
-            value: "*",
+            value: "https://admin.ezmasalaa.com", // ⚠️ DO NOT use "*"
           },
           {
             key: "Access-Control-Allow-Methods",
@@ -41,3 +44,6 @@ const nextConfig: NextConfig = {
 };
 
 export default nextConfig;
+// import type { NextConfig } from "next";
+
+// const nextConfig: NextConfig = {

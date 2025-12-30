@@ -1,7 +1,6 @@
 'use client';
 
 import Link from "next/link";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import api from "@/lib/api";
 
@@ -45,11 +44,9 @@ export default function Footer() {
           {/* LOGO + DESCRIPTION */}
           <div>
             <Link href="/" className="inline-block mb-8">
-              <Image
+              <img
                 src="/logo.png"
                 alt="EZ Masala"
-                width={180}
-                height={60}
                 className="w-auto h-14"
               />
             </Link>

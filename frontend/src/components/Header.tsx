@@ -1,7 +1,6 @@
 'use client';
 
 import Link from "next/link";
-import Image from "next/image";
 import { useAppSelector, useAppDispatch } from "@/store/hooks";
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
@@ -88,14 +87,14 @@ export default function Header() {
           </button>
 
           <Link href="/" className="flex items-center transition shrink-0">
-            <Image src="/logo.png" alt="EZ Masala" width={160} height={70} className="h-12 w-auto" priority />
+            <img src="/logo.png" alt="EZ Masala" className="h-12 w-auto" />
           </Link>
 
           <div className="w-8"></div>
         </div>
 
         <Link href="/" className="hidden lg:flex items-center hover:opacity-80 transition shrink-0">
-          <Image src="/logo.png" alt="EZ Masala" width={260} height={90} className="h-14 md:h-16 w-auto" priority />
+          <img src="/logo.png" alt="EZ Masala" className="h-14 md:h-16 w-auto" />
         </Link>
 
         <div className="flex-1 max-w-lg relative hidden md:block" ref={searchRef}>

@@ -1,6 +1,5 @@
 'use client';
 
-import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 import ProductCard from "@/components/ProductCard";
@@ -47,20 +46,18 @@ export default function Home() {
       <section className="py-2 md:py-10 bg-white relative overflow-hidden">
 
         <div className="md:hidden w-full h-72 relative mb-10">
-          <Image
+          <img
             src="/spice/8.jpg"
             alt="Fresh masalas"
-            fill
-            className="object-cover rounded-none"
+            className="w-full h-full object-cover rounded-none"
           />
         </div>
 
         <div className="hidden md:block absolute top-0 left-0 w-1/2 h-full">
-          <Image
+          <img
             src="/spice/8.jpg"
             alt="Fresh masalas"
-            fill
-            className="object-cover rounded-none"
+            className="w-full h-full object-cover rounded-none"
           />
           <div className="absolute inset-0 pointer-events-none"></div>
         </div>
@@ -337,12 +334,10 @@ export default function Home() {
 
       <section className="py-8 my-4 bg-white">
         <div className="container mx-auto px-6 text-center">
-          <Image
+          <img
             src="/Certifications.jpg"
             alt="Certification"
-            width={1200}
-            height={400}
-            className="mx-auto rounded-2xl shadow-lg"
+            className="mx-auto rounded-2xl shadow-lg max-w-full h-auto"
           />
         </div>
       </section>
