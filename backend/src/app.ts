@@ -54,14 +54,14 @@ app.use('/api', routes);
 app.use(errorHandler);
 
 // Start server
-const PORT = process.env.PORT || 5000;
+const PORT = Number(process.env.PORT) || 9002;
 
 connectDb()
   .then(() => {
-    app.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
-      console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
-    });
+    app.listen(PORT, '127.0.0.1', () => {
+  console.log(`Server running on port ${PORT}`);
+  console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
+});
   })
   .catch((error) => {
     console.error('Failed to connect to database:', error);
