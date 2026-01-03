@@ -102,8 +102,8 @@ export default function Home() {
 
             {/* USP 1 - Chef Hat Icon */}
             <div className="flex flex-col items-center text-center p-6 bg-white rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 group">
-              <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300 overflow-hidden">
-                <img src="/usp1.png" alt="Easy for New & Experienced Cooks" className="w-14 h-14 object-cover" />
+              <div className="w-20 h-20 rounded-2xl flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                <img src="/usp1.png" alt="Easy for New & Experienced Cooks" className="w-full h-full object-contain" />
               </div>
               <h3 className="text-lg font-dm-sans font-bold text-gray-900 mb-2">Easy for New & Experienced Cooks</h3>
               <p className="text-sm text-gray-600 font-dm-sans">Designed for first-time cooks as well as trained chefs.</p>
@@ -111,8 +111,8 @@ export default function Home() {
 
             {/* USP 2 - Spice Mortar & Pestle Icon */}
             <div className="flex flex-col items-center text-center p-6 bg-white rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 group">
-              <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300 overflow-hidden">
-                <img src="/usp2.png" alt="Consistent Taste, Every Time" className="w-14 h-14 object-cover" />
+              <div className="w-20 h-20 rounded-2xl flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                <img src="/usp2.png" alt="Consistent Taste, Every Time" className="w-full h-full object-contain" />
               </div>
               <h3 className="text-lg font-dm-sans font-bold text-gray-900 mb-2">Consistent Taste, Every Time</h3>
               <p className="text-sm text-gray-600 font-dm-sans">Fixed flavour support – less guesswork, more reliability.</p>
@@ -120,8 +120,8 @@ export default function Home() {
 
             {/* USP 3 - Cooking Pot with Steam Icon */}
             <div className="flex flex-col items-center text-center p-6 bg-white rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 group">
-              <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300 overflow-hidden">
-                <img src="/usp3.png" alt="One Base, Many Dishes" className="w-14 h-14 object-cover" />
+              <div className="w-20 h-20 rounded-2xl flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                <img src="/usp3.png" alt="One Base, Many Dishes" className="w-full h-full object-contain" />
               </div>
               <h3 className="text-lg font-dm-sans font-bold text-gray-900 mb-2">One Base, Many Dishes</h3>
               <p className="text-sm text-gray-600 font-dm-sans">Use the same pack to cook different gravies, dals and curries.</p>
@@ -129,8 +129,8 @@ export default function Home() {
 
             {/* USP 4 - Recipe Card with Spices Icon */}
             <div className="flex flex-col items-center text-center p-6 bg-white rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 group">
-              <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300 overflow-hidden">
-                <img src="/usp4.jpg" alt="Clear Instructions on Every Box" className="w-14 h-14 object-cover" />
+              <div className="w-20 h-20 rounded-2xl flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                <img src="/usp4.jpg" alt="Clear Instructions on Every Box" className="w-full h-full object-contain" />
               </div>
               <h3 className="text-lg font-dm-sans font-bold text-gray-900 mb-2">Clear Instructions on Every Box</h3>
               <p className="text-sm text-gray-600 font-dm-sans">All sides of the box guide you step by step.</p>

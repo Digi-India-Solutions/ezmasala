@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
-import Image from 'next/image';
 import { toast } from 'sonner';
 import { isAdminAuthenticated, clearAdminAuth } from '@/utils/adminAuth';
 import api from '@/lib/api';
@@ -199,13 +198,12 @@ export default function OrderDetailsPage() {
               <div className="space-y-4">
                 {order.items.map((item, index) => (
                   <div key={index} className="flex gap-4 items-center pb-4 border-b last:border-b-0">
-                    <div className="w-20 h-20 relative bg-gray-100 rounded-lg flex-shrink-0">
+                    <div className="w-20 h-20 relative bg-gray-100 rounded-lg flex-shrink-0 overflow-hidden">
                       {item.image && (
-                        <Image
+                        <img
                           src={item.image}
                           alt={item.title}
-                          fill
-                          className="object-cover rounded-lg"
+                          className="w-full h-full object-cover rounded-lg"
                         />
                       )}
                     </div>

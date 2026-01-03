@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import { toast } from 'sonner';
-import Image from 'next/image';
 import api from '@/lib/api';
 
 export default function AdminBannersPage() {
@@ -123,11 +122,10 @@ export default function AdminBannersPage() {
 
           {imagePreview && (
             <div className="relative w-full h-64 rounded-xl overflow-hidden border-2 border-gray-200">
-              <Image
+              <img
                 src={imagePreview}
                 alt="Preview"
-                fill
-                className="object-contain"
+                className="w-full h-full object-contain"
               />
             </div>
           )}
@@ -171,11 +169,10 @@ export default function AdminBannersPage() {
                 }`}
               >
                 <div className="relative w-full h-48">
-                  <Image
+                  <img
                     src={banner.image}
                     alt="Banner"
-                    fill
-                    className="object-cover"
+                    className="w-full h-full object-cover"
                   />
                   {!banner.isActive && (
                     <div className="absolute inset-0 bg-black/50 flex items-center justify-center">

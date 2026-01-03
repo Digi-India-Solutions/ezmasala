@@ -2,7 +2,6 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import Image from "next/image";
 import api from "@/lib/api";
 
 export default function AdminNav() {
@@ -146,11 +145,10 @@ export default function AdminNav() {
           {/* Logo Section */}
           <div className="flex items-center gap-3">
             <div className="relative w-10 h-10 lg:w-12 lg:h-12">
-              <Image
+              <img
                 src="/logo.png"
                 alt="EZ Masala Logo"
-                fill
-                className="object-contain"
+                className="object-contain w-full h-full"
               />
             </div>
             <span className="text-lg lg:text-xl font-black text-black">EZ Masala Admin</span>
