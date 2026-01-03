@@ -45,29 +45,22 @@ export default function Home() {
 
       <section className="py-2 md:py-10 bg-white relative overflow-hidden">
 
-        <div className="md:hidden w-full h-72 relative mb-10">
-          <img
-            src="/about_us.png"
-            alt="About EZ Masala"
-            className="w-full h-full object-contain rounded-none"
-          />
-        </div>
-
-        <div className="hidden md:block absolute top-0 left-0 w-1/2 h-full">
-          <img
-            src="/about_us.png"
-            alt="About EZ Masala"
-            className="w-full h-full object-contain rounded-none"
-          />
-          <div className="absolute inset-0 pointer-events-none"></div>
-        </div>
-
-        {/* TEXT CONTENT */}
-        <div className="container mx-auto px-6 relative z-10">
-          <div className="grid md:grid-cols-2 gap-16 items-center">
-
-            {/* EMPTY SPACE FOR DESKTOP IMAGE */}
-            <div className="hidden md:block"></div>
+        <div className="container mx-auto px-6">
+          <div className="grid md:grid-cols-2 gap-16 items-center justify-items-center">
+            
+            {/* YOUTUBE VIDEO */}
+            <div className="w-4/5 md:w-full h-60 md:h-96">
+              <iframe
+                width="100%"
+                height="100%"
+                src="https://www.youtube.com/embed/hs6eZ5R8-pY?autoplay=1&mute=1&controls=1"
+                title="About EZ Masala"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="rounded-none"
+              ></iframe>
+            </div>
 
             {/* RIGHT TEXT SIDE */}
             <div>
