@@ -67,9 +67,9 @@ export default function Home() {
                   OUR STORY
                 </span>
               </div>
-              <h2 className="text-5xl font-dm-sans font-black mb-6 text-gray-900 leading-tight tracking-tight">
+              <h3 className="text-5xl font-dm-sans font-black mb-6 text-gray-900 leading-tight tracking-tight">
                 Smart Shortcut to Everyday Cooking. Traditionally Smart.
-              </h2>
+              </h3>
               <div className="space-y-4 text-base text-gray-700 leading-relaxed font-dm-sans">
                 <p className="border-l-4 border-black pl-4">
                   EZ Masala brings innovation to the conventional Indian kitchen
