@@ -5,45 +5,24 @@ import { useRef, useState, useEffect } from "react";
 const customerReviews = [
   {
     id: 1,
-    name: "Priya Sharma",
+    name: "Home maker, Delhi",
     rating: 5,
-    text: "The turmeric powder is so fresh and aromatic! It has completely transformed my cooking. Highly recommend EZ Masala.",
+    text: "I used EZ Masala J for dal and paneer. My family said the taste was the same every time – and it saved me so much time.",
     spiceImage: "/spice/1.jpg"
   },
   {
     id: 2,
-    name: "Rahul Mehta",
+    name: "Working professional, Gurgaon",
     rating: 5,
-    text: "Best garam masala I've ever used. The blend is perfect and the quality is exceptional. Will definitely order again!",
+    text: "With EZ Masala M, I can make sambar and rasam even though I'm not from South India. The printed instructions really help.",
     spiceImage: "/spice/2.jpg"
   },
   {
     id: 3,
-    name: "Anjali Desai",
+    name: "Home chef, Noida",
     rating: 5,
-    text: "Absolutely love the red chili powder! Perfect masala level and authentic taste. EZ Masala never disappoints.",
+    text: "For my small tiffin service, standard taste is important. Now even my helper can follow one simple method with EZ Masala.",
     spiceImage: "/spice/3.jpg"
-  },
-  {
-    id: 4,
-    name: "Vikram Singh",
-    rating: 5,
-    text: "The coriander powder is incredibly fresh. You can tell the difference in quality immediately. Great product!",
-    spiceImage: "/spice/4.jpg"
-  },
-  {
-    id: 5,
-    name: "Meera Patel",
-    rating: 5,
-    text: "Amazing quality and authentic flavors! The packaging is also great and keeps the masalas fresh. Very satisfied!",
-    spiceImage: "/spice/5.jpg"
-  },
-  {
-    id: 6,
-    name: "Arjun Reddy",
-    rating: 5,
-    text: "EZ Masala has become my go-to brand for all masalas. The quality is consistent and the prices are reasonable.",
-    spiceImage: "/spice/6.jpg"
   }
 ];
 

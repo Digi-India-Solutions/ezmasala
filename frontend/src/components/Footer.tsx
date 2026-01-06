@@ -52,8 +52,7 @@ export default function Footer() {
             </Link>
 
             <p className="text-gray-700 text-lg leading-relaxed max-w-sm font-inter">
-              Our products are made with ethically sourced ingredients and contain
-              no added chemicals, flavours, colours or preservatives.
+              EZ Masala simplifies Indian cooking worldwide, preserving traditional taste with one versatile masala delivering consistent aroma effortlessly.
             </p>
           </div>
 

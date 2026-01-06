@@ -46,18 +46,19 @@ export default function Home() {
       <section className="py-2 md:py-10 bg-white relative overflow-hidden">
         <div className="container mx-auto px-6">
           <div className="grid md:grid-cols-2 gap-16 items-center justify-items-center">
-            {/* YOUTUBE VIDEO */}
+            {/* VIDEO */}
             <div className="w-4/5 md:w-full h-60 md:h-96">
-              <iframe
+              <video
                 width="100%"
                 height="100%"
-                src="https://www.youtube.com/embed/hs6eZ5R8-pY?autoplay=1&mute=1&controls=1"
-                title="About EZ Masala"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                className="rounded-none"
-              ></iframe>
+                autoPlay
+                muted
+                controls
+                className="rounded-none w-full h-full object-cover"
+              >
+                <source src="/video.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
             </div>
 
             {/* RIGHT TEXT SIDE */}
@@ -68,7 +69,7 @@ export default function Home() {
                 </span>
               </div>
               <h3 className="text-4xl font-dm-sans font-black mb-6 text-gray-900 leading-tight tracking-tight">
-                Smart Shortcut to Everyday Cooking. Traditionally Smart.
+                Smart Shortcut to Everyday Cooking. 
               </h3>
               <div className="space-y-4 text-base text-gray-700 leading-relaxed font-dm-sans">
                 <p className="border-l-4 border-black pl-4">
@@ -172,7 +173,7 @@ export default function Home() {
         <div className="container mx-auto px-6">
           <div className="mb-8">
             <h2 className="text-4xl md:text-5xl font-dm-sans font-black text-gray-900 mb-3 tracking-tight">
-              Cook with True Flavours of India
+              One Masala for Everyday Indian Cooking
             </h2>
             <p className="text-gray-600 text-lg font-dm-sans">
               Discover our most loved masalas, handpicked for quality and taste
