@@ -94,7 +94,7 @@ export default function Footer() {
             </h4>
 
             <ul className="space-y-2 text-base text-gray-700 font-inter">
-              <li className="text-lg">Phone: {contactInfo?.phone || '+91 9082730822'}</li>
+              <li className="text-lg">Phone: {contactInfo?.phone || '+91 9910387487'}</li>
               <li className="text-lg">
                 Email:
                 <a href={`mailto:${contactInfo?.email || 'hello@ezmasala.com'}`} className="ml-1 underline underline-offset-4 decoration-black hover:text-green-600 transition">
