@@ -97,8 +97,8 @@ export default function Footer() {
               <li className="text-lg">Phone: {contactInfo?.phone || '+91 9910387487'}</li>
               <li className="text-lg">
                 Email:
-                <a href={`mailto:${contactInfo?.email || 'hello@ezmasala.com'}`} className="ml-1 underline underline-offset-4 decoration-black hover:text-green-600 transition">
-                  {contactInfo?.email || 'hello@ezmasala.com'}
+                <a href={`mailto:${contactInfo?.email || 'info@ezmasala.com'}`} className="ml-1 underline underline-offset-4 decoration-black hover:text-green-600 transition">
+                  {contactInfo?.email || 'info@ezmasala.com'}
                 </a>
               </li>
               
