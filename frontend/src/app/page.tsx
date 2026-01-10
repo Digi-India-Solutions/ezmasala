@@ -47,7 +47,7 @@ export default function Home() {
         <div className="container mx-auto px-6">
           <div className="grid md:grid-cols-2 gap-16 items-center justify-items-center">
             {/* VIDEO */}
-            <div className="w-4/5 md:w-full h-60 md:h-96">
+            <div className="w-full h-60 md:h-96">
               <video
                 width="100%"
                 height="100%"
